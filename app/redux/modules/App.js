@@ -1,3 +1,0 @@
-/**
- * Router redux integration
- */
