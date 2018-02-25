@@ -71,8 +71,8 @@
     "preset": "jest-expo"
   },
   "rnpm": {
-     "assets": [
-       "./assets/fonts"
-     ]
+    "assets": [
+      "./assets/fonts"
+    ]
   }
 }
