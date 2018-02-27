@@ -26,6 +26,9 @@ import ProfileComponent from '../components/Profile';
 
 import AboutComponent from '../components/About';
 
+import ConversationContainer from '../../containers/Conversation';
+import ConversationComponent from '../components/Conversation';
+
 const Index = (
   <Stack>
     <Scene hideNavBar>
@@ -94,6 +97,19 @@ const Index = (
             Layout={UpdateProfileComponent}
           />
         </Stack>
+
+        <Stack
+          key="conversation"
+          title={AppConfig.appName.toUpperCase()}
+          icon={() => <Icon name="chatboxes" {...DefaultProps.icons} />}
+          {...DefaultProps.navbarProps}
+        >
+          <Scene
+            title="CONVERSACIÓN"
+            key="conversation"
+            component={ConversationContainer}
+            Layout={ConversationComponent} />
+        </Stack>
       </Tabs>
     </Scene>
 
@@ -106,6 +122,7 @@ const Index = (
       component={RecipesContainer}
       Layout={RecipeViewComponent}
     />
+
   </Stack>
 );
 
