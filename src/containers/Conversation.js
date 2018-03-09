@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { login } from '../actions/member';
+import { login } from '../actions/conversation';
 
 const Conversation = ({
   Layout,
@@ -23,7 +23,7 @@ const Conversation = ({
   />
 );
 
-Login.propTypes = {
+Conversation.propTypes = {
   Layout: PropTypes.func.isRequired,
   member: PropTypes.shape({}).isRequired,
   onFormSubmit: PropTypes.func.isRequired,
@@ -33,7 +33,7 @@ Login.propTypes = {
   successMessage: PropTypes.string,
 };
 
-Login.defaultProps = {
+Conversation.defaultProps = {
   infoMessage: null,
   errorMessage: null,
   successMessage: null,
