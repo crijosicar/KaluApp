@@ -79,6 +79,7 @@ class Conversation extends React.Component {
             title="Kalu Assistant"
             content="Disfruta de tu nuevo asistente virtual."
           />
+
           {error && <Messages message={error} />}
 
           <GiftedChat
