@@ -8,7 +8,7 @@ import Header from './Header';
 import Spacer from './Spacer';
 import Conversation from 'chat-template/dist/Conversation';
 
-class Conversation extends React.Component {
+class ConversationComponent extends React.Component {
   static propTypes = {
     member: PropTypes.shape({
       email: PropTypes.string,
@@ -77,4 +77,4 @@ class Conversation extends React.Component {
   }
 }
 
-export default Conversation;
+export default ConversationComponent;
