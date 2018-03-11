@@ -14,8 +14,8 @@ class Login extends React.Component {
       email: PropTypes.string,
     }),
     error: PropTypes.string,
-    //loading: PropTypes.bool.isRequired,
-    //onFormSubmit: PropTypes.func.isRequired,
+    loading: PropTypes.bool.isRequired,
+    onFormSubmit: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -42,10 +42,9 @@ class Login extends React.Component {
   }
 
   handleSubmit = () => {
-   this.props.onFormSubmit(this.state)
-      
-     // .then(() => Actions.tabbar())
-     // .catch(e => console.log(`Error: ${e}`));
+    //this.props.onFormSubmit(this.state)
+    // .then(() => Actions.tabbar())
+    // .catch(e => console.log(`Error: ${e}`));
      this.props.onFormSubmit(this.state)
      .then(() => Actions.login())
      .catch(e => console.log(`Error: ${e}`));
@@ -110,18 +109,18 @@ class Login extends React.Component {
             <Spacer size={20} />
             <List>
 
-            <ListItem onPress={Actions.forgotPassword} > 
-              
-              <Body> 
+            <ListItem onPress={Actions.forgotPassword} >
+
+              <Body>
               <Text style={{
               fontSize: 14, textAlign:
                 'center', margin: 10
             }}>Olvidaste tu constrasena?</Text>
               </Body>
             </ListItem>
-            </List>  
+            </List>
             <Spacer size={20} />
-            
+
             <Button success block onPress={this.handleSubmit}>
             <Text style={{
               fontSize: 14, textAlign:
@@ -129,9 +128,9 @@ class Login extends React.Component {
             }}>Login</Text>
             </Button>
             <Spacer size={20} />
-            
-            <ListItem onPress={Actions.signUp} > 
-              
+
+            <ListItem onPress={Actions.signUp} >
+
               <Body>
                 <Text style={{
               fontSize: 14, textAlign:
@@ -140,7 +139,7 @@ class Login extends React.Component {
               </Body>
             </ListItem>
           </Form>
-          
+
         </Content>
       </Container>
     );

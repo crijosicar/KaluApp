@@ -31,79 +31,49 @@ import ConversationComponent from '../components/Conversation';
 
 const Index = (
   <Stack>
-    <Scene hideNavBar />
-      {/* <Tabs
-        key="tabbar"
-        swipeEnabled
-        type="replace"
-        showLabel={false}
-        {...DefaultProps.tabProps}
-      > */}
-        {/* <Stack
-          key="home"
-          title={AppConfig.appName.toUpperCase()}
-          icon={() => <Icon name="planet" {...DefaultProps.icons} />}
-          {...DefaultProps.navbarProps}
-        >
-          <Scene key="home" component={AboutComponent} />
-        </Stack> */}
-
-        {/* <Stack
-          key="recipes"
-          title="RECIPES"
-          icon={() => <Icon name="book" {...DefaultProps.icons} />}
-          {...DefaultProps.navbarProps}
-        >
-          <Scene key="recipes" component={RecipesContainer} Layout={RecipesComponent} />
-        </Stack> */}
-
-        {/* <Stack
-          key="profile"
-          title="PROFILE"
-          icon={() => <Icon name="contact" {...DefaultProps.icons} />}
-          {...DefaultProps.navbarProps}
-        > */}
-          <Scene key="profileHome" component={MemberContainer} Layout={ProfileComponent} />
+    <Scene hideNavBar>
+          <Scene
+            key="profileHome"
+            component={MemberContainer}
+            Layout={ProfileComponent}
+            />
           <Scene
             back
             key="signUp"
             title="SIGN UP"
-            {...DefaultProps.navbarProps}
             component={SignUpContainer}
             Layout={SignUpComponent}
-          />
+            />
           <Scene
             back
             key="login"
             title="LOGIN"
-            {...DefaultProps.navbarProps}
             component={LoginContainer}
             Layout={LoginComponent}
-          />
+            />
           <Scene
             back
             key="forgotPassword"
             title="FORGOT PASSWORD"
-            {...DefaultProps.navbarProps}
             component={ForgotPasswordContainer}
             Layout={ForgotPasswordComponent}
-          />
+            />
           <Scene
             back
             key="updateProfile"
             title="UPDATE PROFILE"
-            {...DefaultProps.navbarProps}
             component={UpdateProfileContainer}
             Layout={UpdateProfileComponent}
-          />
+            />
           <Scene
-            title="CONVERSACIÓN"
             key="conversation"
+            title="CONVERSACIÓN"
             component={ConversationContainer}
-            Layout={ConversationComponent} />
-
+            Layout={ConversationComponent}
+            />
         {/* </Stack> */}
       {/* </Tabs> */}
+  </Scene>
 </Stack >
 );
 
