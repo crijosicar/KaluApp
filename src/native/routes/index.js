@@ -26,9 +26,12 @@ import ProfileComponent from '../components/Profile';
 
 import AboutComponent from '../components/About';
 
+import ConversationContainer from '../../containers/Conversation';
+import ConversationComponent from '../components/Conversation';
+
 const Index = (
   <Stack>
-    <Scene hideNavBar>
+    <Scene hideNavBar />
       {/* <Tabs
         key="tabbar"
         swipeEnabled
@@ -93,20 +96,18 @@ const Index = (
             component={UpdateProfileContainer}
             Layout={UpdateProfileComponent}
           />
+          <Scene
+            title="CONVERSACIÓN"
+            key="conversation"
+            component={ConversationContainer}
+            Layout={ConversationComponent} />
+        
         {/* </Stack> */}
       {/* </Tabs> */}
-    </Scene>
-
-    <Scene
-      back
-      clone
-      key="recipe"
-      title="RECIPE"
-      {...DefaultProps.navbarProps}
-      component={RecipesContainer}
-      Layout={RecipeViewComponent}
-    />
-  </Stack>
+      
+</Stack >   
+   
+  
 );
 
 export default Index;
