@@ -69,8 +69,9 @@ class ConversationComponent extends React.Component {
             content="Disfruta de tu nuevo asistente virtual."
           />
           {error && <Messages message={error} />}
+
           <Conversation height={300} messages={messages}/>
-          
+
         </Content>
       </Container>
     );
