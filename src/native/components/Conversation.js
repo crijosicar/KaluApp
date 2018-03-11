@@ -6,9 +6,9 @@ import Loading from './Loading';
 import Messages from './Messages';
 import Header from './Header';
 import Spacer from './Spacer';
-import Conversation from 'chat-template/dist/Conversation';
+import { GiftedChat } from 'react-native-gifted-chat'
 
-class ConversationComponent extends React.Component {
+class Conversation extends React.Component {
   static propTypes = {
     member: PropTypes.shape({
       email: PropTypes.string,
@@ -16,6 +16,7 @@ class ConversationComponent extends React.Component {
     error: PropTypes.string,
     loading: PropTypes.bool.isRequired,
     onFormSubmit: PropTypes.func.isRequired,
+    messages: [],
   }
 
   static defaultProps = {
@@ -28,10 +29,28 @@ class ConversationComponent extends React.Component {
     this.state = {
       email: (props.member && props.member.email) ? props.member.email : '',
       password: '',
+      messages: [
+        {
+          _id: 1,
+          text: 'Hello developer',
+          createdAt: new Date(),
+          user: {
+            _id: 2,
+            name: 'React Native',
+            avatar: 'https://facebook.github.io/react/img/logo_og.png',
+          },
+        },
+      ],
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  onSend(messages = []) {
+    this.setState(previousState => ({
+      messages: GiftedChat.append(previousState.messages, messages),
+    }))
   }
 
   handleChange = (name, val) => {
@@ -49,14 +68,6 @@ class ConversationComponent extends React.Component {
 
   render() {
     const { loading, error } = this.props;
-    var messages = [{
-      message:'How do I use this messaging app?',
-      from: 'right',
-      backColor: '#3d83fa',
-      textColor: "white",
-      avatar: 'https://www.seeklogo.net/wp-content/uploads/2015/09/google-plus-new-icon-logo.png',
-      duration: 2000,
-    }];
 
     // Loading
     if (loading) return <Loading />;
@@ -70,12 +81,17 @@ class ConversationComponent extends React.Component {
           />
           {error && <Messages message={error} />}
 
-          <Conversation height={300} messages={messages}/>
-
+          <GiftedChat
+            messages={this.state.messages}
+            onSend={messages => this.onSend(messages)}
+            user={{
+              _id: 1,
+            }}
+          />
         </Content>
       </Container>
     );
   }
 }
 
-export default ConversationComponent;
+export default Conversation;

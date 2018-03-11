@@ -101,13 +101,10 @@ const Index = (
             key="conversation"
             component={ConversationContainer}
             Layout={ConversationComponent} />
-        
+
         {/* </Stack> */}
       {/* </Tabs> */}
-      
-</Stack >   
-   
-  
+</Stack >
 );
 
 export default Index;
