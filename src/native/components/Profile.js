@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { View } from 'react-native';
-import { Container, Content, List, ListItem, Body, Left, Text, Icon } from 'native-base';
+import { Container, Content, Form, List,Item,Label,Input, ListItem, Body, Left, Text, Icon, Button } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import Header from './Header';
-
-const Profile = ({ member, logout }) => (
+import Spacer from './Spacer';
+import Login from './Login';
+const Profile = ({ member, logout,onFormSubmit }) => (
   <Container>
     <Content>
       <List>
@@ -38,12 +39,13 @@ const Profile = ({ member, logout }) => (
         :
           <View>
             <Content padder>
-              <Header
-                title="Hi there,"
-                content="Please login to gain extra access"
-              />
             </Content>
-
+            <View>
+              <Login onPress={Actions.login}>
+              </Login>
+                
+            </View>
+            {/*   
             <ListItem onPress={Actions.login} icon>
               <Left>
                 <Icon name="power" />
@@ -51,8 +53,16 @@ const Profile = ({ member, logout }) => (
               <Body>
                 <Text>Login</Text>
               </Body>
-            </ListItem>
-            <ListItem onPress={Actions.signUp} icon>
+            </ListItem> */}
+            {/* <ListItem onPress={Actions.forgotPassword} icon> 
+              <Left> 
+                <Icon name="help-buoy" />
+              </Left>
+              <Body> 
+                <Text>Olvidaste tu constrasena</Text>
+              </Body>
+            </ListItem>*/}
+            {/* <ListItem onPress={Actions.signUp} icon> 
               <Left>
                 <Icon name="add-circle" />
               </Left>
@@ -60,14 +70,7 @@ const Profile = ({ member, logout }) => (
                 <Text>Sign Up</Text>
               </Body>
             </ListItem>
-            <ListItem onPress={Actions.forgotPassword} icon>
-              <Left>
-                <Icon name="help-buoy" />
-              </Left>
-              <Body>
-                <Text>Forgot Password</Text>
-              </Body>
-            </ListItem>
+            */}
           </View>
         }
       </List>

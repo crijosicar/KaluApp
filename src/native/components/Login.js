@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Container, Content, Form, Item, Label, Input, Text, Button } from 'native-base';
+import { View } from 'react-native';
+import { Container, Content, Form,List,ListItem, Item, Label, Input, Text, Button,StyleProvider, H1, H2, H3,Body } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import Loading from './Loading';
 import Messages from './Messages';
@@ -13,8 +14,8 @@ class Login extends React.Component {
       email: PropTypes.string,
     }),
     error: PropTypes.string,
-    loading: PropTypes.bool.isRequired,
-    onFormSubmit: PropTypes.func.isRequired,
+    //loading: PropTypes.bool.isRequired,
+    //onFormSubmit: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -41,9 +42,13 @@ class Login extends React.Component {
   }
 
   handleSubmit = () => {
-    this.props.onFormSubmit(this.state)
-      .then(() => Actions.tabbar())
-      .catch(e => console.log(`Error: ${e}`));
+   this.props.onFormSubmit(this.state)
+      
+     // .then(() => Actions.tabbar())
+     // .catch(e => console.log(`Error: ${e}`));
+     this.props.onFormSubmit(this.state)
+     .then(() => Actions.login())
+     .catch(e => console.log(`Error: ${e}`));
   }
 
   render() {
@@ -55,12 +60,34 @@ class Login extends React.Component {
     return (
       <Container>
         <Content padder>
-          <Header
-            title="Welcome back"
-            content="Please use your email and password to login."
-          />
+          <View style={{
+            flex: 1, justifyContent: 'center',
+            alignItems: 'center'
+          }}>
+            <Text style={{
+              fontSize: 24, textAlign:
+                'center', margin: 10
+            }}>
+              KALU
+          </Text>
+          </View>
 
           {error && <Messages message={error} />}
+          <Spacer size={30} />
+          <Button block onPress={this.handleSubmit}>
+            <Text>Inicio de Sesion con Facebook</Text>
+          </Button>
+          <Spacer size={30} />
+          <View style={{
+            flex: 1, justifyContent: 'center',
+            alignItems: 'center'
+          }}>
+
+            <Text style={{
+              fontSize: 14, textAlign:
+                'center', margin: 10
+            }}> o digita tus datos</Text>
+          </View>
 
           <Form>
             <Item stackedLabel>
@@ -81,11 +108,39 @@ class Login extends React.Component {
             </Item>
 
             <Spacer size={20} />
+            <List>
 
-            <Button block onPress={this.handleSubmit}>
-              <Text>Login</Text>
+            <ListItem onPress={Actions.forgotPassword} > 
+              
+              <Body> 
+              <Text style={{
+              fontSize: 14, textAlign:
+                'center', margin: 10
+            }}>Olvidaste tu constrasena?</Text>
+              </Body>
+            </ListItem>
+            </List>  
+            <Spacer size={20} />
+            
+            <Button success block onPress={this.handleSubmit}>
+            <Text style={{
+              fontSize: 14, textAlign:
+                'center', margin: 10
+            }}>Login</Text>
             </Button>
+            <Spacer size={20} />
+            
+            <ListItem onPress={Actions.signUp} > 
+              
+              <Body>
+                <Text style={{
+              fontSize: 14, textAlign:
+                'center', margin: 10
+            }}>No tienes cuenta? Registrate</Text>
+              </Body>
+            </ListItem>
           </Form>
+          
         </Content>
       </Container>
     );

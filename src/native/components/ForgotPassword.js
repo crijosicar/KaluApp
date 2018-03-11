@@ -55,8 +55,8 @@ class ForgotPassword extends React.Component {
       <Container>
         <Content padder>
           <Header
-            title="Reset your Password"
-            content="No stress, no stress. We'll get you back into your account."
+            title="Reinicia tu contraseña"
+            content="Recibiras el acceso a tu cuenta a tu correo electronico"
           />
 
           {error && <Messages message={error} />}
@@ -74,7 +74,7 @@ class ForgotPassword extends React.Component {
 
             <Spacer size={20} />
 
-            <Button block onPress={this.handleSubmit}><Text>Reset Password</Text></Button>
+            <Button block onPress={this.handleSubmit}><Text>Reiniciar Contraseña</Text></Button>
           </Form>
         </Content>
       </Container>

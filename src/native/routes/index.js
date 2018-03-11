@@ -29,37 +29,37 @@ import AboutComponent from '../components/About';
 const Index = (
   <Stack>
     <Scene hideNavBar>
-      <Tabs
+      {/* <Tabs
         key="tabbar"
         swipeEnabled
         type="replace"
         showLabel={false}
         {...DefaultProps.tabProps}
-      >
-        <Stack
+      > */}
+        {/* <Stack
           key="home"
           title={AppConfig.appName.toUpperCase()}
           icon={() => <Icon name="planet" {...DefaultProps.icons} />}
           {...DefaultProps.navbarProps}
         >
           <Scene key="home" component={AboutComponent} />
-        </Stack>
+        </Stack> */}
 
-        <Stack
+        {/* <Stack
           key="recipes"
           title="RECIPES"
           icon={() => <Icon name="book" {...DefaultProps.icons} />}
           {...DefaultProps.navbarProps}
         >
           <Scene key="recipes" component={RecipesContainer} Layout={RecipesComponent} />
-        </Stack>
+        </Stack> */}
 
-        <Stack
+        {/* <Stack
           key="profile"
           title="PROFILE"
           icon={() => <Icon name="contact" {...DefaultProps.icons} />}
           {...DefaultProps.navbarProps}
-        >
+        > */}
           <Scene key="profileHome" component={MemberContainer} Layout={ProfileComponent} />
           <Scene
             back
@@ -93,8 +93,8 @@ const Index = (
             component={UpdateProfileContainer}
             Layout={UpdateProfileComponent}
           />
-        </Stack>
-      </Tabs>
+        {/* </Stack> */}
+      {/* </Tabs> */}
     </Scene>
 
     <Scene

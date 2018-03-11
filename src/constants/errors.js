@@ -11,9 +11,9 @@ export default {
   memberExists: 'Member already exists',
   missingFirstName: 'First name is missing',
   missingLastName: 'Last name is missing',
-  missingEmail: 'Email is missing',
-  missingPassword: 'Password is missing',
-  passwordsDontMatch: 'Passwords do not match',
+  missingEmail: 'completa el correo electronico ',
+  missingPassword: 'completa la contrasena',
+  passwordsDontMatch: 'contrasenas no concuerdan',
 
   // Recipes
   recipe404: 'Recipe not found',

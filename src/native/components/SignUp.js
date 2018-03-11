@@ -6,6 +6,7 @@ import Loading from './Loading';
 import Messages from './Messages';
 import Header from './Header';
 import Spacer from './Spacer';
+import { View } from 'react-native';
 
 class SignUp extends React.Component {
   static propTypes = {
@@ -21,8 +22,8 @@ class SignUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: '',
-      lastName: '',
+      // firstName: '',
+      // lastName: '',
       email: '',
       password: '',
       password2: '',
@@ -54,15 +55,34 @@ class SignUp extends React.Component {
     return (
       <Container>
         <Content padder>
-          <Header
-            title="Welcome"
-            content="We're glad to welcome you to the community. There's only a few questions and you'll be on your way."
-          />
+        <View style={{
+          flex: 1, justifyContent: 'center',
+          alignItems: 'center'
+        }}>
+          <Text style={{
+            fontSize: 24, textAlign:
+              'center', margin: 10
+          }}>
+            Registro de Usuarios
+        </Text>
+        </View>
+
+        <View style={{
+          flex: 1, justifyContent: 'center',
+          alignItems: 'center'
+        }}>
+          <Text style={{
+            fontSize: 24, textAlign:
+              'center', margin: 10
+          }}>
+            KALU
+        </Text>
+        </View>
 
           {error && <Messages message={error} />}
 
           <Form>
-            <Item stackedLabel>
+            {/* <Item stackedLabel>
               <Label>First Name</Label>
               <Input onChangeText={v => this.handleChange('firstName', v)} />
             </Item>
@@ -70,10 +90,10 @@ class SignUp extends React.Component {
             <Item stackedLabel>
               <Label>Last Name</Label>
               <Input onChangeText={v => this.handleChange('lastName', v)} />
-            </Item>
+            </Item> */}
 
             <Item stackedLabel>
-              <Label>Email</Label>
+              <Label>Correo Electronico</Label>
               <Input
                 autoCapitalize="none"
                 keyboardType="email-address"
@@ -82,19 +102,19 @@ class SignUp extends React.Component {
             </Item>
 
             <Item stackedLabel>
-              <Label>Password</Label>
+              <Label>Contrasena</Label>
               <Input secureTextEntry onChangeText={v => this.handleChange('password', v)} />
             </Item>
 
             <Item stackedLabel>
-              <Label>Confirm Password</Label>
+              <Label>Confirma tu Contrasena</Label>
               <Input secureTextEntry onChangeText={v => this.handleChange('password2', v)} />
             </Item>
 
             <Spacer size={20} />
 
-            <Button block onPress={this.handleSubmit}>
-              <Text>Sign Up</Text>
+            <Button success block onPress={this.handleSubmit}>
+              <Text>Crear Cuenta</Text>
             </Button>
           </Form>
         </Content>
