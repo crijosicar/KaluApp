@@ -8,28 +8,26 @@ import Header from './Header';
 import Spacer from './Spacer';
 import { GiftedChat } from 'react-native-gifted-chat'
 
-class Conversation extends React.Component {
+class MainChat extends React.Component {
   static propTypes = {
-    member: PropTypes.shape({
-      email: PropTypes.string,
-    }),
+    conversation: PropTypes.shape({}),
     error: PropTypes.string,
     loading: PropTypes.bool.isRequired,
     onFormSubmit: PropTypes.func.isRequired,
-    messages: [],
   }
 
   static defaultProps = {
     error: null,
-    member: {},
+    conversation: {},
+    chat: [],
   }
 
   constructor(props) {
     super(props);
+    console.log("props -> ", props);
     this.state = {
-      email: (props.member && props.member.email) ? props.member.email : '',
-      password: '',
-      messages: [
+      conversation: (props.conversation) ? props.conversation : '',
+      chat: [
         {
           _id: 1,
           text: 'Hello developer',
@@ -47,9 +45,9 @@ class Conversation extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  onSend(messages = []) {
+  onSend(chat = []) {
     this.setState(previousState => ({
-      messages: GiftedChat.append(previousState.messages, messages),
+      chat: GiftedChat.append(previousState.chat, chat),
     }))
   }
 
@@ -62,7 +60,7 @@ class Conversation extends React.Component {
 
   handleSubmit = () => {
     this.props.onFormSubmit(this.state)
-      .then(() => Actions.tabbar())
+      .then(() => alert("hola"))
       .catch(e => console.log(`Error: ${e}`));
   }
 
@@ -83,8 +81,8 @@ class Conversation extends React.Component {
           {error && <Messages message={error} />}
 
           <GiftedChat
-            messages={this.state.messages}
-            onSend={messages => this.onSend(messages)}
+            messages={this.state.chat}
+            onSend={chat => this.onSend(chat)}
             user={{
               _id: 1,
             }}
@@ -95,4 +93,4 @@ class Conversation extends React.Component {
   }
 }
 
-export default Conversation;
+export default MainChat;

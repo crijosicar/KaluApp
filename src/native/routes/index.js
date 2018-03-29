@@ -26,14 +26,14 @@ import ProfileComponent from '../components/Profile';
 
 import AboutComponent from '../components/About';
 
-import ConversationContainer from '../../containers/Conversation';
-import ConversationComponent from '../components/Conversation';
+import MainChatContainer from '../../containers/MainChat';
+import MainChatComponent from '../components/MainChat';
 
 const Index = (
-  <Stack>
     <Scene hideNavBar>
           <Scene
             key="profileHome"
+            title="Perfil"
             component={MemberContainer}
             Layout={ProfileComponent}
             />
@@ -45,7 +45,6 @@ const Index = (
             Layout={SignUpComponent}
             />
           <Scene
-            back
             key="login"
             title="LOGIN"
             component={LoginContainer}
@@ -68,13 +67,10 @@ const Index = (
           <Scene
             key="conversation"
             title="CONVERSACIÓN"
-            component={ConversationContainer}
-            Layout={ConversationComponent}
+            component={MainChatContainer}
+            Layout={MainChatComponent}
             />
-        {/* </Stack> */}
-      {/* </Tabs> */}
   </Scene>
-</Stack >
 );
 
 export default Index;
