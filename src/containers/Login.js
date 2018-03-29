@@ -1,43 +1,39 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { login } from '../actions/member';
 
-const Login = ({
-  Layout,
-  onFormSubmit,
-  member,
-  isLoading,
-  infoMessage,
-  errorMessage,
-  successMessage,
-}) => (
-  <Layout
-    member={member}
-    loading={isLoading}
-    info={infoMessage}
-    error={errorMessage}
-    success={successMessage}
-    onFormSubmit={onFormSubmit}
-  />
-);
+class Login extends Component {
+  static propTypes = {
+    Layout: PropTypes.func.isRequired,
+    onFormSubmit: PropTypes.func.isRequired,
+    member: PropTypes.shape({}).isRequired,
+    isLoading: PropTypes.bool.isRequired,
+    infoMessage: PropTypes.string,
+    errorMessage: PropTypes.string,
+    successMessage: PropTypes.string,
+  }
 
-Login.propTypes = {
-  Layout: PropTypes.func.isRequired,
-  member: PropTypes.shape({}).isRequired,
-  onFormSubmit: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool.isRequired,
-  infoMessage: PropTypes.string,
-  errorMessage: PropTypes.string,
-  successMessage: PropTypes.string,
-};
+  componentDidMount = () => {};
 
-Login.defaultProps = {
-  infoMessage: null,
-  errorMessage: null,
-  successMessage: null,
-};
+  render = () => {
+    const { Layout,
+            member,
+            onFormSubmit,
+            isLoading,
+            infoMessage,
+            errorMessage,
+            successMessage } = this.props;
+
+    return <Layout  onFormSubmit={onFormSubmit}
+                    member={member}
+                    loading={isLoading}
+                    info={infoMessage}
+                    error={errorMessage}
+                    success={successMessage}/>;
+  }
+}
 
 const mapStateToProps = state => ({
   member: state.member || {},

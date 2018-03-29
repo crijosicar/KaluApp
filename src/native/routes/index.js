@@ -31,7 +31,7 @@ import MainChatComponent from '../components/MainChat';
 
 const Index = (
     <Scene hideNavBar>
-          <Scene
+          {/*<Scene
             key="profileHome"
             title="Perfil"
             component={MemberContainer}
@@ -43,14 +43,14 @@ const Index = (
             title="SIGN UP"
             component={SignUpContainer}
             Layout={SignUpComponent}
-            />
+            />*/}
           <Scene
             key="login"
             title="LOGIN"
             component={LoginContainer}
             Layout={LoginComponent}
             />
-          <Scene
+          {/*<Scene
             back
             key="forgotPassword"
             title="FORGOT PASSWORD"
@@ -63,7 +63,7 @@ const Index = (
             title="UPDATE PROFILE"
             component={UpdateProfileContainer}
             Layout={UpdateProfileComponent}
-            />
+            />*/}
           <Scene
             key="conversation"
             title="CONVERSACIÓN"

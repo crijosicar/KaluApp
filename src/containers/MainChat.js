@@ -9,10 +9,11 @@ class MainChat extends Component {
     Layout: PropTypes.func.isRequired,
     onFormSubmit: PropTypes.func.isRequired,
     getConversationData: PropTypes.func.isRequired,
-    conversation: PropTypes.shape({
-      loading: PropTypes.bool.isRequired,
-      error: PropTypes.string,
-    }).isRequired,
+    conversation: PropTypes.shape({}).isRequired,
+    isLoading: PropTypes.bool.isRequired,
+    infoMessage: PropTypes.string,
+    errorMessage: PropTypes.string,
+    successMessage: PropTypes.string,
   }
 
   componentDidMount = () => {
@@ -20,14 +21,20 @@ class MainChat extends Component {
   }
 
   render = () => {
-    const { Layout, conversation, onFormSubmit, isLoading, infoMessage, errorMessage, successMessage } = this.props;
+    const { Layout,
+            conversation,
+            onFormSubmit,
+            isLoading,
+            infoMessage,
+            errorMessage,
+            successMessage } = this.props;
 
-    return <Layout conversation={conversation}
-                   onFormSubmit={onFormSubmit}
-                   loading={isLoading}
-                   info={infoMessage}
-                   error={errorMessage}
-                   success={successMessage} />;
+    return <Layout  conversation={conversation}
+                    onFormSubmit={onFormSubmit}
+                    loading={isLoading}
+                    info={infoMessage}
+                    error={errorMessage}
+                    success={successMessage}/>;
   }
 }
 

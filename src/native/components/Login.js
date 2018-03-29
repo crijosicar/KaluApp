@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { View } from 'react-native';
 import { Container, Content, Form,List,ListItem, Item, Label, Input, Text, Button,StyleProvider, H1, H2, H3,Body } from 'native-base';
 import { Actions } from 'react-native-router-flux';
+
 import Loading from './Loading';
 import Messages from './Messages';
 import Header from './Header';
@@ -12,7 +13,7 @@ class Login extends React.Component {
   static propTypes = {
     member: PropTypes.shape({
       email: PropTypes.string,
-    }),
+    }).isRequired,
     error: PropTypes.string,
     loading: PropTypes.bool.isRequired,
     onFormSubmit: PropTypes.func.isRequired,
@@ -25,6 +26,7 @@ class Login extends React.Component {
 
   constructor(props) {
     super(props);
+
     this.state = {
       email: (props.member && props.member.email) ? props.member.email : '',
       password: '',
@@ -43,12 +45,15 @@ class Login extends React.Component {
 
   handleSubmit = () => {
      this.props.onFormSubmit(this.state)
-     .then(() => Actions.login())
-     .catch(e => console.log(`Error: ${e}`));
-  }
-
-  goTo = (view = null) => {
-
+     .then(() => alert("hola"))
+     .catch(e => {
+       console.log(`Error: ${e}`)
+       this.setState({
+         ...this.state,
+         email: "",
+         password: ""
+       });
+     });
   }
 
   render() {
@@ -72,8 +77,6 @@ class Login extends React.Component {
             </Text>
           </View>
 
-          { error && <Messages message={error} /> }
-
           <Spacer size={30} />
 
           <Button block onPress={this.handleSubmit}>
@@ -87,10 +90,17 @@ class Login extends React.Component {
             alignItems: 'center'
           }}>
               <Text style={{
-                fontSize: 14, textAlign:
-                  'center', margin: 10
+                fontSize: 14,
+                textAlign: 'center',
+                margin: 10
               }}> ó digita tus datos</Text>
           </View>
+
+          <Spacer size={10} />
+
+          { error && <Messages message={error} /> }
+
+          <Spacer size={10} />
 
           <Form>
             <Item stackedLabel>

@@ -6,7 +6,7 @@ import { Actions } from 'react-native-router-flux';
 import Header from './Header';
 import Spacer from './Spacer';
 import Login from './Login';
-const Profile = ({ member, logout,onFormSubmit }) => (
+const Profile = ({ member, logout, onFormSubmit }) => (
   <Container>
     <Content>
       <List>
@@ -43,34 +43,8 @@ const Profile = ({ member, logout,onFormSubmit }) => (
             <View>
               <Login onPress={Actions.login}>
               </Login>
-                
+
             </View>
-            {/*   
-            <ListItem onPress={Actions.login} icon>
-              <Left>
-                <Icon name="power" />
-              </Left>
-              <Body>
-                <Text>Login</Text>
-              </Body>
-            </ListItem> */}
-            {/* <ListItem onPress={Actions.forgotPassword} icon> 
-              <Left> 
-                <Icon name="help-buoy" />
-              </Left>
-              <Body> 
-                <Text>Olvidaste tu constrasena</Text>
-              </Body>
-            </ListItem>*/}
-            {/* <ListItem onPress={Actions.signUp} icon> 
-              <Left>
-                <Icon name="add-circle" />
-              </Left>
-              <Body>
-                <Text>Sign Up</Text>
-              </Body>
-            </ListItem>
-            */}
           </View>
         }
       </List>

@@ -22,8 +22,6 @@ class SignUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // firstName: '',
-      // lastName: '',
       email: '',
       password: '',
       password2: '',
@@ -82,16 +80,6 @@ class SignUp extends React.Component {
           {error && <Messages message={error} />}
 
           <Form>
-            {/* <Item stackedLabel>
-              <Label>First Name</Label>
-              <Input onChangeText={v => this.handleChange('firstName', v)} />
-            </Item>
-
-            <Item stackedLabel>
-              <Label>Last Name</Label>
-              <Input onChangeText={v => this.handleChange('lastName', v)} />
-            </Item> */}
-
             <Item stackedLabel>
               <Label>Correo Electronico</Label>
               <Input

@@ -10,14 +10,10 @@ export function signUp(formData) {
     email,
     password,
     password2,
-    // firstName,
-    // lastName,
   } = formData;
 
   return dispatch => new Promise(async (resolve, reject) => {
     // Validation checks
-    // if (!firstName) return reject({ message: ErrorMessages.missingFirstName });
-    // if (!lastName) return reject({ message: ErrorMessages.missingLastName });
     if (!email) return reject({ message: ErrorMessages.missingEmail });
     if (!password) return reject({ message: ErrorMessages.missingPassword });
     if (!password2) return reject({ message: ErrorMessages.missingPassword });
@@ -131,7 +127,11 @@ export function login(formData) {
               data: res,
             }));
           }).catch(reject));
-  }).catch(async (err) => { await statusMessage(dispatch, 'error', err.message); throw err.message; });
+  })
+  .catch(async (err) => {
+     await statusMessage(dispatch, 'error', err.message);
+     throw err.message;
+   });
 }
 
 /**
@@ -151,7 +151,11 @@ export function resetPassword(formData) {
       .sendPasswordResetEmail(email)
       .then(() => statusMessage(dispatch, 'loading', false).then(resolve(dispatch({ type: 'USER_RESET' }))))
       .catch(reject);
-  }).catch(async (err) => { await statusMessage(dispatch, 'error', err.message); throw err.message; });
+  })
+  .catch(async (err) => {
+    await statusMessage(dispatch, 'error', err.message);
+    throw err.message;
+   });
 }
 
 /**
@@ -205,7 +209,11 @@ export function updateProfile(formData) {
         await statusMessage(dispatch, 'success', 'Profile Updated');
         resolve();
       }).catch(reject);
-  }).catch(async (err) => { await statusMessage(dispatch, 'error', err.message); throw err.message; });
+  })
+  .catch(async (err) => {
+    await statusMessage(dispatch, 'error', err.message);
+    throw err.message;
+  });
 }
 
 /**
@@ -218,5 +226,9 @@ export function logout() {
         dispatch({ type: 'USER_RESET' });
         setTimeout(resolve, 1000); // Resolve after 1s so that user sees a message
       }).catch(reject);
-  }).catch(async (err) => { await statusMessage(dispatch, 'error', err.message); throw err.message; });
+  })
+  .catch(async (err) => {
+    await statusMessage(dispatch, 'error', err.message);
+    throw err.message; 
+  });
 }

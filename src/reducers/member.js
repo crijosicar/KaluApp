@@ -23,8 +23,6 @@ export default function userReducer(state = initialState, action) {
           ...state,
           loading: false,
           error: null,
-          //firstName: action.data.firstName,
-          //lastName: action.data.lastName,
           signedUp: action.data.signedUp,
           role: action.data.role,
         };
