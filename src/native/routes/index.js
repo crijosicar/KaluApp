@@ -26,8 +26,8 @@ import ProfileComponent from '../components/Profile';
 
 import AboutComponent from '../components/About';
 
-import MainChatContainer from '../../containers/MainChat';
-import MainChatComponent from '../components/MainChat';
+import ChatScreenContainer from '../../containers/ChatScreen';
+import ChatScreenComponent from '../components/ChatScreen';
 
 const Index = (
     <Scene hideNavBar>
@@ -67,8 +67,8 @@ const Index = (
           <Scene
             key="conversation"
             title="CONVERSACIÓN"
-            component={MainChatContainer}
-            Layout={MainChatComponent}
+            component={ChatScreenContainer}
+            Layout={ChatScreenComponent}
             />
   </Scene>
 );

@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { sendMessage, getConversationData } from '../actions/conversation';
+import { sendMessage, loadMessages } from '../actions/conversation';
 
-class MainChat extends Component {
+class ChatScreen extends Component {
   static propTypes = {
     Layout: PropTypes.func.isRequired,
     onFormSubmit: PropTypes.func.isRequired,
-    getConversationData: PropTypes.func.isRequired,
+    loadMessages: PropTypes.func.isRequired,
     conversation: PropTypes.shape({}).isRequired,
     isLoading: PropTypes.bool.isRequired,
     infoMessage: PropTypes.string,
@@ -16,9 +16,7 @@ class MainChat extends Component {
     successMessage: PropTypes.string,
   }
 
-  componentDidMount = () => {
-    this.props.getConversationData();
-  }
+  componentDidMount = () => { this.props.loadMessages() }
 
   render = () => {
     const { Layout,
@@ -34,7 +32,7 @@ class MainChat extends Component {
                     loading={isLoading}
                     info={infoMessage}
                     error={errorMessage}
-                    success={successMessage}/>;
+                    success={successMessage} />;
   }
 }
 
@@ -48,7 +46,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   onFormSubmit: sendMessage,
-  getConversationData,
+  loadMessages,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainChat);
+export default connect(mapStateToProps, mapDispatchToProps)(ChatScreen);

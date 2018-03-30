@@ -1,48 +1,105 @@
 import ErrorMessages from '../constants/errors';
 import statusMessage from './status';
 import { Firebase, FirebaseRef } from '../lib/firebase';
+import * as types from '../reducers/types';
 
-/**
-  * Login to Firebase with Email/Password
-  */
-export function sendMessage(formData) {
-  const {
-    email,
-    password,
-  } = formData;
-
+export function sendMessage(message) {
   return dispatch => new Promise(async (resolve, reject) => {
-    await statusMessage(dispatch, 'loading', true);
+    await dispatch(chatMessageLoading());
 
-    // Validation checks
-    if (!email) return reject({ message: ErrorMessages.missingEmail });
-    if (!password) return reject({ message: ErrorMessages.missingPassword });
+    let createdAt = new Date().getTime();
+    let currentUser = {
+      email: "email@mail.com",
+      id: '001'
+    }
+    let chatMessage = {
+      text: message,
+      createdAt: createdAt,
+      user: currentUser
+    }
 
-    await statusMessage(dispatch, 'loading', false);
+    if(true){
+      return resolve(dispatch(chatMessageError("Error de prueba!")));
+    }
+    return resolve(dispatch(chatMessageSuccess()));
 
-    // Send Login data to Redux
-    return resolve(dispatch({
-      type: 'CONVERSATION_ADD_MESSAGE_CHAT',
-      data: {},
-    }));
   })
   .catch(async (err) => {
-     await statusMessage(dispatch, 'error', err.message);
+     await resolve(dispatch(chatMessageError(err.message)))
      throw err.message;
    });
 }
 
-export function getConversationData() {
-  if (Firebase === null) return () => new Promise(resolve => resolve());
-
-  // Ensure token is up to date
-  return dispatch => new Promise((resolve) => {
-    Firebase.auth().onAuthStateChanged((loggedIn) => {
-      if (loggedIn) {
-        return resolve(getUserData(dispatch));
+export function loadMessages() {
+  return dispatch => new Promise(async (resolve, reject) => {
+    let arrMensajes = [
+      {
+        text: "hola",
+        createdAt: new Date().getTime(),
+        user: {
+          email: "email@mail.com",
+          id: '001'
+        }
+      },
+      {
+        text: "hola",
+        createdAt: new Date().getTime(),
+        user: {
+          email: "email@mail.com",
+          id: '001'
+        }
+      },
+      {
+        text: "hola",
+        createdAt: new Date().getTime(),
+        user: {
+          email: "email@mail.com",
+          id: '001'
+        }
       }
-
-      return () => new Promise(() => resolve());
-    });
+    ];
+    return resolve(dispatch(loadMessagesSuccess(arrMensajes)));
+  })
+  .catch(async (err) => {
+    await resolve(dispatch(loadMessagesError(err.message)));
+    throw err.message;
   });
 }
+
+export function updateMessage(text) {
+  return dispatch => new Promise(async (resolve, reject) => {
+    return resolve(dispatch(chatUpdateMessage(text)));
+  })
+  .catch(async (err) => {
+    throw err.message;
+  });
+}
+
+
+const chatMessageLoading = () => ({
+  type: types.CHAT_MESSAGE_LOADING
+})
+
+const chatMessageSuccess = () => ({
+  type: types.CHAT_MESSAGE_SUCCESS
+})
+
+const chatMessageError = error => ({
+  type: types.CHAT_MESSAGE_ERROR,
+  error
+})
+
+const chatUpdateMessage = text => ({
+  type: types.CHAT_MESSAGE_UPDATE,
+  text
+})
+
+const loadMessagesSuccess = messages => ({
+  type: types.CHAT_LOAD_MESSAGES_SUCCESS,
+  messages
+})
+
+const loadMessagesError = error => ({
+  type: types.CHAT_LOAD_MESSAGES_ERROR,
+  error
+})

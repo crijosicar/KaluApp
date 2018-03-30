@@ -2,14 +2,16 @@ import React, { Component }  from 'react';
 import PropTypes from 'prop-types';
 import { Container, Content, Form, Item, Label, Input, Text, Button } from 'native-base';
 import { Actions } from 'react-native-router-flux';
-import { Alert } from 'react-native';
+import { Alert, KeyboardAvoidingView, StyleSheet } from 'react-native';
 
 import Loading from './Loading';
 import Messages from './Messages';
 import Header from './Header';
 import Spacer from './Spacer';
+import MessagesList from '../containers/MessagesList';
+import MessagesForm from '../containers/MessagesForm';
 
-class MainChat extends Component {
+class ChatScreen extends Component {
   static propTypes = {
     conversation: PropTypes.shape({}).isRequired,
     error: PropTypes.string,
@@ -20,7 +22,6 @@ class MainChat extends Component {
   static defaultProps = {
     error: null,
     conversation: {},
-    chat: [],
   }
 
   constructor(props) {
@@ -28,15 +29,9 @@ class MainChat extends Component {
 
     this.state = {
       conversation: (props.conversation) ? props.conversation : '',
-      chat: []
     };
-
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  componentWillMount(){
-
   }
 
   handleChange = (name, val) => {
@@ -63,10 +58,15 @@ class MainChat extends Component {
         <Content padder>
           <Header
             title="Kalu Assistant"
-            content="Disfruta de tu nuevo asistente virtual."
-          />
+            content="Disfruta de tu nuevo asistente virtual."/>
 
-          { error && <Messages message={error} /> }
+            <KeyboardAvoidingView
+                style={styles.container}
+                behavior='padding'
+                keyboardVerticalOffset={64}>
+                <MessagesList />
+                {/* <MessagesForm /> */}
+            </KeyboardAvoidingView>
 
         </Content>
       </Container>
@@ -74,4 +74,14 @@ class MainChat extends Component {
   }
 }
 
-export default MainChat;
+const styles = StyleSheet.create({
+  container: {
+    width: 500,
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+    backgroundColor: '#eeeeee'
+  }
+});
+
+export default ChatScreen;

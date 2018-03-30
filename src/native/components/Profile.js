@@ -6,6 +6,7 @@ import { Actions } from 'react-native-router-flux';
 import Header from './Header';
 import Spacer from './Spacer';
 import Login from './Login';
+
 const Profile = ({ member, logout, onFormSubmit }) => (
   <Container>
     <Content>
