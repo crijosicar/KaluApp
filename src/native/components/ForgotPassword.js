@@ -74,8 +74,10 @@ class ForgotPassword extends React.Component {
 
             <Spacer size={20} />
 
-            <Button block onPress={this.handleSubmit}><Text>Reiniciar Contraseña</Text></Button>
-          </Form>
+            <Button succes block onPress={this.handleSubmit}><Text>Reiniciar Contraseña</Text></Button>
+            <Spacer size={20} />
+            <Button warning block onPress={Actions.login}><Text>Volver a Login</Text></Button>
+            </Form>
         </Content>
       </Container>
     );

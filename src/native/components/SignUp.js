@@ -116,6 +116,11 @@ class SignUp extends React.Component {
             <Button success block onPress={this.handleSubmit}>
               <Text>Crear Cuenta</Text>
             </Button>
+
+            <Spacer size={20} />
+
+            <Button warning block onPress={Actions.login}><Text>Volver a Login</Text></Button>
+
           </Form>
         </Content>
       </Container>

@@ -14,8 +14,8 @@ class Login extends React.Component {
       email: PropTypes.string,
     }),
     error: PropTypes.string,
-    loading: PropTypes.bool.isRequired,
-    onFormSubmit: PropTypes.func.isRequired,
+   // loading: PropTypes.bool.isRequired,
+     onFormSubmit: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -29,7 +29,7 @@ class Login extends React.Component {
       email: (props.member && props.member.email) ? props.member.email : '',
       password: '',
     };
-
+    
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -42,12 +42,10 @@ class Login extends React.Component {
   }
 
   handleSubmit = () => {
+    this.props.onFormSubmit(this)
     //this.props.onFormSubmit(this.state)
-    // .then(() => Actions.tabbar())
-    // .catch(e => console.log(`Error: ${e}`));
-     this.props.onFormSubmit(this.state)
-     .then(() => Actions.login())
-     .catch(e => console.log(`Error: ${e}`));
+      .then(() => Actions.login())
+      .catch(e => console.log(`Error: ${e}`));
   }
 
   render() {
@@ -73,7 +71,7 @@ class Login extends React.Component {
 
           {error && <Messages message={error} />}
           <Spacer size={30} />
-          <Button block onPress={this.handleSubmit}>
+          <Button block>
             <Text>Inicio de Sesion con Facebook</Text>
           </Button>
           <Spacer size={30} />
