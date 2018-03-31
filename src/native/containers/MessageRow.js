@@ -4,6 +4,9 @@ import PropTypes from 'prop-types'
 import MessageRowComponent from './components/MessageRow'
 
 class MessageRow extends Component {
+
+  keyExtractor = (item, index) => item.id;
+
   render() {
     const isCurrentUser = 'email@mail.com' == this.props.message.user.email;
     return (

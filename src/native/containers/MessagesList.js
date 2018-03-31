@@ -14,7 +14,6 @@ class MessagesList extends Component {
   }
 
   render() {
-    console.log(this.props);
     const data = getChatItems(this.props.messages).reverse();
     return (
       <MessageListComponent data={data} />
@@ -23,8 +22,8 @@ class MessagesList extends Component {
 }
 
 const mapStateToProps = state => ({
-  messages: state.messages,
-  error: state.loadMessagesError
+  messages: state.conversation.messages,
+  error: state.conversation.loadMessagesError
 })
 
 const mapDispatchToProps = {
@@ -32,7 +31,7 @@ const mapDispatchToProps = {
 }
 
 MessagesList.propTypes = {
-  messages: PropTypes.object,
+  messages: PropTypes.array,
   error: PropTypes.string,
   loadMessages: PropTypes.func.isRequired
 }

@@ -11,33 +11,39 @@ class MessageListComponent extends Component {
   constructor() {
     super()
 
-    this.renderItem = ({item}) => {
-      return <MessageRow message={item} />
-    }
-
-    this.emptyList = () => {
-      return (
-        <Text
-          style={styles.placeholder}>
-          {'Escribir...'}
-        </Text>
-      )
-    }
-
-    this.itemLayout = (data, index) => (
-      {length: ITEM_HEIGHT, offset: ITEM_HEIGHT * index, index}
-    )
+    this.renderItem = this.renderItem.bind(this);
+    this.emptyList = this.emptyList.bind(this);
+    this.itemLayout = this.itemLayout.bind(this);
   }
 
   componentDidUpdate() {
-    if (this.props.data.length) {
+    if (this.props.data.length){
         this.flatList.scrollToIndex({animated: true, index: 0});
     }
   }
 
+  keyExtractor = (item, index) => item.id;
+
+  renderItem = ({item}) => {
+    return <MessageRow message={item}/>
+  }
+
+  emptyList = () => {
+    return (
+      <Text
+        style={styles.placeholder}>
+        {'Escribe un mensajes'}
+      </Text>
+    )
+  }
+
+  itemLayout = (data, index) => (
+    {length: ITEM_HEIGHT, offset: ITEM_HEIGHT * index, index}
+  )
+
   render() {
-    const data = this.props.data
-    const contentContainerStyle = data.length ? null : styles.flatlistContainerStyle
+    const data = this.props.data;
+    const contentContainerStyle = data.length ? null : styles.flatlistContainerStyle;
 
     return (
       <FlatList
@@ -45,7 +51,7 @@ class MessageListComponent extends Component {
         style={styles.container}
         contentContainerStyle={contentContainerStyle}
         data={data}
-        keyExtractor={item => item.time}
+        keyExtractor={(item, index) => index}
         renderItem={this.renderItem}
         getItemLayout={this.itemLayout}
         ListEmptyComponent={this.emptyList}
@@ -67,4 +73,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default MessageListComponent
+export default MessageListComponent;

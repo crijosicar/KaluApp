@@ -27,6 +27,7 @@ const MessageRowComponent = props => {
       </View>
     </View>
   )
+
 }
 
 MessageRowComponent.propTypes = {
@@ -67,4 +68,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default MessageRowComponent
+export default MessageRowComponent;
