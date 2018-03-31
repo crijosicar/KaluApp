@@ -1,22 +1,25 @@
-import React, { Component } from 'react'
-import { View, TextInput, TouchableOpacity, Image, Alert, StyleSheet } from 'react-native'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import { View, TextInput, TouchableOpacity, Image, Alert, StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
 
-const OPACITY_ENABLED = 1.0
-const OPACITY_DISABLED = 0.2
+const OPACITY_ENABLED = 1.0;
+const OPACITY_DISABLED = 0.2;
 
 class MessageFormComponent extends Component {
 
   constructor() {
-    super()
+    super();
+    
+    this.handleMessageChange = this.handleMessageChange.bind(this);
+    this.handleButtonPress = this.handleButtonPress.bind(this);
+  }
 
-    this.handleMessageChange = (message) => {
-      this.props.updateMessage(message)
-    }
+  handleMessageChange = (message) => {
+    this.props.updateMessage(message);
+  }
 
-    this.handleButtonPress = () => {
-      this.props.sendMessage(this.props.message)
-    }
+  handleButtonPress = () => {
+    this.props.sendMessage(this.props.message);
   }
 
   componentDidUpdate(prevProps) {
@@ -26,16 +29,15 @@ class MessageFormComponent extends Component {
   }
 
   render() {
-    const sending = this.props.sending
-    const isButtonDisabled = sending || this.props.message.trim().length == 0
-    const opacity = isButtonDisabled ? OPACITY_DISABLED : OPACITY_ENABLED
+    const sending = this.props.sending;
+    const isButtonDisabled = sending || this.props.message.trim().length == 0;
+    const opacity = isButtonDisabled ? OPACITY_DISABLED : OPACITY_ENABLED;
 
     return (
       <View style={styles.container}>
-
         <TextInput
           style={styles.textInput}
-          placeholder={'Mensaje'}
+          placeholder={'Escribe un mensaje'}
           returnKeyType='send'
           onChangeText={this.handleMessageChange}
           value={this.props.message}
@@ -52,7 +54,6 @@ class MessageFormComponent extends Component {
               style={{opacity: opacity}} />
 
           </TouchableOpacity>
-
       </View>
     );
   }

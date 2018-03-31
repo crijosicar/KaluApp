@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import MessageRow from '../MessageRow';
 
-const ITEM_HEIGHT = 50
+const ITEM_HEIGHT = 50;
 
 class MessageListComponent extends Component {
 

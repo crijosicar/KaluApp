@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native'
 import PropTypes from 'prop-types'
 import relativeDate from 'relative-date'
 
-const MESSAGE_TEXT_MARGIN = 50
+const MESSAGE_TEXT_MARGIN = 50;
 
 const MessageRowComponent = props => {
   const isCurrentUser = props.isCurrentUser;
@@ -27,7 +27,6 @@ const MessageRowComponent = props => {
       </View>
     </View>
   )
-
 }
 
 MessageRowComponent.propTypes = {

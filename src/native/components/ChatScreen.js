@@ -2,7 +2,7 @@ import React, { Component }  from 'react';
 import PropTypes from 'prop-types';
 import { Container, Content, Form, Item, Label, Input, Text, Button } from 'native-base';
 import { Actions } from 'react-native-router-flux';
-import { Alert, KeyboardAvoidingView, StyleSheet } from 'react-native';
+import { Alert, StyleSheet, View, Image, Animated, Keyboard, KeyboardAvoidingView} from 'react-native';
 
 import Loading from './Loading';
 import Messages from './Messages';
@@ -30,21 +30,6 @@ class ChatScreen extends Component {
     this.state = {
       conversation: (props.conversation) ? props.conversation : '',
     };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleChange = (name, val) => {
-    this.setState({
-      ...this.state,
-      [name]: val,
-    });
-  }
-
-  handleSubmit = () => {
-    this.props.onFormSubmit(this.state)
-      .then(() => alert("hola"))
-      .catch(e => console.log(`Error: ${e}`));
   }
 
   render() {
@@ -56,18 +41,16 @@ class ChatScreen extends Component {
     return (
       <Container>
         <Content padder>
-          <Header
-            title="Kalu Assistant"
-            content="Disfruta de tu nuevo asistente virtual."/>
-
             <KeyboardAvoidingView
-                style={styles.container}
                 behavior='padding'
+                style={styles.container}
                 keyboardVerticalOffset={64}>
-                <MessagesList {...this.state}/>
-                {/* <MessagesForm /> */}
-            </KeyboardAvoidingView>
+                {/* List of messages */}
+                <MessagesList {...this.state} />
 
+                {/* Form for send message */}
+                <MessagesForm {...this.props} />
+            </KeyboardAvoidingView>
         </Content>
       </Container>
     );
@@ -76,10 +59,8 @@ class ChatScreen extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    width: 500,
     display: 'flex',
     flexDirection: 'column',
-    height: '100%',
     backgroundColor: '#eeeeee'
   }
 });

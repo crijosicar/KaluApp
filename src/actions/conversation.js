@@ -18,7 +18,9 @@ export function sendMessage(message) {
       user: currentUser
     }
 
-    if(true){
+    console.log(chatMessage);
+
+    if(false){
       return resolve(dispatch(chatMessageError("Error de prueba!")));
     }
     return resolve(dispatch(chatMessageSuccess()));

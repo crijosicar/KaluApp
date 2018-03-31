@@ -1,12 +1,9 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import MessageRowComponent from './components/MessageRow'
+import MessageRowComponent from './components/MessageRow';
 
 class MessageRow extends Component {
-
-  keyExtractor = (item, index) => item.id;
-
   render() {
     const isCurrentUser = 'email@mail.com' == this.props.message.user.email;
     return (
@@ -21,4 +18,4 @@ MessageRow.propTypes = {
   message: PropTypes.object.isRequired,
 }
 
-export default MessageRow
+export default MessageRow;
