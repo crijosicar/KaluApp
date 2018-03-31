@@ -44,12 +44,7 @@ class Login extends React.Component {
   }
 
   handleSubmit = () => {
-<<<<<<< HEAD
-    this.props.onFormSubmit(this)
-    //this.props.onFormSubmit(this.state)
-      .then(() => Actions.login())
-      .catch(e => console.log(`Error: ${e}`));
-=======
+
      this.props.onFormSubmit(this.state)
      .then(() => alert("hola"))
      .catch(e => {
@@ -60,7 +55,6 @@ class Login extends React.Component {
          password: ""
        });
      });
->>>>>>> 82d512dc465b48d3f7e5e589d3004aa03d168bf5
   }
 
   render() {
@@ -85,14 +79,11 @@ class Login extends React.Component {
           </View>
 
           <Spacer size={30} />
-<<<<<<< HEAD
-          <Button block>
-            <Text>Inicio de Sesion con Facebook</Text>
-=======
+
 
           <Button block onPress={this.handleSubmit}>
             <Text>Inicio de sesion con Facebook</Text>
->>>>>>> 82d512dc465b48d3f7e5e589d3004aa03d168bf5
+
           </Button>
 
           <Spacer size={30} />
