@@ -2,41 +2,42 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { login } from '../actions/member';
+import { sendMessage, loadMessages } from '../actions/conversation';
 
-class Login extends Component {
+class ChatScreen extends Component {
   static propTypes = {
     Layout: PropTypes.func.isRequired,
     onFormSubmit: PropTypes.func.isRequired,
-    member: PropTypes.shape({}).isRequired,
+    loadMessages: PropTypes.func.isRequired,
+    conversation: PropTypes.shape({}).isRequired,
     isLoading: PropTypes.bool.isRequired,
     infoMessage: PropTypes.string,
     errorMessage: PropTypes.string,
     successMessage: PropTypes.string,
   }
 
-  componentDidMount = () => {};
+  componentDidMount = () => { this.props.loadMessages() }
 
   render = () => {
     const { Layout,
-            member,
+            conversation,
             onFormSubmit,
             isLoading,
             infoMessage,
             errorMessage,
             successMessage } = this.props;
 
-    return <Layout  onFormSubmit={onFormSubmit}
-                    member={member}
+    return <Layout  conversation={conversation}
+                    onFormSubmit={onFormSubmit}
                     loading={isLoading}
                     info={infoMessage}
                     error={errorMessage}
-                    success={successMessage}/>;
+                    success={successMessage} />;
   }
 }
 
 const mapStateToProps = state => ({
-  member: state.member || {},
+  conversation: state.conversation || {},
   isLoading: state.status.loading || false,
   infoMessage: state.status.info || null,
   errorMessage: state.status.error || null,
@@ -44,7 +45,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  onFormSubmit: login,
+  onFormSubmit: sendMessage,
+  loadMessages,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(ChatScreen);

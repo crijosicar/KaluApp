@@ -1,56 +1,37 @@
-import React from 'react';
+import React, { Component }  from 'react';
 import PropTypes from 'prop-types';
 import { Container, Content, Form, Item, Label, Input, Text, Button } from 'native-base';
 import { Actions } from 'react-native-router-flux';
+import { Alert, KeyboardAvoidingView, StyleSheet } from 'react-native';
+
 import Loading from './Loading';
 import Messages from './Messages';
 import Header from './Header';
 import Spacer from './Spacer';
-import { GiftedChat } from 'react-native-gifted-chat'
+import MessagesList from '../containers/MessagesList';
+import MessagesForm from '../containers/MessagesForm';
 
-class Conversation extends React.Component {
+class ChatScreen extends Component {
   static propTypes = {
-    member: PropTypes.shape({
-      email: PropTypes.string,
-    }),
+    conversation: PropTypes.shape({}).isRequired,
     error: PropTypes.string,
     loading: PropTypes.bool.isRequired,
     onFormSubmit: PropTypes.func.isRequired,
-    messages: [],
   }
 
   static defaultProps = {
     error: null,
-    member: {},
+    conversation: {},
   }
 
   constructor(props) {
     super(props);
-    this.state = {
-      email: (props.member && props.member.email) ? props.member.email : '',
-      password: '',
-      messages: [
-        {
-          _id: 1,
-          text: 'Hello developer',
-          createdAt: new Date(),
-          user: {
-            _id: 2,
-            name: 'React Native',
-            avatar: 'https://facebook.github.io/react/img/logo_og.png',
-          },
-        },
-      ],
-    };
 
+    this.state = {
+      conversation: (props.conversation) ? props.conversation : '',
+    };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  onSend(messages = []) {
-    this.setState(previousState => ({
-      messages: GiftedChat.append(previousState.messages, messages),
-    }))
   }
 
   handleChange = (name, val) => {
@@ -62,7 +43,7 @@ class Conversation extends React.Component {
 
   handleSubmit = () => {
     this.props.onFormSubmit(this.state)
-      .then(() => Actions.tabbar())
+      .then(() => alert("hola"))
       .catch(e => console.log(`Error: ${e}`));
   }
 
@@ -77,22 +58,30 @@ class Conversation extends React.Component {
         <Content padder>
           <Header
             title="Kalu Assistant"
-            content="Disfruta de tu nuevo asistente virtual."
-          />
+            content="Disfruta de tu nuevo asistente virtual."/>
 
-          {error && <Messages message={error} />}
+            <KeyboardAvoidingView
+                style={styles.container}
+                behavior='padding'
+                keyboardVerticalOffset={64}>
+                <MessagesList />
+                {/* <MessagesForm /> */}
+            </KeyboardAvoidingView>
 
-          <GiftedChat
-            messages={this.state.messages}
-            onSend={messages => this.onSend(messages)}
-            user={{
-              _id: 1,
-            }}
-          />
         </Content>
       </Container>
     );
   }
 }
 
-export default Conversation;
+const styles = StyleSheet.create({
+  container: {
+    width: 500,
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+    backgroundColor: '#eeeeee'
+  }
+});
+
+export default ChatScreen;
