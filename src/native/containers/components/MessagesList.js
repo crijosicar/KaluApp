@@ -22,8 +22,6 @@ class MessageListComponent extends Component {
     }
   }
 
-  keyExtractor = (item, index) => item.id;
-
   renderItem = ({item}) => {
     return <MessageRow message={item}/>
   }
