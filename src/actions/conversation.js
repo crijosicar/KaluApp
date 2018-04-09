@@ -2,7 +2,7 @@ import ErrorMessages from '../constants/errors';
 import statusMessage from './status';
 import { Firebase, FirebaseRef } from '../lib/firebase';
 import * as types from '../reducers/types';
-import axios from 'axios';
+import Api from '../lib/api';
 
 export function sendMessage(message) {
   return dispatch => new Promise(async (resolve, reject) => {
@@ -28,52 +28,25 @@ export function sendMessage(message) {
 
   })
   .catch(async (err) => {
-     await resolve(dispatch(chatMessageError(err.message)))
+     await dispatch(chatMessageError(err.message));
      throw err.message;
    });
 }
 
 export function loadMessages() {
   return dispatch => new Promise(async (resolve, reject) => {
-    /*let arrMensajes = [
-      {
-        text: "hola",
-        createdAt: new Date().getTime(),
-        user: {
-          email: "email@mail.com",
-          id: '001'
-        }
-      },
-      {
-        text: "hola",
-        createdAt: new Date().getTime(),
-        user: {
-          email: "email@mail.com",
-          id: '001'
-        }
-      },
-      {
-        text: "hola",
-        createdAt: new Date().getTime(),
-        user: {
-          email: "email@mail.com",
-          id: '001'
-        }
-      }
-    ];*/
+    let Auth = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6Ly9rYWx1YWRtaW4ubG9jYWwvYXBpL2xvZ2luIiwiaWF0IjoxNTIzMjIzMzA0LCJleHAiOjE1NTQ3NTkzMDQsIm5iZiI6MTUyMzIyMzMwNCwianRpIjoibVF0aUxDQlRmOGwxaldsMyJ9.bMhXdOcomataJMBNDoEyN8sXJl3Pim7Mh6JaXTQ1gj0';
 
-    return axios.get('http://kaluadmin.local/api/get-messages')
-      .then(function (response) {
-          console.log(response);
-           resolve(dispatch(loadMessagesSuccess(response.data)));
-      })
-      .catch(async function (error) {
-          await reject(dispatch(loadMessagesError(error.message)));
-      });
-  })
-  .catch(async (err) => {
-    await resolve(dispatch(loadMessagesError(err.message)));
-    throw err.message;
+    return Api.post('http://127.0.0.1:80/api/get-messages', { "user_id": 1, "token": Auth })
+    .then(async (response) => {
+         await dispatch(loadMessagesSuccess(response.data));
+         resolve();
+    })
+    .catch(reject);
+
+  }).catch(async (err) => {
+      throw err.message;
+      await dispatch(loadMessagesError(err.message));
   });
 }
 

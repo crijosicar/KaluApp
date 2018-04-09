@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View } from 'react-native';
+import { View, Image } from 'react-native';
 import { Container, Content, Form,List,ListItem, Item, Label, Input, Text, Button,StyleProvider, H1, H2, H3,Body } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 
@@ -31,7 +31,7 @@ class Login extends React.Component {
       email: (props.member && props.member.email) ? props.member.email : '',
       password: '',
     };
-    
+
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -76,6 +76,10 @@ class Login extends React.Component {
               }}>
                 KALU
             </Text>
+            <Image
+            style={{width: 50, height: 50}}
+            source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}}
+          />
           </View>
 
           <Spacer size={30} />

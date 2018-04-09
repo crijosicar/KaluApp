@@ -31,7 +31,6 @@ const mapDispatchToProps = {
 }
 
 MessagesList.propTypes = {
-  messages: PropTypes.array,
   error: PropTypes.string,
   loadMessages: PropTypes.func.isRequired
 }
