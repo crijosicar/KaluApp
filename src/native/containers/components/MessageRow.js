@@ -32,10 +32,13 @@ const MessageRowComponent = props => {
 MessageRowComponent.propTypes = {
   isCurrentUser: PropTypes.bool.isRequired,
   message: PropTypes.shape({
-    createdAt: PropTypes.number.isRequired,
+    createdAt: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
+    isBot: PropTypes.bool.isRequired,
+    userID: PropTypes.number.isRequired,
     user: PropTypes.shape({
-      email: PropTypes.string.isRequired
+      email: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
     })
   })
 }
