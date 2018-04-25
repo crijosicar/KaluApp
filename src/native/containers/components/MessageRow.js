@@ -6,10 +6,11 @@ import relativeDate from 'relative-date'
 const MESSAGE_TEXT_MARGIN = 50;
 
 const MessageRowComponent = props => {
-  const isCurrentUser = props.isCurrentUser;
+  const isCurrentUser = props.message.isBot === 1;
   const alignItems = isCurrentUser ? 'flex-end' : 'flex-start';
   const margin = isCurrentUser ? {marginLeft: MESSAGE_TEXT_MARGIN} : {marginRight: MESSAGE_TEXT_MARGIN};
   const username = isCurrentUser ? 'tu' : props.message.user.email;
+  console.log(props.message.createdAt); //1976-04-19
   const date = relativeDate(new Date(props.message.createdAt));
   return (
     <View
@@ -30,11 +31,10 @@ const MessageRowComponent = props => {
 }
 
 MessageRowComponent.propTypes = {
-  isCurrentUser: PropTypes.bool.isRequired,
   message: PropTypes.shape({
     createdAt: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
-    isBot: PropTypes.bool.isRequired,
+    isBot: PropTypes.number.isRequired,
     userID: PropTypes.number.isRequired,
     user: PropTypes.shape({
       email: PropTypes.string.isRequired,

@@ -5,11 +5,9 @@ import MessageRowComponent from './components/MessageRow';
 
 class MessageRow extends Component {
   render() {
-    const isCurrentUser =  this.props.message.isBot;
     return (
       <MessageRowComponent
-        message={this.props.message}
-        isCurrentUser={isCurrentUser}/>
+        message={this.props.message}/>
     );
   }
 }

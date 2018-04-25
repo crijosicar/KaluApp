@@ -10,13 +10,13 @@ import MessageListComponent from './components/MessagesList'
 class MessagesList extends Component {
 
   componentDidMount() {
-    this.props.loadMessages();
+      this.props.loadMessages();
   }
 
   render() {
-    const data = getChatItems(this.props.messages).reverse();
+    const data = getChatItems(this.props.messages.items).reverse();
     return (
-      <MessageListComponent data={data} />
+      <MessageListComponent data={data}/>
     )
   }
 }

@@ -144,17 +144,19 @@ class Login extends React.Component {
 
             <Spacer size={20} />
 
-            <Button
-              success
-              block
-              onPress={this.handleSubmit}>
-              <Text style={{
-                  fontSize: 14, textAlign:
-                  'center', margin: 10
-                }}>Login</Text>
-            </Button>
+            {/*
+              <Button
+                success
+                block
+                onPress={this.handleSubmit}>
+                <Text style={{
+                    fontSize: 14, textAlign:
+                    'center', margin: 10
+                  }}>Login</Text>
+              </Button>
 
-            <Spacer size={20} />
+              <Spacer size={20} />
+             */}
 
             <Button
               success

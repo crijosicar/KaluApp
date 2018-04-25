@@ -29,7 +29,6 @@ class Api {
     let options = Object.assign({ method: verb }, params ? { body: JSON.stringify(params) } : null );
     options.headers = Api.headers();
 
-    console.log("options request -> ", options);
     return fetch(route, options).then(resp => {
       let json = resp.json();
       if (resp.ok) {
@@ -37,7 +36,6 @@ class Api {
       }
       return json.then(err => {throw err});
     }).then( json => {
-      console.log("json response -> ", json);
       return json;
     } );
   }

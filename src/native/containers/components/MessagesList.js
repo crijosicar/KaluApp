@@ -42,7 +42,6 @@ class MessageListComponent extends Component {
   render() {
     const data = this.props.data;
     const contentContainerStyle = data.length ? null : styles.flatlistContainerStyle;
-
     return (
       <FlatList
         ref={(c) => { this.flatList = c }}
