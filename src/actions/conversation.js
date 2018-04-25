@@ -5,7 +5,7 @@ import * as types from '../reducers/types';
 import Api from '../lib/api';
 import * as api from '../constants/api'
 
-const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjUsImlzcyI6Imh0dHA6Ly9rYWx1YWRtaW4ubG9jYWwvYXBpL2xvZ2luIiwiaWF0IjoxNTI0Njc2Mzg5LCJleHAiOjE1NTYyMTIzODksIm5iZiI6MTUyNDY3NjM4OSwianRpIjoiTmVsNElGSHJtd3VuTU9HOCJ9.yBKM01DHsf3Kqjuuo_m0kPM7T7pnnWujM2shwSJuDwI";
+const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6Ly9rYWx1YWRtaW4ubG9jYWwvYXBpL2xvZ2luIiwiaWF0IjoxNTIzMjIzMzA0LCJleHAiOjE1NTQ3NTkzMDQsIm5iZiI6MTUyMzIyMzMwNCwianRpIjoibVF0aUxDQlRmOGwxaldsMyJ9.bMhXdOcomataJMBNDoEyN8sXJl3Pim7Mh6JaXTQ1gj0";
 
 export function sendMessage(message) {
   return dispatch => new Promise(async (resolve, reject) => {

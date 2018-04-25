@@ -1,3 +1,3 @@
 export default {
-  basePath: 'http://10.0.1.22',
+  basePath:'http://www.kaluapp.com:81',
 };
