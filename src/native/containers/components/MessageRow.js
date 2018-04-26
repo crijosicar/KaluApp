@@ -10,8 +10,8 @@ const MessageRowComponent = props => {
   const alignItems = isCurrentUser ? 'flex-end' : 'flex-start';
   const margin = isCurrentUser ? {marginLeft: MESSAGE_TEXT_MARGIN} : {marginRight: MESSAGE_TEXT_MARGIN};
   const username = isCurrentUser ? 'tu' : props.message.user.email;
-  console.log(props.message.createdAt); //1976-04-19
   const date = relativeDate(new Date(props.message.createdAt));
+  
   return (
     <View
       style={styles.container}>
