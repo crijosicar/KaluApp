@@ -30,7 +30,7 @@ class MessageListComponent extends Component {
     return (
       <Text
         style={styles.placeholder}>
-        {'Escribe un mensajes'}
+        {'Escribe un mensaje'}
       </Text>
     )
   }
@@ -42,6 +42,7 @@ class MessageListComponent extends Component {
   render() {
     const data = this.props.data;
     const contentContainerStyle = data.length ? null : styles.flatlistContainerStyle;
+
     return (
       <FlatList
         ref={(c) => { this.flatList = c }}
@@ -54,6 +55,7 @@ class MessageListComponent extends Component {
         ListEmptyComponent={this.emptyList}
         inverted />
     )
+    
   }
 }
 

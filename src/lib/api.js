@@ -28,16 +28,15 @@ class Api {
 
     let options = Object.assign({ method: verb }, params ? { body: JSON.stringify(params) } : null );
     options.headers = Api.headers();
-
     return fetch(route, options).then(resp => {
       let json = resp.json();
       if (resp.ok) {
         return json
       }
-      return json.then(err => {throw err});
-    }).then( json => {
-      return json;
-    } );
+      return json.then(err => {console.log(err);});
+    }).catch( err => {
+      return err;
+    });
   }
 }
 

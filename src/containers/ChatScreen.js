@@ -16,8 +16,6 @@ class ChatScreen extends Component {
     successMessage: PropTypes.string,
   }
 
-  //componentDidMount = () => { this.props.loadMessages() }
-
   render = () => {
     const { Layout,
             conversation,

@@ -5,14 +5,16 @@ import * as types from '../reducers/types';
 import Api from '../lib/api';
 import { basePath } from '../constants/api'
 
-const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6Ly9rYWx1YWRtaW4ubG9jYWwvYXBpL2xvZ2luIiwiaWF0IjoxNTIzMjIzMzA0LCJleHAiOjE1NTQ3NTkzMDQsIm5iZiI6MTUyMzIyMzMwNCwianRpIjoibVF0aUxDQlRmOGwxaldsMyJ9.bMhXdOcomataJMBNDoEyN8sXJl3Pim7Mh6JaXTQ1gj0";
+const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6Ly93d3cua2FsdWFwcC5jb206ODEvYXBpL2xvZ2luIiwiaWF0IjoxNTI0NzAzMjA1LCJleHAiOjE1NTYyMzkyMDUsIm5iZiI6MTUyNDcwMzIwNSwianRpIjoiYjI1NGJhREp2bEJqYTlrRCJ9.50Hc4bf6m0y0p0eBmlzQ8OvRGY8u3ma-r_9a3u_nVeU";
+//const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjUsImlzcyI6Imh0dHA6Ly9rYWx1YWRtaW4ubG9jYWwvYXBpL2xvZ2luIiwiaWF0IjoxNTI0NzAyOTg2LCJleHAiOjE1NTYyMzg5ODYsIm5iZiI6MTUyNDcwMjk4NiwianRpIjoiVFZOaGNnY1V3V3cxQW5zUCJ9.--VvBwJKF6O4jwFhLWvQxdZoz5KhyyWctPMgUvyluU0";
 
 export function sendMessage(message) {
   return dispatch => new Promise(async (resolve, reject) => {
     await dispatch(chatMessageLoading());
 
     let createdAt = new Date().getTime();
-    let baseurl = "http://www.kaluapp.com:81/api/send-message"
+    //let baseurl = "http://kaluadmin.local/api/send-message";
+    let baseurl = "http://www.kaluapp.com:81/api/send-message";
 
     return Api.post(baseurl,
       {
@@ -27,8 +29,8 @@ export function sendMessage(message) {
         "token": token
       }
     )
-    .then(async (response) => {
-          await dispatch(chatMessageSuccess());
+    .then((response) => {
+          dispatch(chatMessageSuccess());
           resolve();
     })
     .catch((err) => {
@@ -46,7 +48,8 @@ export function loadMessages() {
   return dispatch => new Promise(async (resolve, reject) => {
 
     await statusMessage(dispatch, 'loading', true);
-    let baseurl = "http://www.kaluapp.com:81/api/get-messages";
+    //let baseurl = "http://kaluadmin.local/api/get-messages";
+    let baseurl = "http://www.kaluapp.com:81/api/get-message";
 
     return Api.post(baseurl,
     {
@@ -54,15 +57,20 @@ export function loadMessages() {
          "token": token
     })
     .then((response) => {
+        statusMessage(dispatch, 'loading', false);
+
+        if(response.stack){
+          dispatch(loadMessagesError(response.message));
+          reject();
+          return;
+        }
+
         dispatch(loadMessagesSuccess(response));
-        statusMessage(dispatch, 'loading', false);
         resolve();
+        return;
     })
-    .catch((err) => {
-        dispatch(loadMessagesError(err.message));
-        statusMessage(dispatch, 'loading', false);
-        reject();
-    });
+    .catch(reject);
+
 
   }).catch(async (err) => {
       await statusMessage(dispatch, 'loading', false);

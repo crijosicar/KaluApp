@@ -144,7 +144,6 @@ class Login extends React.Component {
 
             <Spacer size={20} />
 
-            {/*
               <Button
                 success
                 block
@@ -156,7 +155,6 @@ class Login extends React.Component {
               </Button>
 
               <Spacer size={20} />
-             */}
 
             <Button
               success
