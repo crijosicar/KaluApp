@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { resetPassword } from '../actions/member';
+import { resetPassword, setLoadingFalse } from '../actions/member';
 
 const ForgotPassword = ({
   Layout,
@@ -10,12 +10,14 @@ const ForgotPassword = ({
   member,
   isLoading,
   errorMessage,
+  onStartView,
 }) => (
   <Layout
     member={member}
     loading={isLoading}
     error={errorMessage}
     onFormSubmit={onFormSubmit}
+    onStartView={onStartView}
   />
 );
 
@@ -23,6 +25,7 @@ ForgotPassword.propTypes = {
   Layout: PropTypes.func.isRequired,
   member: PropTypes.shape({}).isRequired,
   onFormSubmit: PropTypes.func.isRequired,
+  onStartView: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
   errorMessage: PropTypes.string,
 };
@@ -40,6 +43,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
+  onStartView: setLoadingFalse,
   onFormSubmit: resetPassword,
 };
 

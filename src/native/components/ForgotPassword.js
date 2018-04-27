@@ -24,12 +24,20 @@ class ForgotPassword extends React.Component {
 
   constructor(props) {
     super(props);
+
     this.state = {
       email: (props.member && props.member.email) ? props.member.email : '',
     };
 
+    console.log(this.props.loading);
+    
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount(){
+    this.props.onStartView();
+    console.log(this.props.loading);
   }
 
   handleChange = (name, val) => {

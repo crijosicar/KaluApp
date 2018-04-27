@@ -3,7 +3,6 @@ import statusMessage from './status';
 import { Firebase, FirebaseRef } from '../lib/firebase';
 import * as types from '../reducers/types';
 import Api from '../lib/api';
-import { basePath } from '../constants/api'
 
 const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6Ly93d3cua2FsdWFwcC5jb206ODEvYXBpL2xvZ2luIiwiaWF0IjoxNTI0NzAzMjA1LCJleHAiOjE1NTYyMzkyMDUsIm5iZiI6MTUyNDcwMzIwNSwianRpIjoiYjI1NGJhREp2bEJqYTlrRCJ9.50Hc4bf6m0y0p0eBmlzQ8OvRGY8u3ma-r_9a3u_nVeU";
 //const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjUsImlzcyI6Imh0dHA6Ly9rYWx1YWRtaW4ubG9jYWwvYXBpL2xvZ2luIiwiaWF0IjoxNTI0NzAyOTg2LCJleHAiOjE1NTYyMzg5ODYsIm5iZiI6MTUyNDcwMjk4NiwianRpIjoiVFZOaGNnY1V3V3cxQW5zUCJ9.--VvBwJKF6O4jwFhLWvQxdZoz5KhyyWctPMgUvyluU0";

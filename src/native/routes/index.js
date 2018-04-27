@@ -50,14 +50,14 @@ const Index = (
             component={LoginContainer}
             Layout={LoginComponent}
             />
-          {/*<Scene
+          <Scene
             back
             key="forgotPassword"
             title="FORGOT PASSWORD"
             component={ForgotPasswordContainer}
             Layout={ForgotPasswordComponent}
             />
-          <Scene
+          {/*<Scene
             back
             key="updateProfile"
             title="UPDATE PROFILE"

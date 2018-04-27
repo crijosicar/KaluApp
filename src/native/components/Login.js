@@ -11,12 +11,12 @@ import Spacer from './Spacer';
 
 class Login extends React.Component {
   static propTypes = {
-    member: PropTypes.shape({
+      member: PropTypes.shape({
       email: PropTypes.string,
     }).isRequired,
     error: PropTypes.string,
-   // loading: PropTypes.bool.isRequired,
-     onFormSubmit: PropTypes.func.isRequired,
+    loading: PropTypes.bool.isRequired,
+    onFormSubmit: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -43,12 +43,12 @@ class Login extends React.Component {
     });
   }
 
-  handleSubmit = () => {
-
+  handleSubmit = (e) => {
      this.props.onFormSubmit(this.state)
-     .then(() => alert("hola"))
+     .then(() => {
+       Actions.forgotPassword(e);
+     })
      .catch(e => {
-       console.log(`Error: ${e}`)
        this.setState({
          ...this.state,
          email: "",
@@ -77,9 +77,9 @@ class Login extends React.Component {
                 KALU
             </Text>
             <Image
-            style={{width: 50, height: 50}}
-            source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}}
-          />
+              style={{width: 50, height: 50}}
+              source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}}
+            />
           </View>
 
           <Spacer size={30} />
@@ -87,7 +87,6 @@ class Login extends React.Component {
 
           <Button block onPress={this.handleSubmit}>
             <Text>Inicio de sesion con Facebook</Text>
-
           </Button>
 
           <Spacer size={30} />
@@ -144,11 +143,13 @@ class Login extends React.Component {
 
             <Spacer size={20} />
 
-            
               <Button
                 success
                 block
-                onPress={this.handleSubmit}>
+                onPress={(e)=>{
+                  this.handleSubmit(e);
+
+                  }}>
                 <Text style={{
                     fontSize: 14, textAlign:
                     'center', margin: 10
@@ -156,7 +157,6 @@ class Login extends React.Component {
               </Button>
 
               <Spacer size={20} />
-             
 
             <Button
               success

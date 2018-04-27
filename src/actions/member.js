@@ -1,6 +1,7 @@
 import ErrorMessages from '../constants/errors';
 import statusMessage from './status';
 import { Firebase, FirebaseRef } from '../lib/firebase';
+import Api from '../lib/api';
 
 /**
   * Sign Up to Firebase
@@ -39,27 +40,13 @@ export function signUp(formData) {
 }
 
 /**
-  * Get this User's Details
+  * Set this User's Session Details
   */
-function getUserData(dispatch) {
-  const UID = (
-    FirebaseRef
-    && Firebase
-    && Firebase.auth()
-    && Firebase.auth().currentUser
-    && Firebase.auth().currentUser.uid
-  ) ? Firebase.auth().currentUser.uid : null;
-
-  if (!UID) return false;
-
-  const ref = FirebaseRef.child(`users/${UID}`);
-
-  return ref.on('value', (snapshot) => {
-    const userData = snapshot.val() || [];
-
+function validateUserSession(dispatch, signedUp) {
+  return dispatch => new Promise((resolve) => {
     return dispatch({
-      type: 'USER_DETAILS_UPDATE',
-      data: userData,
+      type: 'SET_USER_STATUS',
+      data: {signedUp: signedUp},
     });
   });
 }
@@ -71,7 +58,7 @@ export function getMemberData() {
   return dispatch => new Promise((resolve) => {
     Firebase.auth().onAuthStateChanged((loggedIn) => {
       if (loggedIn) {
-        return resolve(getUserData(dispatch));
+        return resolve(validateUserSession(dispatch));
       }
 
       return () => new Promise(() => resolve());
@@ -83,6 +70,7 @@ export function getMemberData() {
   * Login to Firebase with Email/Password
   */
 export function login(formData) {
+
   const {
     email,
     password,
@@ -92,33 +80,63 @@ export function login(formData) {
     // Validation checks
     if (!email) return reject({ message: ErrorMessages.missingEmail });
     if (!password) return reject({ message: ErrorMessages.missingPassword });
-    
+
     await statusMessage(dispatch, 'loading', true);
 
-    return dispatch => new Promise(async (resolve, reject) => {
-      
-          await statusMessage(dispatch, 'loading', true);
-          let baseurl = "http://www.kaluapp.com:81/api/login";
-      
-          return Api.post(baseurl,
-          {
-            "email": email,
-            "password": password
-          })
-          .then((response) => {
-            dispatch({
-              type: 'USER_LOGIN',
-              data: response,
-              //resolve();
-          })
-          .catch(reject);
-      });
-    });       
+    let baseurl = "http://www.kaluapp.com:81/api/login";
+    let payload = {
+    	"email": email,
+    	"password": password
+    };
+
+    return Api.post(baseurl, payload)
+      .then(async (response) => {
+        //await statusMessage(dispatch, 'loading', false);
+        if(response.message){
+            await statusMessage(dispatch, 'error', response.message);
+            await validateUserSession(dispatch, false);
+            reject({ message: response.message });
+        } else {
+
+            let baseurl = "http://www.kaluapp.com:81/api/get-user-details";
+            let payload = {
+              "token": response.token
+            };
+
+            Api.post(baseurl, payload)
+            .then(async (response) => {
+
+              //await statusMessage(dispatch, 'loading', false);
+
+              if(response.message){
+                  await statusMessage(dispatch, 'error', response.message);
+                  await validateUserSession(dispatch, false);
+                  reject({ message: response.message });
+              } else {
+                await validateUserSession(dispatch, true);
+
+                await dispatch({
+                  type: 'USER_LOGIN',
+                  data: payload.token
+                });
+
+                await dispatch({
+                  type: 'SET_USER_DATA',
+                  data: response
+                });
+
+                resolve();
+              }
+            }).catch(reject);
+        }
+      }).catch(reject);
+
   }).catch((err) => {
-    //statusMessage(dispatch, 'error', err.message);
+    statusMessage(dispatch, err.message, false);
     throw err.message;
-   });  
+   });
 }
+
 /**
   * Reset Password
   */
@@ -214,6 +232,14 @@ export function logout() {
   })
   .catch(async (err) => {
     await statusMessage(dispatch, 'error', err.message);
-    throw err.message; 
+    throw err.message;
   });
+}
+
+
+export function setLoadingFalse(){
+  return dispatch => new Promise((resolve, reject) => {
+    statusMessage(dispatch, 'loading', false);
+  })
+  .catch((err) => { throw err.message;});
 }
