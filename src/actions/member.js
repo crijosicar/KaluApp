@@ -132,7 +132,7 @@ export function login(formData) {
       }).catch(reject);
 
   }).catch((err) => {
-    statusMessage(dispatch, err.message, false);
+    statusMessage(dispatch, 'error', err.message);
     throw err.message;
    });
 }

@@ -48,16 +48,14 @@ class Login extends React.Component {
      .then((e) => { Actions.forgotPassword(); })
      .catch((e) => {
        this.setState({
-         ...this.state,
-         email: "",
-         password: ""
+         ...this.state
        });
      });
   }
 
   render() {
     const { loading, error } = this.props;
-    console.log(loading, error );
+
     // Loading
     if (loading) return <Loading />;
 
