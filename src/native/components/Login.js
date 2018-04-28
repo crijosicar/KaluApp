@@ -45,8 +45,8 @@ class Login extends React.Component {
 
   handleSubmit = () => {
      this.props.onFormSubmit(this.state)
-     .then(() => { Actions.forgotPassword() })
-     .catch(() => {
+     .then((e) => { Actions.forgotPassword(); })
+     .catch((e) => {
        this.setState({
          ...this.state,
          email: "",
@@ -57,7 +57,7 @@ class Login extends React.Component {
 
   render() {
     const { loading, error } = this.props;
-
+    console.log(loading, error );
     // Loading
     if (loading) return <Loading />;
 
@@ -133,7 +133,7 @@ class Login extends React.Component {
                       <Text style={{
                       fontSize: 14, textAlign:
                         'center', margin: 10
-                      }}>Olvidaste tu constrasena?
+                      }}>Olvidaste tu constraseña?
                     </Text>
                   </Body>
               </ListItem>
@@ -144,7 +144,9 @@ class Login extends React.Component {
               <Button
                 success
                 block
-                onPress={this.handleSubmit()}>
+                onPress={() => {
+                  this.handleSubmit();
+                }}>
                 <Text style={{
                     fontSize: 14, textAlign:
                     'center', margin: 10
@@ -153,15 +155,6 @@ class Login extends React.Component {
 
               <Spacer size={20} />
 
-            <Button
-              success
-              block
-              onPress={Actions.conversation}>
-              <Text style={{
-                  fontSize: 14, textAlign:
-                  'center', margin: 10
-                }}>Conversación</Text>
-            </Button>
           </Form>
         </Content>
       </Container>

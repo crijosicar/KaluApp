@@ -40,7 +40,7 @@ class MessageListComponent extends Component {
   )
 
   render() {
-    const data = this.props.data;
+    const { data } = this.props.data;
     const contentContainerStyle = data.length ? null : styles.flatlistContainerStyle;
 
     return (
@@ -55,7 +55,7 @@ class MessageListComponent extends Component {
         ListEmptyComponent={this.emptyList}
         inverted />
     )
-    
+
   }
 }
 
