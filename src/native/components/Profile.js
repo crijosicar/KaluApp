@@ -15,8 +15,8 @@ const Profile = ({ member, logout, onFormSubmit }) => (
           <View>
             <Content padder>
               <Header
-                title={`Hi ${member.firstName},`}
-                content={`You are currently logged in as ${member.email}`}
+                title={`Hi ${member.name},`}
+                content={`Estas actualmente logueado como ${member.email}`}
               />
             </Content>
 

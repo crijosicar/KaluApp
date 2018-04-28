@@ -26,7 +26,7 @@ class ChatScreen extends Component {
 
   constructor(props) {
     super(props);
-
+    
     this.state = {
       conversation: (props.conversation) ? props.conversation : {},
     };
@@ -45,7 +45,7 @@ class ChatScreen extends Component {
                 behavior='padding'
                 style={styles.container}
                 keyboardVerticalOffset={64}>
-                
+
                 {/* List of messages */}
                 <MessagesList {...this.state} />
 

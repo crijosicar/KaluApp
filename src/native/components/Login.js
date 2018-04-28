@@ -43,12 +43,10 @@ class Login extends React.Component {
     });
   }
 
-  handleSubmit = (e) => {
+  handleSubmit = () => {
      this.props.onFormSubmit(this.state)
-     .then(() => {
-       Actions.forgotPassword(e);
-     })
-     .catch(e => {
+     .then(() => { Actions.forgotPassword() })
+     .catch(() => {
        this.setState({
          ...this.state,
          email: "",
@@ -84,9 +82,8 @@ class Login extends React.Component {
 
           <Spacer size={30} />
 
-
           <Button block onPress={this.handleSubmit}>
-            <Text>Inicio de sesion con Facebook</Text>
+            <Text>Inicia con Facebook</Text>
           </Button>
 
           <Spacer size={30} />
@@ -95,11 +92,12 @@ class Login extends React.Component {
             flex: 1, justifyContent: 'center',
             alignItems: 'center'
           }}>
-              <Text style={{
+            <Text style={{
                 fontSize: 14,
                 textAlign: 'center',
                 margin: 10
-              }}> ó digita tus datos</Text>
+              }}> ó digita tus datos
+            </Text>
           </View>
 
           <Spacer size={10} />
@@ -146,14 +144,11 @@ class Login extends React.Component {
               <Button
                 success
                 block
-                onPress={(e)=>{
-                  this.handleSubmit(e);
-
-                  }}>
+                onPress={this.handleSubmit()}>
                 <Text style={{
                     fontSize: 14, textAlign:
                     'center', margin: 10
-                  }}>Login</Text>
+                  }}>Iniciar sesión</Text>
               </Button>
 
               <Spacer size={20} />

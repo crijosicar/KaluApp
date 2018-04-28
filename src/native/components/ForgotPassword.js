@@ -28,16 +28,12 @@ class ForgotPassword extends React.Component {
     this.state = {
       email: (props.member && props.member.email) ? props.member.email : '',
     };
-
-    console.log(this.props.loading);
-    
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount(){
     this.props.onStartView();
-    console.log(this.props.loading);
   }
 
   handleChange = (name, val) => {
@@ -71,7 +67,7 @@ class ForgotPassword extends React.Component {
 
           <Form>
             <Item stackedLabel>
-              <Label>Email</Label>
+              <Label>Correo electrónico</Label>
               <Input
                 autoCapitalize="none"
                 value={this.state.email}
@@ -84,8 +80,8 @@ class ForgotPassword extends React.Component {
 
             <Button succes block onPress={this.handleSubmit}><Text>Reiniciar Contraseña</Text></Button>
             <Spacer size={20} />
-            <Button warning block onPress={Actions.login}><Text>Volver a Login</Text></Button>
-            </Form>
+            <Button warning block onPress={Actions.login}><Text>Volver a Ingresar</Text></Button>
+          </Form>
         </Content>
       </Container>
     );
