@@ -39,7 +39,9 @@ class MessageFormComponent extends Component {
           style={styles.textInput}
           placeholder={'Escribe un mensaje'}
           returnKeyType='send'
-          onChangeText={this.handleMessageChange}
+          onChangeText={(text) => {
+            this.handleMessageChange(text);
+          }}
           value={this.props.message}
           underlineColorAndroid={'transparent'}
           editable={!sending} />
@@ -47,7 +49,7 @@ class MessageFormComponent extends Component {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              this.handleButtonPress(0);
+              this.handleButtonPress();
             }}
             disabled={isButtonDisabled}>
 

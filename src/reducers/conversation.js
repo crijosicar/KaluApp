@@ -12,9 +12,10 @@ export default function conversationReducer(state = initialState, action) {
           sendingError: null,
           error: null,
           loading: false,
-        };
+        }
     }
     case types.CHAT_MESSAGE_ERROR: {
+      if(action.error){
         return {
           ...state,
           sending: false,
@@ -22,6 +23,8 @@ export default function conversationReducer(state = initialState, action) {
           error: null,
           loading: false,
         };
+      }
+      return initialState;
     }
     case types.CHAT_MESSAGE_SUCCESS: {
         return {
@@ -34,6 +37,7 @@ export default function conversationReducer(state = initialState, action) {
         }
     }
     case types.CHAT_MESSAGE_UPDATE: {
+      if(action.text){
         return {
           ...state,
           sending: false,
@@ -42,8 +46,11 @@ export default function conversationReducer(state = initialState, action) {
           error: null,
           loading: false,
         }
+      }
+      return initialState;
     }
     case types.CHAT_LOAD_MESSAGES_SUCCESS: {
+      if(action.messages){
         return {
           ...state,
           sending: false,
@@ -52,16 +59,21 @@ export default function conversationReducer(state = initialState, action) {
           error: null,
           loading: false,
         }
+      }
+      return initialState;
     }
     case types.CHAT_LOAD_MESSAGES_ERROR: {
+      if(action.error){
         return {
           ...state,
           sending: false,
-          messages: null,
+          messages: [],
           loadMessagesError: action.error,
           error: null,
           loading: false,
         }
+      }
+      return initialState;
     }
     default:
       return state;

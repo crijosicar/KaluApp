@@ -7,27 +7,27 @@ import MessageFormComponent from './components/MessagesForm'
 
 const MessageForm = (props) => {
   const { member,
-          sending,
-          toSendMessage,
-          toUpdateMessage,
           message,
+          sending,
+          sendMessage,
+          updateMessage,
           sendingError
         } = props;
 
   return <MessageFormComponent
             member={member}
+            message={message}
             sending={sending}
             sendMessage={sendMessage}
             updateMessage={updateMessage}
-            message={message}
             sendingError={sendingError} />
 }
 
 
 const mapStateToProps = state => ({
+  message: state.conversation.message || '',
   sending: state.conversation.sending || false,
   sendingError: state.conversation.sendingError,
-  message: state.conversation.message,
 })
 
 const mapDispatchToProps = {

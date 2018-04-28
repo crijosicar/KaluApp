@@ -9,10 +9,14 @@ export function sendMessage(message, member, from) {
 
     await dispatch(chatMessageLoading());
 
-    //let baseurl = "http://kaluadmin.local/api/send-message";
     let baseurl = "http://www.kaluapp.com:81/api/send-message";
-    let createdAt = new Date().getTime();
+    var mydate = new Date();
+    var curr_date = mydate.getDate();
+    var curr_month = mydate.getMonth();
+    var curr_year = mydate.getFullYear();
+    let cmont = ("0" + (curr_month + 1)).slice(-2);
 
+    let createdAt = `${curr_year}-${cmont}-${curr_date}`;
     return Api.post(baseurl,
       {
         "user_id": member.id,
@@ -27,8 +31,13 @@ export function sendMessage(message, member, from) {
       }
     )
     .then((response) => {
-          dispatch(chatMessageSuccess());
-          resolve();
+          if(response.error){
+              dispatch(chatMessageError("Ocurrió un error!"));
+              resolve();
+          } else {
+              dispatch(chatMessageSuccess());
+              resolve();
+          }
     })
     .catch((err) => {
       dispatch(chatMessageError("Error de prueba!"));
@@ -46,7 +55,6 @@ export function loadMessages(member) {
   return dispatch => new Promise(async (resolve, reject) => {
 
     await statusMessage(dispatch, 'loading', true);
-    //let baseurl = "http://kaluadmin.local/api/get-messages";
     let baseurl = "http://www.kaluapp.com:81/api/get-messages";
 
     return Api.post(baseurl,
@@ -77,14 +85,8 @@ export function loadMessages(member) {
 }
 
 export function updateMessage(text) {
-  return dispatch => new Promise((resolve, reject) => {
-    return resolve(dispatch(chatUpdateMessage(text)));
-  })
-  .catch(async (err) => {
-    throw err.message;
-  });
+  return chatUpdateMessage(text);
 }
-
 
 const chatMessageLoading = () => ({
   type: types.CHAT_MESSAGE_LOADING

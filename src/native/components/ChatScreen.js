@@ -33,8 +33,6 @@ class ChatScreen extends Component {
   }
 
   componentDidMount() {
-      console.log(this.state.conversation);
-      console.log(this.props);
       this.props.loadMessages(this.props.member);
   }
 

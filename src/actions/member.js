@@ -94,8 +94,7 @@ export function login(formData) {
 
     return Api.post(baseurl, payload)
       .then(async (response) => {
-
-        if(response.message){
+        if(response.error){
             await statusMessage(dispatch, 'error', response.message);
             await validateUserSession(dispatch, false);
             reject({ message: response.message });
@@ -107,31 +106,31 @@ export function login(formData) {
             };
 
             Api.post(baseurl, payload)
-            .then(async (response) => {
+              .then(async (response) => {
+                if(response.error){
+                    await statusMessage(dispatch, 'error', response.message);
+                    await validateUserSession(dispatch, false);
+                    reject({ message: response.message });
+                } else {
+                  await validateUserSession(dispatch, true);
 
-              if(response.message){
-                  await statusMessage(dispatch, 'error', response.message);
-                  await validateUserSession(dispatch, false);
-                  reject({ message: response.message });
-              } else {
-                await validateUserSession(dispatch, true);
+                  await dispatch({
+                    type: 'USER_LOGIN',
+                    data: {
+                      token: payload.token
+                    }
+                  });
 
-                await dispatch({
-                  type: 'USER_LOGIN',
-                  data: {
-                    token: payload.token
-                  }
-                });
+                  await dispatch({
+                    type: 'SET_USER_DATA',
+                    data: response
+                  });
 
-                await dispatch({
-                  type: 'SET_USER_DATA',
-                  data: response
-                });
-
-                resolve();
-              }
-            }).catch(reject);
+                  resolve();
+                }
+              }).catch(reject);
         }
+
       }).catch(reject);
 
   }).catch((err) => {

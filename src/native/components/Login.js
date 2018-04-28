@@ -81,7 +81,7 @@ class Login extends React.Component {
           <Spacer size={30} />
 
           <Button block onPress={this.handleSubmit}>
-            <Text>Inicia con Facebook</Text>
+            <Text>Ingresa con Facebook</Text>
           </Button>
 
           <Spacer size={30} />
@@ -106,7 +106,7 @@ class Login extends React.Component {
 
           <Form>
             <Item stackedLabel>
-              <Label>Email</Label>
+              <Label>Correo electrónico</Label>
               <Input
                 autoCapitalize="none"
                 value={this.state.email}
@@ -116,7 +116,7 @@ class Login extends React.Component {
             </Item>
 
             <Item stackedLabel>
-              <Label>Password</Label>
+              <Label>Contraseña</Label>
               <Input
                 secureTextEntry
                 onChangeText={v => this.handleChange('password', v)}
@@ -131,7 +131,7 @@ class Login extends React.Component {
                       <Text style={{
                       fontSize: 14, textAlign:
                         'center', margin: 10
-                      }}>Olvidaste tu constraseña?
+                      }}>¿Olvidaste tu constraseña?
                     </Text>
                   </Body>
               </ListItem>
