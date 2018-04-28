@@ -7,7 +7,7 @@ import { login } from '../actions/member';
 class Login extends Component {
   static propTypes = {
     Layout: PropTypes.func.isRequired,
-    onFormSubmit: PropTypes.func.isRequired,
+    onLogin: PropTypes.func.isRequired,
     member: PropTypes.shape({}).isRequired,
     isLoading: PropTypes.bool.isRequired,
     infoMessage: PropTypes.string,
@@ -20,13 +20,13 @@ class Login extends Component {
   render = () => {
     const { Layout,
             member,
-            onFormSubmit,
+            onLogin,
             isLoading,
             infoMessage,
             errorMessage,
             successMessage } = this.props;
 
-    return <Layout  onFormSubmit={onFormSubmit}
+    return <Layout  onLogin={onLogin}
                     member={member}
                     loading={isLoading}
                     info={infoMessage}
@@ -44,7 +44,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  onFormSubmit: login,
+  onLogin: login,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

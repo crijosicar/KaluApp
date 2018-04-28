@@ -16,7 +16,7 @@ class Login extends React.Component {
     }).isRequired,
     error: PropTypes.string,
     loading: PropTypes.bool.isRequired,
-    onFormSubmit: PropTypes.func.isRequired,
+    onLogin: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -44,7 +44,7 @@ class Login extends React.Component {
   }
 
   handleSubmit = () => {
-     this.props.onFormSubmit(this.state)
+     this.props.onLogin(this.state)
      .then(() => {
        this.setState({
          password: '',
@@ -72,12 +72,6 @@ class Login extends React.Component {
             flex: 1, justifyContent: 'center',
             alignItems: 'center'
           }}>
-            <Text style={{
-                fontSize: 24, textAlign:
-                'center', margin: 10
-              }}>
-                KALU
-            </Text>
             <Image
               style={{width: 50, height: 50}}
               source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}}

@@ -29,7 +29,6 @@ class MessageFormComponent extends Component {
   }
 
   render() {
-    console.log(this.props);
     const { sending = false } = this.props;
     const isButtonDisabled = sending || this.props.message.trim().length == 0;
     const opacity = isButtonDisabled ? OPACITY_DISABLED : OPACITY_ENABLED;

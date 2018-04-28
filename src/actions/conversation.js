@@ -42,7 +42,7 @@ export function sendMessage(message, member, from) {
    });
 }
 
-export function loadMessages(userID = 0, token) {
+export function loadMessages(member) {
   return dispatch => new Promise(async (resolve, reject) => {
 
     await statusMessage(dispatch, 'loading', true);
@@ -51,8 +51,8 @@ export function loadMessages(userID = 0, token) {
 
     return Api.post(baseurl,
       {
-           "user_id": userID,
-           "token": token
+           "user_id": member.id,
+           "token": member.token
       }
     )
     .then((response) => {

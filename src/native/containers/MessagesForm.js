@@ -3,29 +3,36 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import { sendMessage, updateMessage } from '../../actions/conversation'
-
 import MessageFormComponent from './components/MessagesForm'
 
-const MessageForm = props => {
+const MessageForm = (props) => {
+  const { member,
+          sending,
+          toSendMessage,
+          toUpdateMessage,
+          message,
+          sendingError
+        } = props;
+
   return <MessageFormComponent
-            member={props.member}
-            sending={props.sending}
-            sendMessage={props.sendMessage}
-            updateMessage={props.updateMessage}
-            message={props.message}
-            sendingError={props.sendingError} />
+            member={member}
+            sending={sending}
+            sendMessage={sendMessage}
+            updateMessage={updateMessage}
+            message={message}
+            sendingError={sendingError} />
 }
 
 
 const mapStateToProps = state => ({
-  sending: state.conversation.sending,
+  sending: state.conversation.sending || false,
   sendingError: state.conversation.sendingError,
   message: state.conversation.message,
 })
 
 const mapDispatchToProps = {
-  sendMessage,
-  updateMessage,
+  sendMessage: sendMessage,
+  updateMessage: updateMessage,
 }
 
 MessageForm.propTypes = {

@@ -17,7 +17,7 @@ class MessagesList extends Component {
       <MessageListComponent data={data}/>
     )
   }
-  
+
 }
 
 const mapStateToProps = state => ({
@@ -25,8 +25,10 @@ const mapStateToProps = state => ({
   error: state.conversation.loadMessagesError
 })
 
+const mapDispatchToProps = state => ({})
+
 MessagesList.propTypes = {
   error: PropTypes.string
 }
 
-export default connect(mapStateToProps, {})(MessagesList)
+export default connect(mapStateToProps, mapDispatchToProps)(MessagesList)

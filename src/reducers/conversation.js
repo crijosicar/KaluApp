@@ -46,6 +46,7 @@ export default function conversationReducer(state = initialState, action) {
     case types.CHAT_LOAD_MESSAGES_SUCCESS: {
         return {
           ...state,
+          sending: false,
           messages: action.messages,
           loadMessagesError: null,
           error: null,
@@ -55,6 +56,7 @@ export default function conversationReducer(state = initialState, action) {
     case types.CHAT_LOAD_MESSAGES_ERROR: {
         return {
           ...state,
+          sending: false,
           messages: null,
           loadMessagesError: action.error,
           error: null,
