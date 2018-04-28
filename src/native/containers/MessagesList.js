@@ -2,16 +2,11 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { loadMessages } from '../../actions/conversation'
 import { getChatItems } from '../../store/selectors'
 
 import MessageListComponent from './components/MessagesList'
 
 class MessagesList extends Component {
-
-  componentDidMount() {
-      this.props.loadMessages();
-  }
 
   render() {
     let data = [];
@@ -22,6 +17,7 @@ class MessagesList extends Component {
       <MessageListComponent data={data}/>
     )
   }
+  
 }
 
 const mapStateToProps = state => ({
@@ -29,13 +25,8 @@ const mapStateToProps = state => ({
   error: state.conversation.loadMessagesError
 })
 
-const mapDispatchToProps = {
-  loadMessages
-}
-
 MessagesList.propTypes = {
-  error: PropTypes.string,
-  loadMessages: PropTypes.func.isRequired
+  error: PropTypes.string
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MessagesList)
+export default connect(mapStateToProps, {})(MessagesList)

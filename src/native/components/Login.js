@@ -45,7 +45,13 @@ class Login extends React.Component {
 
   handleSubmit = () => {
      this.props.onFormSubmit(this.state)
-     .then((e) => { Actions.forgotPassword(); })
+     .then(() => {
+       this.setState({
+         password: '',
+       });
+       //Actions.forgotPassword();
+       Actions.conversation();
+     })
      .catch((e) => {
        this.setState({
          ...this.state

@@ -4,28 +4,26 @@ import { Firebase, FirebaseRef } from '../lib/firebase';
 import * as types from '../reducers/types';
 import Api from '../lib/api';
 
-const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6Ly93d3cua2FsdWFwcC5jb206ODEvYXBpL2xvZ2luIiwiaWF0IjoxNTI0NzAzMjA1LCJleHAiOjE1NTYyMzkyMDUsIm5iZiI6MTUyNDcwMzIwNSwianRpIjoiYjI1NGJhREp2bEJqYTlrRCJ9.50Hc4bf6m0y0p0eBmlzQ8OvRGY8u3ma-r_9a3u_nVeU";
-//const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjUsImlzcyI6Imh0dHA6Ly9rYWx1YWRtaW4ubG9jYWwvYXBpL2xvZ2luIiwiaWF0IjoxNTI0NzAyOTg2LCJleHAiOjE1NTYyMzg5ODYsIm5iZiI6MTUyNDcwMjk4NiwianRpIjoiVFZOaGNnY1V3V3cxQW5zUCJ9.--VvBwJKF6O4jwFhLWvQxdZoz5KhyyWctPMgUvyluU0";
-
-export function sendMessage(message) {
+export function sendMessage(message, member, from) {
   return dispatch => new Promise(async (resolve, reject) => {
+
     await dispatch(chatMessageLoading());
 
-    let createdAt = new Date().getTime();
     //let baseurl = "http://kaluadmin.local/api/send-message";
     let baseurl = "http://www.kaluapp.com:81/api/send-message";
+    let createdAt = new Date().getTime();
 
     return Api.post(baseurl,
       {
-        "user_id": 1,
-        "is_bot": 1,
+        "user_id": member.id,
+        "is_bot": from,
         "mensaje": message,
         "fecha_creacion": createdAt,
         "user": {
-          "email": "email@mail.com",
-          "id": '001'
+          "email": member.email,
+          "id": member.id
         },
-        "token": token
+        "token": member.token
       }
     )
     .then((response) => {
@@ -36,6 +34,7 @@ export function sendMessage(message) {
       dispatch(chatMessageError("Error de prueba!"));
       reject();
     });
+
   })
   .catch(async (err) => {
      await dispatch(chatMessageError(err.message));
@@ -43,18 +42,19 @@ export function sendMessage(message) {
    });
 }
 
-export function loadMessages() {
+export function loadMessages(userID = 0, token) {
   return dispatch => new Promise(async (resolve, reject) => {
 
     await statusMessage(dispatch, 'loading', true);
     //let baseurl = "http://kaluadmin.local/api/get-messages";
-    let baseurl = "http://www.kaluapp.com:81/api/get-message";
+    let baseurl = "http://www.kaluapp.com:81/api/get-messages";
 
     return Api.post(baseurl,
-    {
-         "user_id": 1,
-         "token": token
-    })
+      {
+           "user_id": userID,
+           "token": token
+      }
+    )
     .then((response) => {
         statusMessage(dispatch, 'loading', false);
 
@@ -70,7 +70,6 @@ export function loadMessages() {
     })
     .catch(reject);
 
-
   }).catch(async (err) => {
       await statusMessage(dispatch, 'loading', false);
       throw err.message;
@@ -78,7 +77,7 @@ export function loadMessages() {
 }
 
 export function updateMessage(text) {
-  return dispatch => new Promise(async (resolve, reject) => {
+  return dispatch => new Promise((resolve, reject) => {
     return resolve(dispatch(chatUpdateMessage(text)));
   })
   .catch(async (err) => {

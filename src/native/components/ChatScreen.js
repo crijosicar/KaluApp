@@ -26,10 +26,14 @@ class ChatScreen extends Component {
 
   constructor(props) {
     super(props);
-    
+
     this.state = {
       conversation: (props.conversation) ? props.conversation : {},
     };
+  }
+
+  componentDidMount() {
+      this.props.loadMessages(this.props.member.id, this.props.member.token);
   }
 
   render() {
@@ -47,7 +51,7 @@ class ChatScreen extends Component {
                 keyboardVerticalOffset={64}>
 
                 {/* List of messages */}
-                <MessagesList {...this.state} />
+                <MessagesList {...this.props} />
 
                 {/* Form for send message */}
                 <MessagesForm {...this.props} />

@@ -8,11 +8,12 @@ import MessageFormComponent from './components/MessagesForm'
 
 const MessageForm = props => {
   return <MessageFormComponent
-          sending={props.sending}
-          sendMessage={props.sendMessage}
-          updateMessage={props.updateMessage}
-          message={props.message}
-          sendingError={props.sendingError} />
+            member={props.member}
+            sending={props.sending}
+            sendMessage={props.sendMessage}
+            updateMessage={props.updateMessage}
+            message={props.message}
+            sendingError={props.sendingError} />
 }
 
 

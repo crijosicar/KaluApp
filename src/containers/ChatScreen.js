@@ -19,23 +19,29 @@ class ChatScreen extends Component {
   render = () => {
     const { Layout,
             conversation,
+            member,
             onFormSubmit,
             isLoading,
             infoMessage,
             errorMessage,
-            successMessage } = this.props;
+            successMessage,
+            loadMessages
+          } = this.props;
 
     return <Layout  conversation={conversation}
+                    member={member}
                     onFormSubmit={onFormSubmit}
                     loading={isLoading}
                     info={infoMessage}
                     error={errorMessage}
-                    success={successMessage} />;
+                    success={successMessage}
+                    loadMessages={loadMessages} />;
   }
 }
 
 const mapStateToProps = state => ({
   conversation: state.conversation || {},
+  member: state.member || {},
   isLoading: state.status.loading || false,
   infoMessage: state.status.info || null,
   errorMessage: state.status.error || null,
@@ -44,7 +50,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   onFormSubmit: sendMessage,
-  loadMessages,
+  loadMessages: loadMessages
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatScreen);

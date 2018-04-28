@@ -9,7 +9,7 @@ class MessageFormComponent extends Component {
 
   constructor() {
     super();
-    
+
     this.handleMessageChange = this.handleMessageChange.bind(this);
     this.handleButtonPress = this.handleButtonPress.bind(this);
   }
@@ -18,8 +18,8 @@ class MessageFormComponent extends Component {
     this.props.updateMessage(message);
   }
 
-  handleButtonPress = () => {
-    this.props.sendMessage(this.props.message);
+  handleButtonPress = (isBot = 0) => {
+    this.props.sendMessage(this.props.message, this.props.member, isBot);
   }
 
   componentDidUpdate(prevProps) {
@@ -29,7 +29,8 @@ class MessageFormComponent extends Component {
   }
 
   render() {
-    const sending = this.props.sending;
+    console.log(this.props);
+    const { sending = false } = this.props;
     const isButtonDisabled = sending || this.props.message.trim().length == 0;
     const opacity = isButtonDisabled ? OPACITY_DISABLED : OPACITY_ENABLED;
 
@@ -46,7 +47,9 @@ class MessageFormComponent extends Component {
 
           <TouchableOpacity
             style={styles.button}
-            onPress={this.handleButtonPress}
+            onPress={() => {
+              this.handleButtonPress(0);
+            }}
             disabled={isButtonDisabled}>
 
             <Image

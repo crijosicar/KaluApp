@@ -51,6 +51,9 @@ function validateUserSession(dispatch, signedUp) {
   });
 }
 
+/**
+  * Get this User's Session Details
+  */
 export function getMemberData() {
   if (Firebase === null) return () => new Promise(resolve => resolve());
 
@@ -91,7 +94,7 @@ export function login(formData) {
 
     return Api.post(baseurl, payload)
       .then(async (response) => {
-        //await statusMessage(dispatch, 'loading', false);
+
         if(response.message){
             await statusMessage(dispatch, 'error', response.message);
             await validateUserSession(dispatch, false);
@@ -106,8 +109,6 @@ export function login(formData) {
             Api.post(baseurl, payload)
             .then(async (response) => {
 
-              //await statusMessage(dispatch, 'loading', false);
-
               if(response.message){
                   await statusMessage(dispatch, 'error', response.message);
                   await validateUserSession(dispatch, false);
@@ -117,7 +118,9 @@ export function login(formData) {
 
                 await dispatch({
                   type: 'USER_LOGIN',
-                  data: payload.token
+                  data: {
+                    token: payload.token
+                  }
                 });
 
                 await dispatch({
@@ -236,7 +239,9 @@ export function logout() {
   });
 }
 
-
+/**
+  * Set loading
+  */
 export function setLoadingFalse(){
   return dispatch => new Promise((resolve, reject) => {
     statusMessage(dispatch, 'loading', false);
