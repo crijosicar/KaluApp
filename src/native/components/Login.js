@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, Image } from 'react-native';
+import { View, Image, TouchableOpacity} from 'react-native';
 import { Container, Content, Form,List,ListItem, Item, Label, Input, Text, Button,StyleProvider, H1, H2, H3,Body } from 'native-base';
 import { Actions } from 'react-native-router-flux';
-
+import {LoginManager} from 'react-native-fbsdk';
 import Loading from './Loading';
 import Messages from './Messages';
 import Header from './Header';
@@ -58,6 +58,21 @@ class Login extends React.Component {
        });
      });
   }
+  fbAuth() {
+    LoginManager.logInWithReadPermissions(['public_profile']).then(
+      function (result) {
+        if (result.isCancelled) {
+          console.log('Login was cancelled');
+        } else {
+          console.log('Login was successful with permissions: '
+            + result.grantedPermissions.toString());
+        }
+      },
+      function (error) {
+        console.log('Login failed with error: ' + error);
+      }
+    );
+  }
 
   render() {
     const { loading, error } = this.props;
@@ -80,9 +95,14 @@ class Login extends React.Component {
 
           <Spacer size={30} />
 
-          <Button block onPress={this.handleSubmit}>
+          {/* <Button block onPress={this.handleSubmit}>
             <Text>Ingresa con Facebook</Text>
-          </Button>
+          </Button> */}
+          <View>
+        <TouchableOpacity onPress={this.fbAuth.bind(this)}>
+          <Text>Login with Facebook</Text>
+          </TouchableOpacity>
+        </View>
 
           <Spacer size={30} />
 
