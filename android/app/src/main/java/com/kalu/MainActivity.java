@@ -1,7 +1,9 @@
 package com.kalu;
 
-import com.facebook.react.ReactActivity;
 import android.content.Intent;
+
+import com.facebook.react.ReactActivity;
+import com.facebook.reactnative.androidsdk.FBSDKPackage;
 
 public class MainActivity extends ReactActivity {
 
@@ -11,7 +13,7 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "Kalu";
+        return "kalu";
     }
 
     @Override
@@ -20,4 +22,3 @@ public class MainActivity extends ReactActivity {
         MainApplication.getCallbackManager().onActivityResult(requestCode, resultCode, data);
     }
 }
-

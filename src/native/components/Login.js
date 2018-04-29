@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { View, Image, TouchableOpacity} from 'react-native';
 import { Container, Content, Form,List,ListItem, Item, Label, Input, Text, Button,StyleProvider, H1, H2, H3,Body } from 'native-base';
 import { Actions } from 'react-native-router-flux';
-import {LoginManager} from 'react-native-fbsdk';
+import { LoginManager } from 'react-native-fbsdk';
 import Loading from './Loading';
 import Messages from './Messages';
 import Header from './Header';
