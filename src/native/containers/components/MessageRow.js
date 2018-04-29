@@ -2,16 +2,20 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import PropTypes from 'prop-types'
 import relativeDate from 'relative-date'
+import moment from 'moment'
+import 'moment/locale/es'
 
 const MESSAGE_TEXT_MARGIN = 50;
 
 const MessageRowComponent = props => {
-  const isCurrentUser = props.message.isBot === 1;
+  const isCurrentUser = props.message.isBot === 0;
   const alignItems = isCurrentUser ? 'flex-end' : 'flex-start';
   const margin = isCurrentUser ? {marginLeft: MESSAGE_TEXT_MARGIN} : {marginRight: MESSAGE_TEXT_MARGIN};
   const username = isCurrentUser ? 'tu' : props.message.user.email;
-  const date = relativeDate(new Date(props.message.createdAt));
-  
+  moment.locale('es');
+  const date = moment(new Date(props.message.createdAt)).fromNow();
+
+
   return (
     <View
       style={styles.container}>

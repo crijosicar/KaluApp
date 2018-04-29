@@ -10,13 +10,8 @@ export function sendMessage(message, member, from) {
     await dispatch(chatMessageLoading());
 
     let baseurl = "http://www.kaluapp.com:81/api/send-message";
-    var mydate = new Date();
-    var curr_date = mydate.getDate();
-    var curr_month = mydate.getMonth();
-    var curr_year = mydate.getFullYear();
-    let cmont = ("0" + (curr_month + 1)).slice(-2);
+    var createdAt = formatDate(new Date(), true);
 
-    let createdAt = `${curr_year}-${cmont}-${curr_date}`;
     return Api.post(baseurl,
       {
         "user_id": member.id,
@@ -40,7 +35,7 @@ export function sendMessage(message, member, from) {
           }
     })
     .catch((err) => {
-      dispatch(chatMessageError("Error de prueba!"));
+      dispatch(chatMessageError("Ocurrió un error!"));
       reject();
     });
 
@@ -49,6 +44,31 @@ export function sendMessage(message, member, from) {
      await dispatch(chatMessageError(err.message));
      throw err.message;
    });
+}
+
+function formatDate(date, complete = false) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    if(complete){
+      var seconds = '' + d.getSeconds();
+      var minutes = '' + d.getMinutes();
+      var hour = '' + d.getHours();
+
+      if (seconds.length < 2) seconds = '0' + seconds;
+      if (minutes.length < 2) minutes = '0' + minutes;
+      if (hour.length < 2) hour = '0' + hour;
+
+      let tiempo = [year, month, day].join('-');
+      return `${tiempo} ${hour}:${minutes}:${seconds}`;
+    } else {
+      return [year, month, day].join('-');
+    }
 }
 
 export function loadMessages(member) {
