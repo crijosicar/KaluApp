@@ -104,6 +104,37 @@ export function loadMessages(member) {
   });
 }
 
+export function loadMessagesByMember(member) {
+  return dispatch => new Promise(async (resolve, reject) => {
+
+    await statusMessage(dispatch, 'success', "Enviando mensaje...");
+    let baseurl = "http://www.kaluapp.com:81/api/get-messages";
+
+    return Api.post(baseurl,
+      {
+           "user_id": member.id,
+           "token": member.token
+      }
+    )
+    .then((response) => {
+        statusMessage(dispatch, 'loading', false);
+
+        if(response.stack){
+          dispatch(loadMessagesError(response.message));
+          reject();
+        }
+
+        dispatch(loadMessagesSuccess(response));
+        resolve();
+    })
+    .catch(reject);
+
+  }).catch(async (err) => {
+      await statusMessage(dispatch, 'loading', false);
+      throw err.message;
+  });
+}
+
 export function updateMessage(text) {
   return chatUpdateMessage(text);
 }

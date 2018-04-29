@@ -6,12 +6,14 @@ import { sendMessage, updateMessage } from '../../actions/conversation'
 import MessageFormComponent from './components/MessagesForm'
 
 const MessageForm = (props) => {
+
   const { member,
           message,
           sending,
           sendMessage,
           updateMessage,
-          sendingError
+          sendingError,
+          onSendMessage
         } = props;
 
   return <MessageFormComponent
@@ -20,7 +22,9 @@ const MessageForm = (props) => {
             sending={sending}
             sendMessage={sendMessage}
             updateMessage={updateMessage}
-            sendingError={sendingError} />
+            sendingError={sendingError}
+            onSendMessage={onSendMessage}
+            />
 }
 
 

@@ -14,6 +14,7 @@ class ChatScreen extends Component {
     infoMessage: PropTypes.string,
     errorMessage: PropTypes.string,
     successMessage: PropTypes.string,
+    sending: PropTypes.bool.isRequired,
   }
 
   render = () => {
@@ -25,7 +26,8 @@ class ChatScreen extends Component {
             infoMessage,
             errorMessage,
             successMessage,
-            loadMessages
+            loadMessages,
+            sending
           } = this.props;
 
     return <Layout  conversation={conversation}
@@ -35,11 +37,13 @@ class ChatScreen extends Component {
                     info={infoMessage}
                     error={errorMessage}
                     success={successMessage}
-                    loadMessages={loadMessages} />;
+                    loadMessages={loadMessages}
+                    sending={sending} />;
   }
 }
 
 const mapStateToProps = state => ({
+  sending: state.conversation.sending || false,
   conversation: state.conversation || {},
   member: state.member || {},
   isLoading: state.status.loading || false,

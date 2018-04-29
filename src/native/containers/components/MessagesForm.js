@@ -20,6 +20,7 @@ class MessageFormComponent extends Component {
 
   handleButtonPress = (isBot = 0) => {
     this.props.sendMessage(this.props.message, this.props.member, isBot);
+    this.props.onSendMessage(this.props.message);
   }
 
   componentDidUpdate(prevProps) {

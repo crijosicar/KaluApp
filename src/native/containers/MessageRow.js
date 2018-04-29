@@ -7,7 +7,8 @@ class MessageRow extends Component {
   render() {
     return (
       <MessageRowComponent
-        message={this.props.message}/>
+        message={this.props.message}
+      />
     );
   }
 }

@@ -15,7 +15,6 @@ const MessageRowComponent = props => {
   moment.locale('es');
   const date = moment(new Date(props.message.createdAt)).fromNow();
 
-
   return (
     <View
       style={styles.container}>

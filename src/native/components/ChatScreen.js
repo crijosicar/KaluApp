@@ -2,7 +2,7 @@ import React, { Component }  from 'react';
 import PropTypes from 'prop-types';
 import { Container, Content, Form, Item, Label, Input, Text, Button } from 'native-base';
 import { Actions } from 'react-native-router-flux';
-import { Alert, StyleSheet, View, Image, Animated, Keyboard, KeyboardAvoidingView} from 'react-native';
+import { Alert, StyleSheet, View, Image, Animated, Keyboard, KeyboardAvoidingView, ScrollView } from 'react-native';
 
 import Loading from './Loading';
 import Messages from './Messages';
@@ -37,26 +37,35 @@ class ChatScreen extends Component {
   }
 
   render() {
-    const { loading, error } = this.props;
+    const { loading, error, sending } = this.props;
 
     // Loading
-    if (loading) return <Loading />;
+    //if (loading) return <Loading />;
 
     return (
       <Container>
-        <Content padder>
             <KeyboardAvoidingView
                 behavior='padding'
-                style={styles.container}
-                keyboardVerticalOffset={64}>
+                style={styles.container}>
 
-                {/* List of messages */}
-                <MessagesList {...this.props} />
+                {/* sending && <Messages message={"Enviando mensaje..."} type="info" /> */}
+                { loading && <Messages message={"Cargando mensajes..."} type="info" /> }
 
-                {/* Form for send message */}
-                <MessagesForm {...this.props} />
+                <ScrollView
+                  contentContainerStyle={styles.contentContainer}>
+                  {/* List of messages */}
+                  <MessagesList {...this.props} />
+                </ScrollView>
+
+                  {/* Form for send message */}
+                  <MessagesForm
+                    style={styles.containerMessage}
+                    {...this.props} onSendMessage={
+                      (c) => {
+                        this.props.loadMessages(this.props.member);
+                      }
+                  }/>
             </KeyboardAvoidingView>
-        </Content>
       </Container>
     );
   }
@@ -67,7 +76,11 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: '#eeeeee'
-  }
+  },
+  contentContainer: {
+    //flex: 1,
+    paddingTop: 20
+  },
 });
 
 export default ChatScreen;
