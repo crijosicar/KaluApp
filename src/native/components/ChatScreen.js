@@ -34,37 +34,42 @@ class ChatScreen extends Component {
 
   componentDidMount() {
       this.props.loadMessages(this.props.member);
+      //this.refs._scrollView.scrollTo({x: 0, y: 0, animated: true});
+  }
+
+  componentDidUpdate() {
+    console.log("componentDidUpdate");
+    this.refs._scrollView.scrollTo({x: 0, y: 0, animated: true});
   }
 
   render() {
     const { loading, error, sending } = this.props;
 
-    // Loading
-    //if (loading) return <Loading />;
-
     return (
       <Container>
             <KeyboardAvoidingView
-                behavior='padding'
+                behavior='position'
                 style={styles.container}>
 
-                {/* sending && <Messages message={"Enviando mensaje..."} type="info" /> */}
-                { loading && <Messages message={"Cargando mensajes..."} type="info" /> }
-
-                <ScrollView
-                  contentContainerStyle={styles.contentContainer}>
+                <ScrollView contentContainerStyle={styles.contentContainer}
+                  style={styles.scrollViewPanel}
+                  ref='_scrollView'>
                   {/* List of messages */}
                   <MessagesList {...this.props} />
+
+                  { loading ? <Messages message={"Cargando mensajes..."} type="info" />  : null }
+
                 </ScrollView>
 
                   {/* Form for send message */}
                   <MessagesForm
-                    style={styles.containerMessage}
-                    {...this.props} onSendMessage={
-                      (c) => {
-                        this.props.loadMessages(this.props.member);
-                      }
+                      style={styles.messageFrom}
+                      {...this.props} onSendMessage={
+                        (c) => {
+                          this.props.loadMessages(this.props.member);
+                        }
                   }/>
+
             </KeyboardAvoidingView>
       </Container>
     );
@@ -78,9 +83,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#eeeeee'
   },
   contentContainer: {
-    //flex: 1,
     paddingTop: 20
   },
+  scrollViewPanel: {
+    display: 'flex',
+    height: '91%'
+  },
+  messageFrom: {
+    display: 'flex',
+    flexDirection: 'row',
+  }
 });
 
 export default ChatScreen;

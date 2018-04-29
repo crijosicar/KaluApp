@@ -17,6 +17,8 @@ class MessageListComponent extends Component {
   }
 
   componentDidUpdate() {
+    console.log("componentDidUpdate !!!");
+    //this.refs._scrollView.scrollTo({x: 0, y: 0, animated: true});
     if (this.props.data.length){
         this.flatList.scrollToIndex({animated: true, index: 0});
     }
@@ -67,8 +69,12 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'column',
-    height: '100%',
+    height: '10%',
     backgroundColor: '#eeeeee'
+  },
+  flatlistContainerStyle: {
+    display: 'flex',
+    flexDirection: 'row',
   }
 })
 
