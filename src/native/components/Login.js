@@ -64,6 +64,7 @@ class Login extends React.Component {
         if (result.isCancelled) {
           console.log('Login was cancelled');
         } else {
+          Actions.conversation();
           console.log('Login was successful with permissions: '
             + result.grantedPermissions.toString());
         }
@@ -99,9 +100,9 @@ class Login extends React.Component {
             <Text>Ingresa con Facebook</Text>
           </Button> */}
           <View>
-        <TouchableOpacity onPress={this.fbAuth.bind(this)}>
+          <Button block onPress={this.fbAuth.bind(this)}>
           <Text>Login with Facebook</Text>
-          </TouchableOpacity>
+          </Button>
         </View>
 
           <Spacer size={30} />
