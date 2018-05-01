@@ -34,12 +34,12 @@ class ChatScreen extends Component {
 
   componentDidMount() {
       this.props.loadMessages(this.props.member);
-      //this.refs._scrollView.scrollTo({x: 0, y: 0, animated: true});
   }
 
   componentDidUpdate() {
-    console.log("componentDidUpdate");
-    this.refs._scrollView.scrollTo({x: 0, y: 0, animated: true});
+    if(this.props.messages.length) {
+      this.refs._scrollView.scrollTo({x: 0, y: 0, animated: true});
+    }
   }
 
   render() {
@@ -56,20 +56,19 @@ class ChatScreen extends Component {
                   ref='_scrollView'>
                   {/* List of messages */}
                   <MessagesList {...this.props} />
+                </ScrollView>
 
                   { loading ? <Messages message={"Cargando mensajes..."} type="info" />  : null }
-
-                </ScrollView>
 
                   {/* Form for send message */}
                   <MessagesForm
                       style={styles.messageFrom}
-                      {...this.props} onSendMessage={
-                        (c) => {
-                          this.props.loadMessages(this.props.member);
-                        }
+                      {...this.props}
+                      onSendMessage={
+                      (c) => {
+                        this.props.loadMessages(this.props.member);
+                      }
                   }/>
-
             </KeyboardAvoidingView>
       </Container>
     );
@@ -79,7 +78,7 @@ class ChatScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
     backgroundColor: '#eeeeee'
   },
   contentContainer: {

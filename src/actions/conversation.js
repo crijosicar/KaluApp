@@ -10,14 +10,14 @@ export function sendMessage(message, member, from) {
     await dispatch(chatMessageLoading());
 
     let baseurl = "http://www.kaluapp.com:81/api/send-message";
-    var createdAt = formatDate(new Date(), true);
+    //let baseurl = "http://kaluadmin.local/api/send-message";
 
     return Api.post(baseurl,
       {
         "user_id": member.id,
         "is_bot": from,
         "mensaje": message,
-        "fecha_creacion": createdAt,
+        "fecha_creacion": null,
         "user": {
           "email": member.email,
           "id": member.id
@@ -44,31 +44,6 @@ export function sendMessage(message, member, from) {
      await dispatch(chatMessageError(err.message));
      throw err.message;
    });
-}
-
-function formatDate(date, complete = false) {
-    var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
-
-    if (month.length < 2) month = '0' + month;
-    if (day.length < 2) day = '0' + day;
-
-    if(complete){
-      var seconds = '' + d.getSeconds();
-      var minutes = '' + d.getMinutes();
-      var hour = '' + d.getHours();
-
-      if (seconds.length < 2) seconds = '0' + seconds;
-      if (minutes.length < 2) minutes = '0' + minutes;
-      if (hour.length < 2) hour = '0' + hour;
-
-      let tiempo = [year, month, day].join('-');
-      return `${tiempo} ${hour}:${minutes}:${seconds}`;
-    } else {
-      return [year, month, day].join('-');
-    }
 }
 
 export function loadMessages(member) {

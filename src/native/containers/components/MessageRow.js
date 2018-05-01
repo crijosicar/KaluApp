@@ -13,13 +13,13 @@ const MessageRowComponent = props => {
   const margin = isCurrentUser ? {marginLeft: MESSAGE_TEXT_MARGIN} : {marginRight: MESSAGE_TEXT_MARGIN};
   const username = isCurrentUser ? 'tu' : props.message.user.email;
   moment.locale('es');
-  const date = moment(new Date(props.message.createdAt)).fromNow();
+  const date = moment(props.message.createdAt).fromNow();
 
   return (
     <View
       style={styles.container}>
       <View
-        style={ [styles.bubbleView, {alignItems: alignItems}, margin] }>
+        style={[styles.bubbleView, {alignItems: alignItems}, margin]}>
         <Text
           style={styles.userText} >
           {date + ' - ' + username}

@@ -16,12 +16,22 @@ class MessageListComponent extends Component {
     this.itemLayout = this.itemLayout.bind(this);
   }
 
+  componentDidMount() {
+    //if (this.props.data.length){
+      //console.log("componentDidMount (props) -> ", this.props);
+      //this.refs._flatList.scrollToOffset({x: 0, y: 0, animated: true});
+    //}
+  }
+
   componentDidUpdate() {
-    console.log("componentDidUpdate !!!");
-    //this.refs._scrollView.scrollTo({x: 0, y: 0, animated: true});
-    if (this.props.data.length){
-        this.flatList.scrollToIndex({animated: true, index: 0});
-    }
+    //if (this.props.data.length){
+  //      console.log("componentDidUpdate (props) -> ", this.props);
+    //    this.refs._flatList.scrollToOffset({x: 0, y: 0, animated: true});
+        //this.refs._flatList.scrollToIndex({animated: true, index: 0});
+        //this.refs._flatList.scrollTo({x: 0, y: 0, animated: true});
+        //this.flatList.scrollToIndex({animated: true, index: 0});
+        //this.flatList.scrollToIndex({x: 0, y: 0, animated: true});
+    //}
   }
 
   renderItem = ({item}) => {
@@ -47,8 +57,7 @@ class MessageListComponent extends Component {
 
     return (
       <FlatList
-        ref={(c) => { this.flatList = c }}
-        style={styles.container}
+        ref="_flatList"
         contentContainerStyle={contentContainerStyle}
         data={data}
         keyExtractor={(item, index) => index}
@@ -56,8 +65,7 @@ class MessageListComponent extends Component {
         getItemLayout={this.itemLayout}
         ListEmptyComponent={this.emptyList}
         inverted />
-    )
-
+    );
   }
 }
 
