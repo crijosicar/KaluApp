@@ -21,7 +21,7 @@ class Login extends React.Component {
 
   static defaultProps = {
     error: null,
-    member: {},
+    member: {}
   }
 
   constructor(props) {
