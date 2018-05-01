@@ -72,7 +72,7 @@ class Login extends React.Component {
               );
               // Start the graph request.
               new GraphRequestManager().addRequest(infoRequest).start();
-              
+
             },
              //Create response callback.
             _responseInfoCallback = (error, result) => {
@@ -81,7 +81,7 @@ class Login extends React.Component {
             } else {
               alert('Result Name: ' + result.name);
               console.log('nombre:' + result.name.toString() + ' id:' + result.id.toString());
-        
+
               }
             }
 
@@ -99,6 +99,8 @@ class Login extends React.Component {
 
   render() {
     const { loading, error } = this.props;
+
+
 
     // Loading
     if (loading) return <Loading />;
