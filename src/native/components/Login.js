@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { View, Image, TouchableOpacity} from 'react-native';
 import { Container, Content, Form,List,ListItem, Item, Label, Input, Text, Button,StyleProvider, H1, H2, H3,Body } from 'native-base';
 import { Actions } from 'react-native-router-flux';
-import { LoginManager } from 'react-native-fbsdk';
+import { LoginManager, AccessToken, GraphRequest,GraphRequestManager} from 'react-native-fbsdk';
 import Loading from './Loading';
 import Messages from './Messages';
 import Header from './Header';
@@ -64,6 +64,29 @@ class Login extends React.Component {
         if (result.isCancelled) {
           console.log('Login was cancelled');
         } else {
+          AccessToken.getCurrentAccessToken().then(
+            (data) => {
+              const infoRequest = new GraphRequest(
+                '/me?fields=name,picture',
+                null,
+                this._responseInfoCallback
+              );
+              // Start the graph request.
+              new GraphRequestManager().addRequest(infoRequest).start();
+              
+            },
+             //Create response callback.
+            _responseInfoCallback = (error, result) => {
+            if (error) {
+              alert('Error fetching data: ' + error.toString());
+            } else {
+              alert('Result Name: ' + result.name);
+              console.log('nombre:' + result.name.toString() + ' id:' + result.id.toString());
+        
+              }
+            }
+
+          )
           Actions.conversation();
           console.log('Login was successful with permissions: '
             + result.grantedPermissions.toString());
