@@ -23,8 +23,8 @@ export function signUp(formData) {
     await statusMessage(dispatch, 'loading', true);
 
     // Go to Firebase
-    //let baseurl = "http://www.kaluapp.com:81/api/register";
-    let baseurl = "http://192.168.1.15/api/register";
+    let baseurl = "http://www.kaluapp.com:81/api/register";
+    //let baseurl = "http://192.168.1.15/api/register";
     let payload = {
       "name": email,
       "email": email,

@@ -84,8 +84,8 @@ export function loadMessagesByMember(member) {
   return dispatch => new Promise(async (resolve, reject) => {
 
     await statusMessage(dispatch, 'success', "Enviando mensaje...");
-    //let baseurl = "http://www.kaluapp.com:81/api/get-messages";
-    let baseurl = "http://192.168.1.15/api/get-messages";
+    let baseurl = "http://www.kaluapp.com:81/api/get-messages";
+    //let baseurl = "http://192.168.1.15/api/get-messages";
 
 
     return Api.post(baseurl,
