@@ -19,11 +19,11 @@ const Root = ({ store, persistor }) => (
   <Provider store={store}>
     <PersistGate
       loading={<Loading />}
-      persistor={persistor}
-    >
+      persistor={persistor}>
       <StyleProvider style={getTheme(theme)}>
         <Router>
-          <Stack key="root">
+          <Stack  key="root"
+                  panHandlers={null}>
             {Routes}
           </Stack>
         </Router>

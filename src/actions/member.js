@@ -23,19 +23,28 @@ export function signUp(formData) {
     await statusMessage(dispatch, 'loading', true);
 
     // Go to Firebase
-    return Firebase.auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then((res) => {
-        // Send user details to Firebase database
-        if (res && res.uid) {
-          FirebaseRef.child(`users/${res.uid}`).set({
-            firstName,
-            lastName,
-            signedUp: Firebase.database.ServerValue.TIMESTAMP,
-            lastLoggedIn: Firebase.database.ServerValue.TIMESTAMP,
-          }).then(() => statusMessage(dispatch, 'loading', false).then(resolve));
+    //let baseurl = "http://www.kaluapp.com:81/api/register";
+    let baseurl = "http://192.168.1.15/api/register";
+    let payload = {
+      "name": email,
+      "email": email,
+      "password": password,
+      "password_confirm": password2
+    }
+
+    return Api.post(baseurl, payload)
+      .then(async (response) => {
+        if(response.error){
+            if(response.messages['name']) reject({ message: response.messages['name'][0] });
+            if(response.messages['email']) reject({ message: response.messages['email'][0] });
+            if(response.messages['password']) reject({ message: response.messages['password'][0] });
+            if(response.messages['password_confirm']) reject({ message: response.messages['password_confirm'][0] });
+        } else {
+          await statusMessage(dispatch, 'loading', false);
+          resolve();
         }
       }).catch(reject);
+
   }).catch(async (err) => { await statusMessage(dispatch, 'error', err.message); throw err.message; });
 }
 
@@ -86,7 +95,9 @@ export function login(formData) {
 
     await statusMessage(dispatch, 'loading', true);
 
-    let baseurl = "http://www.kaluapp.com:81/api/login";
+    //let baseurl = "http://www.kaluapp.com:81/api/login";
+    let baseurl = "http://192.168.1.15/api/login";
+
     let payload = {
     	"email": email,
     	"password": password
@@ -100,7 +111,8 @@ export function login(formData) {
             reject({ message: response.message });
         } else {
 
-            let baseurl = "http://www.kaluapp.com:81/api/get-user-details";
+            //let baseurl = "http://www.kaluapp.com:81/api/get-user-details";
+            let baseurl = "http://192.168.1.15/api/get-user-details";
             let payload = {
               "token": response.token
             };
@@ -244,6 +256,16 @@ export function logout() {
 export function setLoadingFalse(){
   return dispatch => new Promise((resolve, reject) => {
     statusMessage(dispatch, 'loading', false);
+  })
+  .catch((err) => { throw err.message;});
+}
+
+/**
+  * Reset user
+  */
+export function userDataReset(){
+  return dispatch => new Promise((resolve, reject) => {
+    resolve(dispatch({ type: 'USER_RESET' }));
   })
   .catch((err) => { throw err.message;});
 }

@@ -53,12 +53,10 @@ class MessageListComponent extends Component {
 
   render() {
     const { data } = this.props;
-    const contentContainerStyle = data.length ? null : styles.flatlistContainerStyle;
 
     return (
       <FlatList
         ref="_flatList"
-        contentContainerStyle={contentContainerStyle}
         data={data}
         keyExtractor={(item, index) => index}
         renderItem={this.renderItem}
@@ -66,6 +64,7 @@ class MessageListComponent extends Component {
         ListEmptyComponent={this.emptyList}
         inverted />
     );
+
   }
 }
 
@@ -79,10 +78,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     height: '10%',
     backgroundColor: '#eeeeee'
-  },
-  flatlistContainerStyle: {
-    display: 'flex',
-    flexDirection: 'row',
   }
 })
 

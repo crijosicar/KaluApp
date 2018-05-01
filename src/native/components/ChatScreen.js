@@ -38,8 +38,15 @@ class ChatScreen extends Component {
 
   componentDidUpdate() {
     if(this.props.messages.length) {
+      console.log("cmu", this.props);
       this.refs._scrollView.scrollTo({x: 0, y: 0, animated: true});
     }
+  }
+
+  onMessagesSended(c){
+    setTimeout(function(){
+       this.props.loadMessages(this.props.member);
+    }.bind(this), 1000);
   }
 
   render() {
@@ -51,8 +58,11 @@ class ChatScreen extends Component {
                 behavior='position'
                 style={styles.container}>
 
-                <ScrollView contentContainerStyle={styles.contentContainer}
+                <ScrollView
+                  contentContainerStyle={styles.contentContainer}
                   style={styles.scrollViewPanel}
+                  bounces={false}
+                  overScrollMode="auto"
                   ref='_scrollView'>
                   {/* List of messages */}
                   <MessagesList {...this.props} />
@@ -64,10 +74,7 @@ class ChatScreen extends Component {
                   <MessagesForm
                       style={styles.messageFrom}
                       {...this.props}
-                      onSendMessage={
-                      (c) => {
-                        this.props.loadMessages(this.props.member);
-                      }
+                      onSendMessage={ (c) => { this.onMessagesSended(c) }
                   }/>
             </KeyboardAvoidingView>
       </Container>
@@ -79,18 +86,21 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'row',
-    backgroundColor: '#eeeeee'
+    backgroundColor: '#eeeeee',
+    height: '100%'
   },
   contentContainer: {
     paddingTop: 20
   },
   scrollViewPanel: {
     display: 'flex',
+    flexDirection: 'column',
     height: '91%'
   },
   messageFrom: {
     display: 'flex',
     flexDirection: 'row',
+    height: '11%'
   }
 });
 
