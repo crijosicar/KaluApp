@@ -9,8 +9,8 @@ export function sendMessage(message, member, from) {
 
     await dispatch(chatMessageLoading());
 
-    //let baseurl = "http://www.kaluapp.com:81/api/send-message";
-    let baseurl = "http://192.168.1.15/api/send-message";
+    let baseurl = "http://www.kaluapp.com:81/api/send-message";
+    //let baseurl = "http://192.168.1.15/api/send-message";
 
     return Api.post(baseurl,
       {
@@ -50,8 +50,8 @@ export function loadMessages(member) {
   return dispatch => new Promise(async (resolve, reject) => {
 
     await statusMessage(dispatch, 'loading', true);
-    //let baseurl = "http://www.kaluapp.com:81/api/get-messages";
-    let baseurl = "http://192.168.1.15/api/get-messages";
+    let baseurl = "http://www.kaluapp.com:81/api/get-messages";
+    //let baseurl = "http://192.168.1.15/api/get-messages";
 
     return Api.post(baseurl,
       {
