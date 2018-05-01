@@ -49,7 +49,6 @@ class Login extends React.Component {
        this.setState({
          password: '',
        });
-       //Actions.forgotPassword();
        Actions.conversation();
      })
      .catch((e) => {
@@ -96,14 +95,11 @@ class Login extends React.Component {
 
           <Spacer size={30} />
 
-          {/* <Button block onPress={this.handleSubmit}>
-            <Text>Ingresa con Facebook</Text>
-          </Button> */}
           <View>
-          <Button block onPress={this.fbAuth.bind(this)}>
-          <Text>Login with Facebook</Text>
-          </Button>
-        </View>
+            <Button block onPress={this.fbAuth.bind(this)}>
+            <Text>Ingresa with Facebook</Text>
+            </Button>
+          </View>
 
           <Spacer size={30} />
 
