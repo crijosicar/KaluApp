@@ -8,12 +8,12 @@ export default {
   invalidFirebase: 'Firebase is not connected correctly',
 
   // Member
-  memberExists: 'Miembro ya existe',
-  missingFirstName: 'Primer nombre es requerido',
-  missingLastName: 'Apellido es requerido',
-  missingEmail: 'Correo electronico es requerido',
-  missingPassword: 'Contraseña es requerido',
-  passwordsDontMatch: 'Contraseñas no coinciden',
+  memberExists: 'El miembro ya existe',
+  missingFirstName: 'El campo primer nombre es requerido',
+  missingLastName: 'El campo apellido es requerido',
+  missingEmail: 'El campo correo electronico es requerido',
+  missingPassword: 'El campo contraseña es requerido',
+  passwordsDontMatch: 'Las contraseñas deben coincidir',
 
   // Recipes
   recipe404: 'Recipe not found',

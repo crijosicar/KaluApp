@@ -12,7 +12,7 @@ class SignUp extends React.Component {
   static propTypes = {
     error: PropTypes.string,
     loading: PropTypes.bool.isRequired,
-    onFormSubmit: PropTypes.func.isRequired,
+    onSignUp: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -26,9 +26,20 @@ class SignUp extends React.Component {
       password: '',
       password2: '',
     };
-
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.onUserResetData();
+  }
+
+  componentDidUpdate(){
+    if(typeof this.props.member.id != "undefined"){
+      if(this.props.member.id != ""){
+        Actions.conversation();
+      }
+    }
   }
 
   handleChange = (name, val) => {
@@ -39,8 +50,13 @@ class SignUp extends React.Component {
   }
 
   handleSubmit = () => {
-    this.props.onFormSubmit(this.state)
-      .then(() => Actions.login())
+    this.props.onSignUp(this.state)
+      .then(() => {
+        this.props.onLogIn({
+          "email": this.state.email,
+          "password": this.state.password
+        });
+      })
       .catch(e => console.log(`Error: ${e}`));
   }
 
@@ -81,7 +97,7 @@ class SignUp extends React.Component {
 
           <Form>
             <Item stackedLabel>
-              <Label>Correo Electronico</Label>
+              <Label>Correo electrónico</Label>
               <Input
                 autoCapitalize="none"
                 keyboardType="email-address"
@@ -90,24 +106,26 @@ class SignUp extends React.Component {
             </Item>
 
             <Item stackedLabel>
-              <Label>Contrasena</Label>
+              <Label>Contraseña</Label>
               <Input secureTextEntry onChangeText={v => this.handleChange('password', v)} />
             </Item>
 
             <Item stackedLabel>
-              <Label>Confirma tu Contrasena</Label>
+              <Label>Confirma tu contraseña</Label>
               <Input secureTextEntry onChangeText={v => this.handleChange('password2', v)} />
             </Item>
 
             <Spacer size={20} />
 
             <Button success block onPress={this.handleSubmit}>
-              <Text>Crear Cuenta</Text>
+              <Text>Crear cuenta</Text>
             </Button>
 
             <Spacer size={20} />
 
-            <Button warning block onPress={Actions.login}><Text>Volver a Login</Text></Button>
+            <Button warning block onPress={Actions.login}>
+              <Text>Ingresar</Text>
+            </Button>
 
           </Form>
         </Content>

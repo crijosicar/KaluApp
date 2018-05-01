@@ -34,12 +34,19 @@ class ChatScreen extends Component {
 
   componentDidMount() {
       this.props.loadMessages(this.props.member);
-      //this.refs._scrollView.scrollTo({x: 0, y: 0, animated: true});
   }
 
   componentDidUpdate() {
-    console.log("componentDidUpdate");
-    this.refs._scrollView.scrollTo({x: 0, y: 0, animated: true});
+    if(this.props.messages.length) {
+      console.log("cmu", this.props);
+      this.refs._scrollView.scrollTo({x: 0, y: 0, animated: true});
+    }
+  }
+
+  onMessagesSended(c){
+    setTimeout(function(){
+       this.props.loadMessages(this.props.member);
+    }.bind(this), 1000);
   }
 
   render() {
@@ -51,25 +58,24 @@ class ChatScreen extends Component {
                 behavior='position'
                 style={styles.container}>
 
-                <ScrollView contentContainerStyle={styles.contentContainer}
+                <ScrollView
+                  contentContainerStyle={styles.contentContainer}
                   style={styles.scrollViewPanel}
+                  bounces={false}
+                  overScrollMode="auto"
                   ref='_scrollView'>
                   {/* List of messages */}
                   <MessagesList {...this.props} />
+                </ScrollView>
 
                   { loading ? <Messages message={"Cargando mensajes..."} type="info" />  : null }
-
-                </ScrollView>
 
                   {/* Form for send message */}
                   <MessagesForm
                       style={styles.messageFrom}
-                      {...this.props} onSendMessage={
-                        (c) => {
-                          this.props.loadMessages(this.props.member);
-                        }
+                      {...this.props}
+                      onSendMessage={ (c) => { this.onMessagesSended(c) }
                   }/>
-
             </KeyboardAvoidingView>
       </Container>
     );
@@ -79,19 +85,22 @@ class ChatScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    flexDirection: 'column',
-    backgroundColor: '#eeeeee'
+    flexDirection: 'row',
+    backgroundColor: '#eeeeee',
+    height: '100%'
   },
   contentContainer: {
     paddingTop: 20
   },
   scrollViewPanel: {
     display: 'flex',
+    flexDirection: 'column',
     height: '91%'
   },
   messageFrom: {
     display: 'flex',
     flexDirection: 'row',
+    height: '11%'
   }
 });
 

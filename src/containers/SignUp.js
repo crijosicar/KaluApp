@@ -2,11 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { signUp } from '../actions/member';
+import { signUp, login, userDataReset, setLoadingFalse } from '../actions/member';
 
 const SignUp = ({
   Layout,
-  onFormSubmit,
+  onSignUp,
+  onLogIn,
+  onUserResetData,
+  setLoadingFalse,
   member,
   isLoading,
   infoMessage,
@@ -19,14 +22,18 @@ const SignUp = ({
     info={infoMessage}
     error={errorMessage}
     success={successMessage}
-    onFormSubmit={onFormSubmit}
+    onSignUp={onSignUp}
+    onLogIn={onLogIn}
+    onUserResetData={onUserResetData}
+    setLoadingFalse={setLoadingFalse}
   />
 );
 
 SignUp.propTypes = {
   Layout: PropTypes.func.isRequired,
   member: PropTypes.shape({}).isRequired,
-  onFormSubmit: PropTypes.func.isRequired,
+  onSignUp: PropTypes.func.isRequired,
+  onLogIn: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
   infoMessage: PropTypes.string,
   errorMessage: PropTypes.string,
@@ -48,7 +55,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  onFormSubmit: signUp,
+  onSignUp: signUp,
+  onLogIn: login,
+  onUserResetData: userDataReset,
+  setLoadingFalse: setLoadingFalse
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

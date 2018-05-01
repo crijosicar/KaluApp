@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, Image, TouchableOpacity} from 'react-native';
+import { View, Image, TouchableOpacity, TouchableHighlight} from 'react-native';
 import { Container, Content, Form,List,ListItem, Item, Label, Input, Text, Button,StyleProvider, H1, H2, H3,Body } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import { LoginManager, AccessToken, GraphRequest,GraphRequestManager} from 'react-native-fbsdk';
@@ -49,7 +49,6 @@ class Login extends React.Component {
        this.setState({
          password: '',
        });
-       //Actions.forgotPassword();
        Actions.conversation();
      })
      .catch((e) => {
@@ -119,28 +118,27 @@ class Login extends React.Component {
 
           <Spacer size={30} />
 
-          {/* <Button block onPress={this.handleSubmit}>
-            <Text>Ingresa con Facebook</Text>
-          </Button> */}
           <View>
-          <Button block onPress={this.fbAuth.bind(this)}>
-          <Text>Login with Facebook</Text>
-          </Button>
-        </View>
+            <Button block onPress={this.fbAuth.bind(this)}>
+              <Text>Ingresa with Facebook</Text>
+            </Button>
+          </View>
 
           <Spacer size={30} />
 
-          <View style={{
-            flex: 1, justifyContent: 'center',
-            alignItems: 'center'
-          }}>
+          <TouchableHighlight
+            onPress={Actions.signUp}
+            style={{
+              flex: 1, justifyContent: 'center',
+              alignItems: 'center'
+            }}>
             <Text style={{
                 fontSize: 14,
                 textAlign: 'center',
                 margin: 10
               }}> ó digita tus datos
             </Text>
-          </View>
+          </TouchableHighlight>
 
           <Spacer size={10} />
 

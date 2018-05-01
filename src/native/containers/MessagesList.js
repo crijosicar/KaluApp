@@ -15,7 +15,7 @@ class MessagesList extends Component {
     }
     return (
       <MessageListComponent data={data}/>
-    )
+    );
   }
 
 }

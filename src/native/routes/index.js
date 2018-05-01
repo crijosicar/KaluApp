@@ -36,20 +36,21 @@ const Index = (
             title="Perfil"
             component={MemberContainer}
             Layout={ProfileComponent}
-            />
-          <Scene
-            back
-            key="signUp"
-            title="SIGN UP"
-            component={SignUpContainer}
-            Layout={SignUpComponent}
             />*/}
+
           <Scene
             key="login"
             title="LOGIN"
             component={LoginContainer}
             Layout={LoginComponent}
             />
+            <Scene
+              back
+              key="signUp"
+              title="SIGN UP"
+              component={SignUpContainer}
+              Layout={SignUpComponent}
+              />
           <Scene
             back
             key="forgotPassword"
