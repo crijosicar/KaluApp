@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { View, Image, TouchableOpacity, TouchableHighlight} from 'react-native';
 import { Container, Content, Form,List,ListItem, Item, Label, Input, Text, Button,StyleProvider, H1, H2, H3,Body } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import { LoginManager, AccessToken, GraphRequest,GraphRequestManager} from 'react-native-fbsdk';
@@ -7,7 +8,6 @@ import Loading from './Loading';
 import Messages from './Messages';
 import Header from './Header';
 import Spacer from './Spacer';
-import { View, Image, TouchableOpacity, TouchableHighlight} from 'react-native';
 
 class Login extends React.Component {
   static propTypes = {
@@ -135,14 +135,12 @@ class Login extends React.Component {
               flex: 1, justifyContent: 'center',
               alignItems: 'center'
             }}>
-
             <Text style={{
                 fontSize: 14,
                 textAlign: 'center',
                 margin: 10
               }}> ó digita tus datos
             </Text>
-            
           </TouchableHighlight>
 
           <Spacer size={10} />
