@@ -6,4 +6,5 @@ export default {
   message: '',
   messages: {},
   loadMessagesError: null,
+  audionName: ''
 };

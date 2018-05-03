@@ -75,6 +75,24 @@ export default function conversationReducer(state = initialState, action) {
       }
       return initialState;
     }
+    case types.SET_AUDIO_NAME: {
+      if(action.data){
+        return {
+          ...state,
+          audionName: action.data.audionName
+        }
+      }
+      return initialState;
+    }
+    case types.SET_WATSON_RESPONSE: {
+      if(action.data){
+        return {
+          ...state,
+          watsonResponse: action.data
+        }
+      }
+      return initialState;
+    }
     default:
       return state;
   }

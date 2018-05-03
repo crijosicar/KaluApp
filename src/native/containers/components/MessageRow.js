@@ -11,7 +11,7 @@ const MessageRowComponent = props => {
   const isCurrentUser = props.message.isBot === 0;
   const alignItems = isCurrentUser ? 'flex-end' : 'flex-start';
   const margin = isCurrentUser ? {marginLeft: MESSAGE_TEXT_MARGIN} : {marginRight: MESSAGE_TEXT_MARGIN};
-  const username = isCurrentUser ? 'tu' : props.message.user.email;
+  const username = isCurrentUser ? 'Tú' : 'Kalu Assistant';
   moment.locale('es');
   const date = moment(props.message.createdAt).fromNow();
 
@@ -22,7 +22,7 @@ const MessageRowComponent = props => {
         style={[styles.bubbleView, {alignItems: alignItems}, margin]}>
         <Text
           style={styles.userText} >
-          {date + ' - ' + username}
+          {username + ' - ' +  date}
         </Text>
         <Text
           style={styles.messageText}>

@@ -22,9 +22,9 @@ export function signUp(formData) {
 
     await statusMessage(dispatch, 'loading', true);
 
-    // Go to Firebase
-    //let baseurl = "http://www.kaluapp.com:81/api/register";
-    let baseurl = "http://192.168.1.15/api/register";
+    let baseurl = "http://www.kaluapp.com:81/api/register";
+    //let baseurl = "http://192.168.1.15/api/register";
+
     let payload = {
       "name": email,
       "email": email,
@@ -71,25 +71,27 @@ function validateUserFacebookCreated(formData) {
 
     await statusMessage(dispatch, 'loading', true);
 
-    // Go to Firebase
     let baseurl = "http://www.kaluapp.com:81/api/get-user-by-fbid";
-   
+    //let baseurl = "http://192.168.1.15/api/get-user-by-fbid";
+
     let payload = {
       "facebook_id": facebook_id
     }
-    
+
     return Api.post(baseurl, payload)
       .then(async (response) => {
         if(response.error){
             if(response.messages['facebook_id']) reject({ message: response.messages['facebook_id'][0] });
-        } 
+        }
         else {
           //await statusMessage(dispatch, 'loading', false);
-          
+
           if (response.user!=null){
-          
+
             let baseurl = "http://www.kaluapp.com:81/api/login";
-            let email= facebook_id+"@facebook.com"; 
+            //let baseurl = "http://192.168.1.15/api/login";
+
+            let email= facebook_id+"@facebook.com";
             let password=facebook_id;
 
             let payload = {
@@ -103,10 +105,12 @@ function validateUserFacebookCreated(formData) {
                   await statusMessage(dispatch, 'error', response.message);
                   await validateUserSession(dispatch, false);
                   reject({ message: response.message });
-                } 
+                }
                 else {
 
                   let baseurl = "http://www.kaluapp.com:81/api/get-user-details";
+                  //let baseurl = "http://192.168.1.15/api/get-user-details";
+
                   let payload = {
                     "token": response.token
                   };
@@ -135,25 +139,26 @@ function validateUserFacebookCreated(formData) {
                         resolve();
                       }
                     }).catch(reject);
-          }
+                  }
 
           }).catch(reject);
 
           }
           else{
 
-            let email= facebook_id+"@facebook.com"; 
+            let email= facebook_id+"@facebook.com";
             let password=facebook_id;
 
             let baseurl = "http://www.kaluapp.com:81/api/register";
             //let baseurl = "http://192.168.1.15/api/register";
+
             let payload = {
               "name": email,
               "email": email,
               "password": password,
               "password_confirm": password
             }
-        
+
             return Api.post(baseurl, payload)
               .then(async (response) => {
                 if(response.error){
@@ -165,14 +170,15 @@ function validateUserFacebookCreated(formData) {
                   await statusMessage(dispatch, 'loading', false);
 
                   let baseurl = "http://www.kaluapp.com:81/api/login";
-                  let email= facebook_id+"@facebook.com"; 
-                  let password=facebook_id;
-        
+                  //let baseurl = "http://192.168.1.15/api/login";
+
+                  let email = facebook_id+"@facebook.com";
+                  let password = facebook_id;
                   let payload = {
                       "email": email,
                       "password": password
                   };
-        
+
                 return Api.post(baseurl, payload)
                   .then(async (response) => {
                     if(response.error){
@@ -180,12 +186,14 @@ function validateUserFacebookCreated(formData) {
                         await validateUserSession(dispatch, false);
                         reject({ message: response.message });
                     } else {
-        
+
                         let baseurl = "http://www.kaluapp.com:81/api/get-user-details";
+                        //let baseurl = "http://192.168.1.15/api/get-user-details";
+
                         let payload = {
                           "token": response.token
                         };
-        
+
                         Api.post(baseurl, payload)
                           .then(async (response) => {
                             if(response.error){
@@ -194,24 +202,23 @@ function validateUserFacebookCreated(formData) {
                                 reject({ message: response.message });
                             } else {
                               await validateUserSession(dispatch, true);
-        
+
                               await dispatch({
                                 type: 'USER_LOGIN',
                                 data: {
                                   token: payload.token
                                 }
                               });
-        
+
                               await dispatch({
                                 type: 'SET_USER_DATA',
                                 data: response
                               });
-        
+
                               resolve();
                             }
                           }).catch(reject);
-                }
-      
+                        }
               }).catch(reject);
               }
             }).catch(reject);
@@ -220,8 +227,8 @@ function validateUserFacebookCreated(formData) {
       }).catch(reject);
    }).catch(async (err) => { await statusMessage(dispatch, 'error', err.message); throw err.message; });
 }
-  
-  
+
+
 
 
 /**
@@ -259,8 +266,8 @@ export function login(formData) {
 
     await statusMessage(dispatch, 'loading', true);
 
-    //let baseurl = "http://www.kaluapp.com:81/api/login";
-    let baseurl = "http://192.168.1.15/api/login";
+    let baseurl = "http://www.kaluapp.com:81/api/login";
+    //let baseurl = "http://192.168.1.15/api/login";
 
     let payload = {
     	"email": email,
@@ -275,8 +282,8 @@ export function login(formData) {
             reject({ message: response.message });
         } else {
 
-            //let baseurl = "http://www.kaluapp.com:81/api/get-user-details";
-            let baseurl = "http://192.168.1.15/api/get-user-details";
+            let baseurl = "http://www.kaluapp.com:81/api/get-user-details";
+            //let baseurl = "http://192.168.1.15/api/get-user-details";
             let payload = {
               "token": response.token
             };

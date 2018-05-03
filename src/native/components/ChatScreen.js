@@ -39,9 +39,7 @@ class ChatScreen extends Component {
   componentDidUpdate(){}
 
   onMessagesSended(c){
-    setTimeout(function(){
-       this.props.loadMessages(this.props.member);
-    }.bind(this), 1000);
+    this.props.loadMessages(this.props.member);
   }
 
   render() {
@@ -52,6 +50,8 @@ class ChatScreen extends Component {
             <KeyboardAvoidingView
                 behavior='position'
                 style={styles.container}>
+                
+                { loading ? <Messages message={"Cargando mensajes..."} type="success" />  : null }
 
                 <ScrollView
                   contentContainerStyle={styles.contentContainer}
@@ -65,8 +65,6 @@ class ChatScreen extends Component {
                   {/* List of messages */}
                   <MessagesList {...this.props} />
                 </ScrollView>
-
-                { loading ? <Messages message={"Cargando mensajes..."} type="success" />  : null }
 
                 {/* Form for send message */}
                 <MessagesForm {...this.props}

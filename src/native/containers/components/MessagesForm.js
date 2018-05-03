@@ -23,7 +23,11 @@ class MessageFormComponent extends Component {
   }
 
   handleButtonPress = (isBot = 0) => {
-    this.props.sendMessage(this.props.message, this.props.member, isBot);
+    this.props.sendMessage(this.props.message, this.props.member, isBot)
+      .then((response) => {
+          this.props.onSendMessage();
+      })
+      .catch((err) => console.log(err));
   }
 
   componentWillMount() {
@@ -37,44 +41,62 @@ class MessageFormComponent extends Component {
      }
 
      this.recorder = new Recorder(FILENAME, {
-       bitrate: 256000,
-       channels: 2,
+       bitrate: 128000,
+       channels: 1,
        sampleRate: 44100,
-       quality: 'max'
+       quality: 'high',
+       format: 'mp4'
      });
    }
 
    onToggleRecord = (isBot = 0) => {
      if(this.recorder && this.recorder.isRecording){
        this.recorder.stop((err) => {
-         if(err) console.log(err);
-         this.props.onSendMessageAsAudio(this.recorder.fsPath, this.props.member, isBot);
+         if(err){
+             console.log("this.recorder.stop err -> ", err);
+             return;
+         } else {
+           this.props.uploadAudio(this.recorder.fsPath)
+             .then((response) => {
+               if(this.props.audionName != ""){
+                 //this.props.audionName
+                 this.props.onSendMessageAsAudio("5aeb2d08e4f9aaudio.pcm", this.props.member, isBot)
+                   .then((response) => {
+                     this.props.onSendMessage();
+                     if(this.props.watsonResponse != ""){
+                       if(!this.props.watsonResponse.error){
+                         if(this.props.watsonResponse.message.output.nodes_visited[0] === "En otras cosas"){
+                           setTimeout(()=> {
+                             this.props.sendMessage(this.props.watsonResponse.message.output.text[0], this.props.member, 1)
+                             .then((response) => {
+                               this.props.onSendMessage();
+                             }).catch((err) => { console.log("err", err); });
+                           }, 500);
+                         }
+                       }
+                     }
+                   }). catch((err) => {
+                     console.log("err -> ", err);
+                   });
+               }
+             }).catch((err) => {
+               console.log("err -> ", err);
+             });
+         }
          this.recorder.destroy();
        });
      } else {
        this.recorder = new Recorder(FILENAME, {
-         bitrate: 256000,
-         channels: 2,
+         bitrate: 128000,
+         channels: 1,
          sampleRate: 44100,
-         quality: 'max'
+         quality: 'high',
+         format: 'mp4'
        }).prepare(() => {
          console.log(this.recorder);
        })
        .record();
      }
-
-    /*this.recorder.toggleRecord((err, stopped) => {
-      if (err) {
-        console.log("onToggleRecord -> ", err);
-      }
-
-      if (stopped) {
-        this.onReloadRecorder();
-        console.log(this.recorder.path);
-        //this.props.onSendMessageAsAudio(this.recorder.fsPath, this.props.member, isBot);
-        new Player(FILENAME).play();
-      }
-    });*/
   }
 
   componentDidUpdate(prevProps) {
