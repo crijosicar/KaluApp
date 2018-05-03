@@ -40,7 +40,7 @@ class ChatScreen extends Component {
                     success={successMessage}
                     loadMessages={loadMessages}
                     sending={sending}
-                    messages={messages} />;
+                    messages={messages}/>;
   }
 }
 

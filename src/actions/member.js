@@ -4,7 +4,7 @@ import { Firebase, FirebaseRef } from '../lib/firebase';
 import Api from '../lib/api';
 
 /**
-  * Sign Up to Firebase
+  * Sign Up to API
   */
 export function signUp(formData) {
   const {
@@ -23,8 +23,8 @@ export function signUp(formData) {
     await statusMessage(dispatch, 'loading', true);
 
     // Go to Firebase
-    let baseurl = "http://www.kaluapp.com:81/api/register";
-    //let baseurl = "http://192.168.1.15/api/register";
+    //let baseurl = "http://www.kaluapp.com:81/api/register";
+    let baseurl = "http://192.168.1.15/api/register";
     let payload = {
       "name": email,
       "email": email,
@@ -95,8 +95,8 @@ export function login(formData) {
 
     await statusMessage(dispatch, 'loading', true);
 
-    let baseurl = "http://www.kaluapp.com:81/api/login";
-    //let baseurl = "http://192.168.1.15/api/login";
+    //let baseurl = "http://www.kaluapp.com:81/api/login";
+    let baseurl = "http://192.168.1.15/api/login";
 
     let payload = {
     	"email": email,
@@ -166,7 +166,8 @@ export function resetPassword(formData) {
     // Go to Firebase
     return Firebase.auth()
       .sendPasswordResetEmail(email)
-      .then(() => statusMessage(dispatch, 'loading', false).then(resolve(dispatch({ type: 'USER_RESET' }))))
+      .then(() => statusMessage(dispatch, 'loading', false)
+                  .then(resolve(dispatch({ type: 'USER_RESET' }))))
       .catch(reject);
   })
   .catch(async (err) => {

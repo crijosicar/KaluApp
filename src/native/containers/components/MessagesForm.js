@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { View, TextInput, TouchableOpacity, Image, Alert, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
+import { Player, Recorder, MediaStates } from 'react-native-audio-toolkit';
 
 const OPACITY_ENABLED = 1.0;
 const OPACITY_DISABLED = 0.2;
+const FILENAME = "aukalu.mp4";
 
 class MessageFormComponent extends Component {
 
@@ -12,6 +14,8 @@ class MessageFormComponent extends Component {
 
     this.handleMessageChange = this.handleMessageChange.bind(this);
     this.handleButtonPress = this.handleButtonPress.bind(this);
+    this.onToggleRecord = this.onToggleRecord.bind(this);
+    this.onReloadRecorder = this.onReloadRecorder.bind(this);
   }
 
   handleMessageChange = (message) => {
@@ -20,7 +24,57 @@ class MessageFormComponent extends Component {
 
   handleButtonPress = (isBot = 0) => {
     this.props.sendMessage(this.props.message, this.props.member, isBot);
-    this.props.onSendMessage(this.props.message);
+  }
+
+  componentWillMount() {
+    this.recorder = null;
+    this.onReloadRecorder();
+  }
+
+  onReloadRecorder = () => {
+     if (this.recorder) {
+       this.recorder.destroy();
+     }
+
+     this.recorder = new Recorder(FILENAME, {
+       bitrate: 256000,
+       channels: 2,
+       sampleRate: 44100,
+       quality: 'max'
+     });
+   }
+
+   onToggleRecord = (isBot = 0) => {
+     if(this.recorder && this.recorder.isRecording){
+       this.recorder.stop((err) => {
+         if(err) console.log(err);
+         this.props.onSendMessageAsAudio(this.recorder.fsPath, this.props.member, isBot);
+         this.recorder.destroy();
+       });
+     } else {
+       this.recorder = new Recorder(FILENAME, {
+         bitrate: 256000,
+         channels: 2,
+         sampleRate: 44100,
+         quality: 'max'
+       }).prepare(() => {
+         console.log(this.recorder);
+       })
+       .record();
+     }
+
+    /*this.recorder.toggleRecord((err, stopped) => {
+      if (err) {
+        console.log("onToggleRecord -> ", err);
+      }
+
+      if (stopped) {
+        this.onReloadRecorder();
+        console.log(this.recorder.path);
+        //this.props.onSendMessageAsAudio(this.recorder.fsPath, this.props.member, isBot);
+        new Player(FILENAME).play();
+      }
+    });*/
   }
 
   componentDidUpdate(prevProps) {
@@ -53,6 +107,16 @@ class MessageFormComponent extends Component {
               this.handleButtonPress();
             }}
             disabled={isButtonDisabled}>
+            <Image
+              source={require('../../../images/ic_send.png')}
+              style={{opacity: opacity}} />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              this.onToggleRecord();
+            }}>
 
             <Image
               source={require('../../../images/ic_send.png')}

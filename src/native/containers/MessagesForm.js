@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import { sendMessage, updateMessage } from '../../actions/conversation'
+import { sendMessage, updateMessage, sendMessageAsAudio } from '../../actions/conversation'
 import MessageFormComponent from './components/MessagesForm'
 
 const MessageForm = (props) => {
@@ -13,7 +13,8 @@ const MessageForm = (props) => {
           sendMessage,
           updateMessage,
           sendingError,
-          onSendMessage
+          onSendMessage,
+          sendMessageAsAudio
         } = props;
 
   return <MessageFormComponent
@@ -24,6 +25,7 @@ const MessageForm = (props) => {
             updateMessage={updateMessage}
             sendingError={sendingError}
             onSendMessage={onSendMessage}
+            onSendMessageAsAudio={sendMessageAsAudio}
             />
 }
 
@@ -37,6 +39,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   sendMessage: sendMessage,
   updateMessage: updateMessage,
+  sendMessageAsAudio: sendMessageAsAudio
 }
 
 MessageForm.propTypes = {

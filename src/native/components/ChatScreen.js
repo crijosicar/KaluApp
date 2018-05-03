@@ -32,16 +32,11 @@ class ChatScreen extends Component {
     };
   }
 
-  componentDidMount() {
+  componentDidMount(){
       this.props.loadMessages(this.props.member);
   }
 
-  componentDidUpdate() {
-    if(this.props.messages.length) {
-      console.log("cmu", this.props);
-      this.refs._scrollView.scrollTo({x: 0, y: 0, animated: true});
-    }
-  }
+  componentDidUpdate(){}
 
   onMessagesSended(c){
     setTimeout(function(){
@@ -63,19 +58,21 @@ class ChatScreen extends Component {
                   style={styles.scrollViewPanel}
                   bounces={false}
                   overScrollMode="auto"
-                  ref='_scrollView'>
+                  ref='_scrollView'
+                  onContentSizeChange={(contentWidth, contentHeight) => {
+                    this.refs._scrollView.scrollToEnd({ animated: true });
+                  }}>
                   {/* List of messages */}
                   <MessagesList {...this.props} />
                 </ScrollView>
 
-                  { loading ? <Messages message={"Cargando mensajes..."} type="info" />  : null }
+                { loading ? <Messages message={"Cargando mensajes..."} type="success" />  : null }
 
-                  {/* Form for send message */}
-                  <MessagesForm
+                {/* Form for send message */}
+                <MessagesForm {...this.props}
                       style={styles.messageFrom}
-                      {...this.props}
                       onSendMessage={ (c) => { this.onMessagesSended(c) }
-                  }/>
+                }/>
             </KeyboardAvoidingView>
       </Container>
     );

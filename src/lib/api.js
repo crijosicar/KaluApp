@@ -4,7 +4,6 @@ class Api {
     return {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-    //  'dataType': 'json',
     }
   }
 
