@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { login } from '../actions/member';
+import { login, validateUserFacebookCreated } from '../actions/member';
 
 class Login extends Component {
   static propTypes = {
@@ -24,14 +24,16 @@ class Login extends Component {
             isLoading,
             infoMessage,
             errorMessage,
-            successMessage } = this.props;
+            successMessage, 
+            onFacebookReg } = this.props;
 
     return <Layout  onLogin={onLogin}
                     member={member}
                     loading={isLoading}
                     info={infoMessage}
                     error={errorMessage}
-                    success={successMessage}/>;
+                    success={successMessage}
+                    onFacebookReg={onFacebookReg}/>;
   }
 }
 
@@ -45,6 +47,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   onLogin: login,
+  onFacebookReg:validateUserFacebookCreated
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -60,6 +60,170 @@ function validateUserSession(dispatch, signedUp) {
   });
 }
 
+function validateUserFacebookCreated(formData) {
+  const {
+   facebook_id
+  } = formData;
+
+  return dispatch => new Promise(async (resolve, reject) => {
+    // Validation checks
+    if (!facebook_id) return reject({ message: 'id de Facebook es requerida' });
+
+    await statusMessage(dispatch, 'loading', true);
+
+    // Go to Firebase
+    let baseurl = "http://www.kaluapp.com:81/api/get-user-by-fbid";
+   
+    let payload = {
+      "facebook_id": facebook_id
+    }
+    
+    return Api.post(baseurl, payload)
+      .then(async (response) => {
+        if(response.error){
+            if(response.messages['facebook_id']) reject({ message: response.messages['facebook_id'][0] });
+        } 
+        else {
+          //await statusMessage(dispatch, 'loading', false);
+          
+          if (response.user!=null){
+          
+            let baseurl = "http://www.kaluapp.com:81/api/login";
+            let email= facebook_id+"@facebook.com"; 
+            let password=facebook_id;
+
+            let payload = {
+                "email": email,
+                "password": password
+            };
+
+            return Api.post(baseurl, payload)
+              .then(async (response) => {
+                if(response.error){
+                  await statusMessage(dispatch, 'error', response.message);
+                  await validateUserSession(dispatch, false);
+                  reject({ message: response.message });
+                } 
+                else {
+
+                  let baseurl = "http://www.kaluapp.com:81/api/get-user-details";
+                  let payload = {
+                    "token": response.token
+                  };
+
+                  Api.post(baseurl, payload)
+                    .then(async (response) => {
+                      if(response.error){
+                          await statusMessage(dispatch, 'error', response.message);
+                          await validateUserSession(dispatch, false);
+                          reject({ message: response.message });
+                      } else {
+                        await validateUserSession(dispatch, true);
+
+                        await dispatch({
+                          type: 'USER_LOGIN',
+                          data: {
+                            token: payload.token
+                          }
+                        });
+
+                        await dispatch({
+                          type: 'SET_USER_DATA',
+                          data: response
+                        });
+
+                        resolve();
+                      }
+                    }).catch(reject);
+          }
+
+          }).catch(reject);
+
+          }
+          else{
+
+            let email= facebook_id+"@facebook.com"; 
+            let password=facebook_id;
+
+            let baseurl = "http://www.kaluapp.com:81/api/register";
+            //let baseurl = "http://192.168.1.15/api/register";
+            let payload = {
+              "name": email,
+              "email": email,
+              "password": password,
+              "password_confirm": password
+            }
+        
+            return Api.post(baseurl, payload)
+              .then(async (response) => {
+                if(response.error){
+                    if(response.messages['name']) reject({ message: response.messages['name'][0] });
+                    if(response.messages['email']) reject({ message: response.messages['email'][0] });
+                    if(response.messages['password']) reject({ message: response.messages['password'][0] });
+                    if(response.messages['password_confirm']) reject({ message: response.messages['password_confirm'][0] });
+                } else {
+                  await statusMessage(dispatch, 'loading', false);
+
+                  let baseurl = "http://www.kaluapp.com:81/api/login";
+                  let email= facebook_id+"@facebook.com"; 
+                  let password=facebook_id;
+        
+                  let payload = {
+                      "email": email,
+                      "password": password
+                  };
+        
+                return Api.post(baseurl, payload)
+                  .then(async (response) => {
+                    if(response.error){
+                        await statusMessage(dispatch, 'error', response.message);
+                        await validateUserSession(dispatch, false);
+                        reject({ message: response.message });
+                    } else {
+        
+                        let baseurl = "http://www.kaluapp.com:81/api/get-user-details";
+                        let payload = {
+                          "token": response.token
+                        };
+        
+                        Api.post(baseurl, payload)
+                          .then(async (response) => {
+                            if(response.error){
+                                await statusMessage(dispatch, 'error', response.message);
+                                await validateUserSession(dispatch, false);
+                                reject({ message: response.message });
+                            } else {
+                              await validateUserSession(dispatch, true);
+        
+                              await dispatch({
+                                type: 'USER_LOGIN',
+                                data: {
+                                  token: payload.token
+                                }
+                              });
+        
+                              await dispatch({
+                                type: 'SET_USER_DATA',
+                                data: response
+                              });
+        
+                              resolve();
+                            }
+                          }).catch(reject);
+                }
+      
+              }).catch(reject);
+              }
+            }).catch(reject);
+          }
+        }
+      }).catch(reject);
+   }).catch(async (err) => { await statusMessage(dispatch, 'error', err.message); throw err.message; });
+}
+  
+  
+
+
 /**
   * Get this User's Session Details
   */

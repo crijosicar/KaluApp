@@ -15,6 +15,16 @@ export default function userReducer(state = initialState, action) {
       }
       return initialState;
     }
+    case 'GET_USERFB_CONFIRMATION':{
+      if (action.data) {
+        return {
+          ...state,
+          
+          facebook_id: action.data.user.facebook_id
+        };
+      }
+      return initialState;
+    }
     case 'SET_USER_DATA': {
       if (action.data) {
         return {
