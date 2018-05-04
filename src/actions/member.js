@@ -162,10 +162,12 @@ function validateUserFacebookCreated(formData) {
             return Api.post(baseurl, payload)
               .then(async (response) => {
                 if(response.error){
+
                     if(response.messages['name']) reject({ message: response.messages['name'][0] });
                     if(response.messages['email']) reject({ message: response.messages['email'][0] });
                     if(response.messages['password']) reject({ message: response.messages['password'][0] });
                     if(response.messages['password_confirm']) reject({ message: response.messages['password_confirm'][0] });
+
                 } else {
                   await statusMessage(dispatch, 'loading', false);
 
@@ -228,9 +230,6 @@ function validateUserFacebookCreated(formData) {
    }).catch(async (err) => { await statusMessage(dispatch, 'error', err.message); throw err.message; });
 }
 
-
-
-
 /**
   * Get this User's Session Details
   */
@@ -268,7 +267,6 @@ export function login(formData) {
 
     let baseurl = "http://www.kaluapp.com:81/api/login";
     //let baseurl = "http://192.168.1.15/api/login";
-
     let payload = {
     	"email": email,
     	"password": password

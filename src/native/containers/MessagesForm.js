@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import { sendMessage, updateMessage, sendMessageAsAudio, uploadAudio } from '../../actions/conversation'
+import { sendMessage, updateMessage, sendMessageAsAudio, uploadAudio, setRecordingStatus } from '../../actions/conversation'
 import MessageFormComponent from './components/MessagesForm'
 
 const MessageForm = (props) => {
@@ -17,7 +17,9 @@ const MessageForm = (props) => {
           onSendMessageAsAudio,
           uploadAudio,
           audionName,
-          watsonResponse
+          watsonResponse,
+          recording,
+          setRecordingStatus
         } = props;
 
   return <MessageFormComponent
@@ -32,6 +34,8 @@ const MessageForm = (props) => {
             onSendMessageAsAudio={onSendMessageAsAudio}
             uploadAudio={uploadAudio}
             watsonResponse={watsonResponse}
+            recording={recording}
+            setRecordingStatus={setRecordingStatus}
             />
 }
 
@@ -42,13 +46,15 @@ const mapStateToProps = state => ({
   message: state.conversation.message || '',
   sending: state.conversation.sending || false,
   sendingError: state.conversation.sendingError,
+  recording: state.conversation.recording || false
 })
 
 const mapDispatchToProps = {
   sendMessage: sendMessage,
   updateMessage: updateMessage,
   onSendMessageAsAudio: sendMessageAsAudio,
-  uploadAudio: uploadAudio
+  uploadAudio: uploadAudio,
+  setRecordingStatus: setRecordingStatus
 }
 
 MessageForm.propTypes = {

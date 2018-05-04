@@ -12,20 +12,44 @@ class MessageFormComponent extends Component {
   constructor() {
     super();
 
-    this.handleMessageChange = this.handleMessageChange.bind(this);
+    this.onMessageChange = this.onMessageChange.bind(this);
     this.handleButtonPress = this.handleButtonPress.bind(this);
     this.onToggleRecord = this.onToggleRecord.bind(this);
     this.onReloadRecorder = this.onReloadRecorder.bind(this);
   }
 
-  handleMessageChange = (message) => {
+  onMessageChange = (message) => {
     this.props.updateMessage(message);
   }
 
   handleButtonPress = (isBot = 0) => {
     this.props.sendMessage(this.props.message, this.props.member, isBot)
       .then((response) => {
-          this.props.onSendMessage();
+        this.props.onSendMessage();
+        if(this.props.watsonResponse != ""){
+          if(!this.props.watsonResponse.error){
+            console.log(this.props.watsonResponse);
+            if(this.props.watsonResponse.message.intents.length){
+              if(this.props.watsonResponse.message.intents[0].intent === "SALUDO"){
+                setTimeout(()=> {
+                  this.props.sendMessage(this.props.watsonResponse.message.output.text[0], this.props.member, 1)
+                  .then((response) => {
+                    this.props.onSendMessage();
+                  }).catch((err) => { console.log("err", err); });
+                }, 500);
+              }
+            } else if( this.props.watsonResponse.message.output.nodes_visited.length){
+              if(this.props.watsonResponse.message.output.nodes_visited[0] === "En otras cosas"){
+                setTimeout(()=> {
+                  this.props.sendMessage(this.props.watsonResponse.message.output.text[0], this.props.member, 1)
+                  .then((response) => {
+                    this.props.onSendMessage();
+                  }).catch((err) => { console.log("err", err); });
+                }, 500);
+              }
+            }
+          }
+        }
       })
       .catch((err) => console.log(err));
   }
@@ -52,26 +76,39 @@ class MessageFormComponent extends Component {
    onToggleRecord = (isBot = 0) => {
      if(this.recorder && this.recorder.isRecording){
        this.recorder.stop((err) => {
+         this.props.setRecordingStatus();
          if(err){
-             console.log("this.recorder.stop err -> ", err);
              return;
          } else {
            this.props.uploadAudio(this.recorder.fsPath)
              .then((response) => {
                if(this.props.audionName != ""){
-                 //this.props.audionName
-                 this.props.onSendMessageAsAudio("5aeb2d08e4f9aaudio.pcm", this.props.member, isBot)
+                 //NO ENTIENDO -> 5aeb2d08e4f9aaudio.pcm / REAL -> this.props.audionName / SALUDO -> 5aec6a2628761audio.pcm / AGREGAR ->  / REDIRECCIONAR ->
+                 this.props.onSendMessageAsAudio(this.props.audionName, this.props.member, isBot)
                    .then((response) => {
                      this.props.onSendMessage();
                      if(this.props.watsonResponse != ""){
                        if(!this.props.watsonResponse.error){
-                         if(this.props.watsonResponse.message.output.nodes_visited[0] === "En otras cosas"){
-                           setTimeout(()=> {
-                             this.props.sendMessage(this.props.watsonResponse.message.output.text[0], this.props.member, 1)
-                             .then((response) => {
-                               this.props.onSendMessage();
-                             }).catch((err) => { console.log("err", err); });
-                           }, 500);
+                         console.log(this.props.watsonResponse);
+                         //debugger;
+                         if(this.props.watsonResponse.message.intents.length){
+                           if(this.props.watsonResponse.message.intents[0].intent === "SALUDO"){
+                             setTimeout(()=> {
+                               this.props.sendMessage(this.props.watsonResponse.message.output.text[0], this.props.member, 1)
+                               .then((response) => {
+                                 this.props.onSendMessage();
+                               }).catch((err) => { console.log("err", err); });
+                             }, 500);
+                           }
+                         } else if( this.props.watsonResponse.message.output.nodes_visited.length){
+                           if(this.props.watsonResponse.message.output.nodes_visited[0] === "En otras cosas"){
+                             setTimeout(()=> {
+                               this.props.sendMessage(this.props.watsonResponse.message.output.text[0], this.props.member, 1)
+                               .then((response) => {
+                                 this.props.onSendMessage();
+                               }).catch((err) => { console.log("err", err); });
+                             }, 500);
+                           }
                          }
                        }
                      }
@@ -96,6 +133,7 @@ class MessageFormComponent extends Component {
          console.log(this.recorder);
        })
        .record();
+       this.props.setRecordingStatus(true);
      }
   }
 
@@ -106,9 +144,10 @@ class MessageFormComponent extends Component {
   }
 
   render() {
-    const { sending = false } = this.props;
+    const { sending = false, recording } = this.props;
     const isButtonDisabled = sending || this.props.message.trim().length == 0;
     const opacity = isButtonDisabled ? OPACITY_DISABLED : OPACITY_ENABLED;
+    const opacityRecorder = recording ? OPACITY_DISABLED : OPACITY_ENABLED;
 
     return (
       <View style={styles.container}>
@@ -117,7 +156,7 @@ class MessageFormComponent extends Component {
           placeholder={'Escribe un mensaje'}
           returnKeyType='send'
           onChangeText={(text) => {
-            this.handleMessageChange(text);
+            this.onMessageChange(text);
           }}
           value={this.props.message}
           underlineColorAndroid={'transparent'}
@@ -141,8 +180,8 @@ class MessageFormComponent extends Component {
             }}>
 
             <Image
-              source={require('../../../images/ic_send.png')}
-              style={{opacity: opacity}} />
+              source={require('../../../images/recorder.png')}
+              style={{opacity: opacityRecorder}} />
 
           </TouchableOpacity>
       </View>

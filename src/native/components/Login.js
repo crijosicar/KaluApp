@@ -81,10 +81,10 @@ class Login extends React.Component {
             } else {
               alert('Result Name: ' + result.name);
               console.log('nombre:' + result.name.toString() + ' id:' + result.id.toString());
-             
+
              //validateUserFacebookCreated
              this.props.onFacebookReg(result.id);
-             
+
               }
             }
 

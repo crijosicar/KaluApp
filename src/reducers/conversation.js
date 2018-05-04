@@ -37,7 +37,6 @@ export default function conversationReducer(state = initialState, action) {
         }
     }
     case types.CHAT_MESSAGE_UPDATE: {
-      if(action.text){
         return {
           ...state,
           sending: false,
@@ -46,8 +45,6 @@ export default function conversationReducer(state = initialState, action) {
           error: null,
           loading: false,
         }
-      }
-      return initialState;
     }
     case types.CHAT_LOAD_MESSAGES_SUCCESS: {
       if(action.messages){
@@ -89,6 +86,15 @@ export default function conversationReducer(state = initialState, action) {
         return {
           ...state,
           watsonResponse: action.data
+        }
+      }
+      return initialState;
+    }
+    case types.SET_RECORDING_STATUS: {
+      if(action.data){
+        return {
+          ...state,
+          recording: action.data.recording
         }
       }
       return initialState;

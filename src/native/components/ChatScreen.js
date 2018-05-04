@@ -36,22 +36,19 @@ class ChatScreen extends Component {
       this.props.loadMessages(this.props.member);
   }
 
-  componentDidUpdate(){}
-
   onMessagesSended(c){
     this.props.loadMessages(this.props.member);
   }
 
   render() {
-    const { loading, error, sending } = this.props;
+    const { loading, error, sending, recording } = this.props;
 
     return (
       <Container>
+            { error && <Messages message={error} /> }
             <KeyboardAvoidingView
                 behavior='position'
                 style={styles.container}>
-                
-                { loading ? <Messages message={"Cargando mensajes..."} type="success" />  : null }
 
                 <ScrollView
                   contentContainerStyle={styles.contentContainer}
@@ -66,10 +63,16 @@ class ChatScreen extends Component {
                   <MessagesList {...this.props} />
                 </ScrollView>
 
+                { loading ? <Messages message={"Cargando mensajes..."} type="success" />  : null }
+                { recording ? <Messages message={"Kalu esta escuchando..."} type="error" />  : null }
+                { sending ? <Messages message={"Enviando mensaje..."} type="info" />  : null }
+
                 {/* Form for send message */}
                 <MessagesForm {...this.props}
                       style={styles.messageFrom}
-                      onSendMessage={ (c) => { this.onMessagesSended(c) }
+                      onSendMessage={(c) => {
+                        this.onMessagesSended(c);
+                      }
                 }/>
             </KeyboardAvoidingView>
       </Container>

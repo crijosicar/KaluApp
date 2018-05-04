@@ -27,25 +27,46 @@ export function sendMessage(message, member, from) {
         "token": member.token
       }
     )
-    .then((response) => {
+    .then(async (response) => {
           if(response.error){
-              dispatch(chatMessageError("Ocurrió un error!"));
-              resolve();
+              await dispatch(chatMessageError("Ocurrió un error!"));
+              reject({ message: "Ocurrió un error!"});
           } else {
-              dispatch(chatMessageSuccess());
+              await dispatch(chatMessageSuccess());
+              await dispatch({
+                type: types.SET_WATSON_RESPONSE,
+                data: response
+              });
               resolve();
           }
     })
     .catch((err) => {
       dispatch(chatMessageError("Ocurrió un error!"));
-      reject();
+      reject({ message: "Ocurrió un error!"});
     });
 
   })
   .catch(async (err) => {
      await dispatch(chatMessageError(err.message));
+     await statusMessage(dispatch, 'error', err.message);
      throw err.message;
    });
+}
+
+/**
+  * Set loading
+  */
+export function setRecordingStatus(status = false){
+  return dispatch => new Promise(async (resolve, reject) => {
+    await dispatch({
+      type: types.SET_RECORDING_STATUS,
+      data: {
+        "recording": status
+      }
+    })
+    resolve();
+  })
+  .catch((err) => { throw err.message });
 }
 
 export function sendMessageAsAudio(audio, member, from) {
@@ -68,26 +89,27 @@ export function sendMessageAsAudio(audio, member, from) {
     };
 
     return Api.post(baseurl, data)
-    .then(async (response) => {
-          if(response.error){
-              await dispatch(chatMessageError("Ocurrió un error!"));
-              resolve();
-          } else {
-              await dispatch(chatMessageSuccess());
-              await dispatch({
-                type: types.SET_WATSON_RESPONSE,
-                data: response
-              });
-              resolve();
-          }
-    })
-    .catch((err) => {
-      dispatch(chatMessageError("Ocurrió un error!"));
-      reject();
-    });
+      .then(async (response) => {
+            if(response.error){
+                await dispatch(chatMessageError("Ocurrió un error!"));
+                reject({ message: "Ocurrió un error!"});
+            } else {
+                await dispatch(chatMessageSuccess());
+                await dispatch({
+                  type: types.SET_WATSON_RESPONSE,
+                  data: response
+                });
+                resolve();
+            }
+      })
+      .catch(async (err) => {
+        await dispatch(chatMessageError("Ocurrió un error!"));
+        reject({ message: "Ocurrió un error!"});
+      });
   })
   .catch(async (err) => {
      await dispatch(chatMessageError(err.message));
+     await statusMessage(dispatch, 'error', err.message);
      throw err.message;
    });
 }
@@ -158,18 +180,18 @@ export function loadMessages(member) {
 
         if(response.stack){
           dispatch(loadMessagesError(response.message));
-          reject();
-          return;
+          reject({message: "Ocurrió un error!"});
+        } else {
+          dispatch(loadMessagesSuccess(response));
+          resolve();
         }
 
-        dispatch(loadMessagesSuccess(response));
-        resolve();
-        return;
     })
     .catch(reject);
 
   }).catch(async (err) => {
       await statusMessage(dispatch, 'loading', false);
+      await statusMessage(dispatch, 'error', err.message);
       throw err.message;
   });
 }
@@ -178,8 +200,8 @@ export function loadMessagesByMember(member) {
   return dispatch => new Promise(async (resolve, reject) => {
 
     await statusMessage(dispatch, 'success', "Enviando mensaje...");
-    let baseurl = "http://www.kaluapp.com:81/api/get-messages";
-    //let baseurl = "http://192.168.1.15/api/get-messages";
+    //let baseurl = "http://www.kaluapp.com:81/api/get-messages";
+    let baseurl = "http://192.168.1.15/api/get-messages";
 
     return Api.post(baseurl,
       {
@@ -192,7 +214,7 @@ export function loadMessagesByMember(member) {
 
         if(response.stack){
           dispatch(loadMessagesError(response.message));
-          reject();
+          reject({message: "Ocurrió un error!"});
         }
 
         dispatch(loadMessagesSuccess(response));
@@ -202,6 +224,7 @@ export function loadMessagesByMember(member) {
 
   }).catch(async (err) => {
       await statusMessage(dispatch, 'loading', false);
+      await statusMessage(dispatch, 'error', err.message);
       throw err.message;
   });
 }

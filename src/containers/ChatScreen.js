@@ -28,7 +28,8 @@ class ChatScreen extends Component {
             successMessage,
             loadMessages,
             sending,
-            messages
+            messages,
+            recording
           } = this.props;
 
     return <Layout  conversation={conversation}
@@ -40,11 +41,13 @@ class ChatScreen extends Component {
                     success={successMessage}
                     loadMessages={loadMessages}
                     sending={sending}
-                    messages={messages}/>;
+                    messages={messages}
+                    recording={recording}/>;
   }
 }
 
 const mapStateToProps = state => ({
+  recording: state.conversation.recording || false,
   sending: state.conversation.sending || false,
   messages: state.conversation.messages || [],
   conversation: state.conversation || {},

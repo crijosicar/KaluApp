@@ -6,5 +6,6 @@ export default {
   message: '',
   messages: {},
   loadMessagesError: null,
-  audionName: ''
+  audionName: '',
+  recording: false
 };
