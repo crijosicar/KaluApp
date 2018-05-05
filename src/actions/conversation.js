@@ -115,14 +115,12 @@ export function uploadAudio(audioPath){
   return dispatch => new Promise(async (resolve, reject) => {
     let baseurl = "http://www.kaluapp.com:81/api/upload-audio";
     //let baseurl = "http://192.168.1.15/api/upload-audio";
-    let files = [
-      {
+    let files = [{
         name: 'audio',
         filename: 'audio.mp4',
         filepath: audioPath,
         filetype: 'audio/mp4'
-      }
-    ];
+    }];
 
     RNFS.uploadFiles({
       toUrl: baseurl,
@@ -137,7 +135,9 @@ export function uploadAudio(audioPath){
       progress: (response) => {
         var percentage = Math.floor((response.totalBytesSent/response.totalBytesExpectedToSend) * 100);
       }
-    }).promise.then((response) => {
+    })
+    .promise
+    .then((response) => {
       if (response.statusCode == 200){
           let body = JSON.parse(response.body);
           if(body.error){
@@ -166,15 +166,12 @@ export function loadMessages(member) {
     let baseurl = "http://www.kaluapp.com:81/api/get-messages";
     //let baseurl = "http://192.168.1.15/api/get-messages";
 
-    return Api.post(baseurl,
-      {
+    return Api.post(baseurl, {
            "user_id": member.id,
            "token": member.token
-      }
-    )
+    })
     .then((response) => {
         statusMessage(dispatch, 'loading', false);
-
         if(response.stack){
           dispatch(loadMessagesError(response.message));
           reject({message: "Ocurrió un error!"});
@@ -182,7 +179,6 @@ export function loadMessages(member) {
           dispatch(loadMessagesSuccess(response));
           resolve();
         }
-
     })
     .catch(reject);
 

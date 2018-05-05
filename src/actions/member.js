@@ -4,8 +4,8 @@ import { Firebase, FirebaseRef } from '../lib/firebase';
 import Api from '../lib/api';
 
 /**
-  * Sign Up to API
-  */
+* Sign Up to API
+*/
 export function signUp(formData) {
   const {
     email,
@@ -32,24 +32,24 @@ export function signUp(formData) {
     }
 
     return Api.post(baseurl, payload)
-      .then(async (response) => {
-        if(response.error){
-            if(response.messages['name']) reject({ message: response.messages['name'][0] });
-            if(response.messages['email']) reject({ message: response.messages['email'][0] });
-            if(response.messages['password']) reject({ message: response.messages['password'][0] });
-            if(response.messages['password_confirm']) reject({ message: response.messages['password_confirm'][0] });
-        } else {
-          await statusMessage(dispatch, 'loading', false);
-          resolve();
-        }
-      }).catch(reject);
+    .then(async (response) => {
+      if(response.error){
+        if(response.messages['name']) reject({ message: response.messages['name'][0] });
+        if(response.messages['email']) reject({ message: response.messages['email'][0] });
+        if(response.messages['password']) reject({ message: response.messages['password'][0] });
+        if(response.messages['password_confirm']) reject({ message: response.messages['password_confirm'][0] });
+      } else {
+        await statusMessage(dispatch, 'loading', false);
+        resolve();
+      }
+    }).catch(reject);
 
   }).catch(async (err) => { await statusMessage(dispatch, 'error', err.message); throw err.message; });
 }
 
 /**
-  * Set this User's Session Details
-  */
+* Set this User's Session Details
+*/
 function validateUserSession(dispatch, signedUp) {
   return dispatch => new Promise((resolve) => {
     return dispatch({
@@ -59,9 +59,13 @@ function validateUserSession(dispatch, signedUp) {
   });
 }
 
-function validateUserFacebookCreated(formData) {
+/**
+* Register user with FB
+*/
+export function registerWithFacebook(formData) {
   const {
-   facebook_id
+    facebook_id,
+    nombre
   } = formData;
 
   return dispatch => new Promise(async (resolve, reject) => {
@@ -70,162 +74,132 @@ function validateUserFacebookCreated(formData) {
 
     await statusMessage(dispatch, 'loading', true);
 
-    let baseurl = "http://www.kaluapp.com:81/api/get-user-by-fbid";
-    //let baseurl = "http://192.168.1.15/api/get-user-by-fbid";
-    let payload = {
+    //let baseurl = "http://www.kaluapp.com:81/api/get-user-by-fbid";
+    let baseurl = "http://192.168.1.15/api/get-user-by-fbid";
+
+    return Api.post(baseurl, {
       "facebook_id": facebook_id
-    }
-
-    return Api.post(baseurl, payload)
-      .then(async (response) => {
-        if(response.error){
-            if(response.messages['facebook_id']) reject({ message: response.messages['facebook_id'][0] });
+    })
+    .then(async (response) => {
+      if(response.error){
+        if(response.messages['facebook_id']){
+          reject({ message: response.messages['facebook_id'][0] });
         }
-        else {
-          //await statusMessage(dispatch, 'loading', false);
+      } else {
+        if (response.user != null){
+          let baseurl = "http://192.168.1.15/api/login";
+          //let baseurl = "http://192.168.1.15/api/login";
+          let email = facebook_id + "@facebook.com";
+          let password = facebook_id;
 
-          if (response.user!=null){
+          return Api.post(baseurl, {
+            "email": email,
+            "password": password
+          })
+          .then(async (response) => {
+            if(response.error){
+              await statusMessage(dispatch, 'error', response.message);
+              await validateUserSession(dispatch, false);
+              reject({ message: response.message });
+            } else {
 
-            let baseurl = "http://www.kaluapp.com:81/api/login";
-            //let baseurl = "http://192.168.1.15/api/login";
-            let email= facebook_id+"@facebook.com";
-            let password=facebook_id;
+              let baseurl = "http://192.168.1.15/api/get-user-details";
+              //let baseurl = "http://192.168.1.15/api/get-user-details";
+              let payload = {
+                "token": response.token
+              };
 
-            let payload = {
-                "email": email,
-                "password": password
-            };
-
-            return Api.post(baseurl, payload)
+              Api.post(baseurl, payload)
               .then(async (response) => {
                 if(response.error){
                   await statusMessage(dispatch, 'error', response.message);
                   await validateUserSession(dispatch, false);
                   reject({ message: response.message });
+                } else {
+                  await validateUserSession(dispatch, true);
+                  await dispatch({
+                    type: 'USER_LOGIN',
+                    data: {
+                      token: payload.token
+                    }
+                  });
+                  await dispatch({
+                    type: 'SET_USER_DATA',
+                    data: response
+                  });
+
+                  resolve();
                 }
-                else {
-
-                  let baseurl = "http://www.kaluapp.com:81/api/get-user-details";
-                  //let baseurl = "http://192.168.1.15/api/get-user-details";
-                  let payload = {
-                    "token": response.token
-                  };
-
-                  Api.post(baseurl, payload)
-                    .then(async (response) => {
-                      if(response.error){
-                          await statusMessage(dispatch, 'error', response.message);
-                          await validateUserSession(dispatch, false);
-                          reject({ message: response.message });
-                      } else {
-                        await validateUserSession(dispatch, true);
-
-                        await dispatch({
-                          type: 'USER_LOGIN',
-                          data: {
-                            token: payload.token
-                          }
-                        });
-
-                        await dispatch({
-                          type: 'SET_USER_DATA',
-                          data: response
-                        });
-
-                        resolve();
-                      }
-                    }).catch(reject);
-                  }
-
+              }).catch(reject);
+            }
           }).catch(reject);
 
-          }
-          else{
+        } else {
 
-            let email= facebook_id+"@facebook.com";
-            let password=facebook_id;
-            let baseurl = "http://www.kaluapp.com:81/api/register";
-            //let baseurl = "http://192.168.1.15/api/register";
-            let payload = {
-              "name": email,
-              "email": email,
-              "password": password,
-              "password_confirm": password
-            }
+          return Api.post("http://192.168.1.15/api/register", {
+            "name": nombre,
+            "email": facebook_id + "@facebook.com",
+            "password": facebook_id,
+            "password_confirm": facebook_id,
+            "facebook_id": facebook_id
+          })
+          .then(async (response) => {
+            if(response.error){
+              if(response.messages['name']) reject({ message: response.messages['name'][0] });
+              if(response.messages['email']) reject({ message: response.messages['email'][0] });
+              if(response.messages['password']) reject({ message: response.messages['password'][0] });
+              if(response.messages['password_confirm']) reject({ message: response.messages['password_confirm'][0] });
+            } else {
+              await statusMessage(dispatch, 'loading', false);
 
-            return Api.post(baseurl, payload)
+              return Api.post("http://192.168.1.15/api/login", {
+                "email": facebook_id + "@facebook.com",
+                "password": facebook_id
+              })
               .then(async (response) => {
                 if(response.error){
-
-                    if(response.messages['name']) reject({ message: response.messages['name'][0] });
-                    if(response.messages['email']) reject({ message: response.messages['email'][0] });
-                    if(response.messages['password']) reject({ message: response.messages['password'][0] });
-                    if(response.messages['password_confirm']) reject({ message: response.messages['password_confirm'][0] });
-
+                  await statusMessage(dispatch, 'error', response.message);
+                  await validateUserSession(dispatch, false);
+                  reject({ message: response.message });
                 } else {
-                  await statusMessage(dispatch, 'loading', false);
-
-                  let baseurl = "http://www.kaluapp.com:81/api/login";
-                  //let baseurl = "http://192.168.1.15/api/login";
-                  let email = facebook_id+"@facebook.com";
-                  let password = facebook_id;
-                  let payload = {
-                      "email": email,
-                      "password": password
-                  };
-
-                return Api.post(baseurl, payload)
+                  let token = response.token;
+                  Api.post("http://192.168.1.15/api/get-user-details", {
+                    "token": token
+                  })
                   .then(async (response) => {
                     if(response.error){
-                        await statusMessage(dispatch, 'error', response.message);
-                        await validateUserSession(dispatch, false);
-                        reject({ message: response.message });
+                      await statusMessage(dispatch, 'error', response.message);
+                      await validateUserSession(dispatch, false);
+                      reject({ message: response.message });
                     } else {
-
-                        let baseurl = "http://www.kaluapp.com:81/api/get-user-details";
-                        //let baseurl = "http://192.168.1.15/api/get-user-details";
-
-                        let payload = {
-                          "token": response.token
-                        };
-
-                        Api.post(baseurl, payload)
-                          .then(async (response) => {
-                            if(response.error){
-                                await statusMessage(dispatch, 'error', response.message);
-                                await validateUserSession(dispatch, false);
-                                reject({ message: response.message });
-                            } else {
-                              await validateUserSession(dispatch, true);
-
-                              await dispatch({
-                                type: 'USER_LOGIN',
-                                data: {
-                                  token: payload.token
-                                }
-                              });
-
-                              await dispatch({
-                                type: 'SET_USER_DATA',
-                                data: response
-                              });
-
-                              resolve();
-                            }
-                          }).catch(reject);
+                      await validateUserSession(dispatch, true);
+                      await dispatch({
+                        type: 'USER_LOGIN',
+                        data: {
+                          token: token
                         }
+                      });
+                      await dispatch({
+                        type: 'SET_USER_DATA',
+                        data: response
+                      });
+
+                      resolve();
+                    }
+                  }).catch(reject);
+                }
               }).catch(reject);
-              }
-            }).catch(reject);
-          }
+            }
+          }).catch(reject);
         }
-      }).catch(reject);
-   }).catch(async (err) => { await statusMessage(dispatch, 'error', err.message); throw err.message; });
+      }
+    }).catch(reject);
+  }).catch(async (err) => { await statusMessage(dispatch, 'error', err.message); throw err.message; });
 }
 
 /**
-  * Get this User's Session Details
-  */
+* Get this User's Session Details
+*/
 export function getMemberData() {
   if (Firebase === null) return () => new Promise(resolve => resolve());
 
@@ -242,8 +216,8 @@ export function getMemberData() {
 }
 
 /**
-  * Login to Firebase with Email/Password
-  */
+* Login to Firebase with Email/Password
+*/
 export function login(formData) {
 
   const {
@@ -261,61 +235,61 @@ export function login(formData) {
     let baseurl = "http://www.kaluapp.com:81/api/login";
     //let baseurl = "http://192.168.1.15/api/login";
     let payload = {
-    	"email": email,
-    	"password": password
+      "email": email,
+      "password": password
     };
 
     return Api.post(baseurl, payload)
-      .then(async (response) => {
-        if(response.error){
+    .then(async (response) => {
+      if(response.error){
+        await statusMessage(dispatch, 'error', response.message);
+        await validateUserSession(dispatch, false);
+        reject({ message: response.message });
+      } else {
+
+        let baseurl = "http://www.kaluapp.com:81/api/get-user-details";
+        //let baseurl = "http://192.168.1.15/api/get-user-details";
+        let payload = {
+          "token": response.token
+        };
+
+        Api.post(baseurl, payload)
+        .then(async (response) => {
+          if(response.error){
             await statusMessage(dispatch, 'error', response.message);
             await validateUserSession(dispatch, false);
             reject({ message: response.message });
-        } else {
+          } else {
+            await validateUserSession(dispatch, true);
 
-            let baseurl = "http://www.kaluapp.com:81/api/get-user-details";
-            //let baseurl = "http://192.168.1.15/api/get-user-details";
-            let payload = {
-              "token": response.token
-            };
+            await dispatch({
+              type: 'USER_LOGIN',
+              data: {
+                token: payload.token
+              }
+            });
 
-            Api.post(baseurl, payload)
-              .then(async (response) => {
-                if(response.error){
-                    await statusMessage(dispatch, 'error', response.message);
-                    await validateUserSession(dispatch, false);
-                    reject({ message: response.message });
-                } else {
-                  await validateUserSession(dispatch, true);
+            await dispatch({
+              type: 'SET_USER_DATA',
+              data: response
+            });
 
-                  await dispatch({
-                    type: 'USER_LOGIN',
-                    data: {
-                      token: payload.token
-                    }
-                  });
+            resolve();
+          }
+        }).catch(reject);
+      }
 
-                  await dispatch({
-                    type: 'SET_USER_DATA',
-                    data: response
-                  });
-
-                  resolve();
-                }
-              }).catch(reject);
-        }
-
-      }).catch(reject);
+    }).catch(reject);
 
   }).catch((err) => {
     statusMessage(dispatch, 'error', err.message);
     throw err.message;
-   });
+  });
 }
 
 /**
-  * Reset Password
-  */
+* Reset Password
+*/
 export function resetPassword(formData) {
   const { email } = formData;
 
@@ -327,20 +301,20 @@ export function resetPassword(formData) {
 
     // Go to Firebase
     return Firebase.auth()
-      .sendPasswordResetEmail(email)
-      .then(() => statusMessage(dispatch, 'loading', false)
-                  .then(resolve(dispatch({ type: 'USER_RESET' }))))
-      .catch(reject);
+    .sendPasswordResetEmail(email)
+    .then(() => statusMessage(dispatch, 'loading', false)
+    .then(resolve(dispatch({ type: 'USER_RESET' }))))
+    .catch(reject);
   })
   .catch(async (err) => {
     await statusMessage(dispatch, 'error', err.message);
     throw err.message;
-   });
+  });
 }
 
 /**
-  * Update Profile
-  */
+* Update Profile
+*/
 export function updateProfile(formData) {
   const {
     email,
@@ -373,22 +347,22 @@ export function updateProfile(formData) {
 
     // Go to Firebase
     return FirebaseRef.child(`users/${UID}`).update({ firstName, lastName })
-      .then(async () => {
-        // Update Email address
-        if (changeEmail) {
-          await Firebase.auth().currentUser.updateEmail(email).catch(reject);
-        }
+    .then(async () => {
+      // Update Email address
+      if (changeEmail) {
+        await Firebase.auth().currentUser.updateEmail(email).catch(reject);
+      }
 
-        // Change the password
-        if (changePassword) {
-          await Firebase.auth().currentUser.updatePassword(password).catch(reject);
-        }
+      // Change the password
+      if (changePassword) {
+        await Firebase.auth().currentUser.updatePassword(password).catch(reject);
+      }
 
-        // Update Redux
-        await getUserData(dispatch);
-        await statusMessage(dispatch, 'success', 'Profile Updated');
-        resolve();
-      }).catch(reject);
+      // Update Redux
+      await getUserData(dispatch);
+      await statusMessage(dispatch, 'success', 'Profile Updated');
+      resolve();
+    }).catch(reject);
   })
   .catch(async (err) => {
     await statusMessage(dispatch, 'error', err.message);
@@ -397,15 +371,15 @@ export function updateProfile(formData) {
 }
 
 /**
-  * Logout
-  */
+* Logout
+*/
 export function logout() {
   return dispatch => new Promise((resolve, reject) => {
     Firebase.auth().signOut()
-      .then(() => {
-        dispatch({ type: 'USER_RESET' });
-        setTimeout(resolve, 1000); // Resolve after 1s so that user sees a message
-      }).catch(reject);
+    .then(() => {
+      dispatch({ type: 'USER_RESET' });
+      setTimeout(resolve, 1000); // Resolve after 1s so that user sees a message
+    }).catch(reject);
   })
   .catch(async (err) => {
     await statusMessage(dispatch, 'error', err.message);
@@ -414,8 +388,8 @@ export function logout() {
 }
 
 /**
-  * Set loading
-  */
+* Set loading
+*/
 export function setLoadingFalse(){
   return dispatch => new Promise((resolve, reject) => {
     statusMessage(dispatch, 'loading', false);
@@ -424,8 +398,8 @@ export function setLoadingFalse(){
 }
 
 /**
-  * Reset user
-  */
+* Reset user
+*/
 export function userDataReset(){
   return dispatch => new Promise((resolve, reject) => {
     resolve(dispatch({ type: 'USER_RESET' }));

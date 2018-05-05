@@ -11,7 +11,7 @@ import Spacer from './Spacer';
 
 class Login extends React.Component {
   static propTypes = {
-      member: PropTypes.shape({
+    member: PropTypes.shape({
       email: PropTypes.string,
     }).isRequired,
     error: PropTypes.string,
@@ -34,6 +34,7 @@ class Login extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.fbAuth = this.fbAuth.bind(this);
   }
 
   handleChange = (name, val) => {
@@ -44,60 +45,67 @@ class Login extends React.Component {
   }
 
   handleSubmit = () => {
-     this.props.onLogin(this.state)
-     .then(() => {
-       this.setState({
-         password: '',
-       });
-       Actions.conversation();
-     })
-     .catch((e) => {
-       this.setState({
-         ...this.state
-       });
-     });
+    this.props.onLogin(this.state)
+    .then(() => {
+      this.setState({
+        password: '',
+        email: ''
+      });
+      if(this.props.member && this.props.member.id){
+        Actions.conversation();
+      }
+    })
+    .catch((e) => {
+      this.setState({
+        ...this.state
+      });
+    });
   }
-  fbAuth() {
-    LoginManager.logInWithReadPermissions(['public_profile']).then(
-      function (result) {
+
+  fbAuth = () => {
+    const responseInfoCallback = (error, result) => {
+      if (error) {
+        alert('Error fetching data: ' + error.toString());
+      } else {
+        this.props.onFacebookRegister({
+          "facebook_id": result.id,
+          "nombre": result.name
+        })
+          .then(() => {
+            this.setState({
+              password: '',
+              email: ''
+            });
+            if(this.props.member && this.props.member.id){
+              Actions.conversation();
+            }
+          })
+          .catch((err) =>{
+              console.log("err ->", err);
+          });
+      }
+    };
+
+    LoginManager.logInWithReadPermissions(['public_profile'])
+    .then((result) => {
         if (result.isCancelled) {
           console.log('Login was cancelled');
         } else {
-          AccessToken.getCurrentAccessToken().then(
-            (data) => {
+          AccessToken.getCurrentAccessToken()
+          .then((data) => {
               const infoRequest = new GraphRequest(
                 '/me?fields=name,picture',
                 null,
-                this._responseInfoCallback
+                responseInfoCallback
               );
-              // Start the graph request.
               new GraphRequestManager().addRequest(infoRequest).start();
-
-            },
-             //Create response callback.
-            _responseInfoCallback = (error, result) => {
-            if (error) {
-              alert('Error fetching data: ' + error.toString());
-            } else {
-              alert('Result Name: ' + result.name);
-              console.log('nombre:' + result.name.toString() + ' id:' + result.id.toString());
-
-             //validateUserFacebookCreated
-             this.props.onFacebookReg(result.id);
-
-              }
-            }
-
-          )
-          Actions.conversation();
-          console.log('Login was successful with permissions: '
-            + result.grantedPermissions.toString());
+            })
+            .catch((err) => console.log("err ->", err))
         }
-      },
-      function (error) {
+      })
+      .catch((error) => {
         console.log('Login failed with error: ' + error);
-      }
-    );
+      });
   }
 
   render() {
@@ -110,20 +118,20 @@ class Login extends React.Component {
       <Container>
         <Content padder>
           <View style={{
-            flex: 1, justifyContent: 'center',
-            alignItems: 'center'
-          }}>
+              flex: 1, justifyContent: 'center',
+              alignItems: 'center'
+            }}>
             <Image
               style={{width: 50, height: 50}}
               source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}}
-            />
+              />
           </View>
 
           <Spacer size={30} />
 
           <View>
-            <Button block onPress={this.fbAuth.bind(this)}>
-              <Text>Ingresa with Facebook</Text>
+            <Button block onPress={this.fbAuth}>
+              <Text>Ingresa con Facebook</Text>
             </Button>
           </View>
 
@@ -157,7 +165,7 @@ class Login extends React.Component {
                 value={this.state.email}
                 keyboardType="email-address"
                 onChangeText={v => this.handleChange('email', v)}
-              />
+                />
             </Item>
 
             <Item stackedLabel>
@@ -165,44 +173,44 @@ class Login extends React.Component {
               <Input
                 secureTextEntry
                 onChangeText={v => this.handleChange('password', v)}
-              />
+                />
             </Item>
 
             <Spacer size={20} />
 
             <List>
               <ListItem onPress={Actions.forgotPassword} >
-                  <Body>
-                      <Text style={{
+                <Body>
+                  <Text style={{
                       fontSize: 14, textAlign:
-                        'center', margin: 10
-                      }}>¿Olvidaste tu constraseña?
-                    </Text>
-                  </Body>
+                      'center', margin: 10
+                    }}>¿Olvidaste tu constraseña?
+                  </Text>
+                </Body>
               </ListItem>
             </List>
 
             <Spacer size={20} />
 
-              <Button
-                success
-                block
-                onPress={() => {
-                  this.handleSubmit();
-                }}>
-                <Text style={{
-                    fontSize: 14, textAlign:
-                    'center', margin: 10
-                  }}>Iniciar sesión</Text>
+            <Button
+              success
+              block
+              onPress={() => {
+                this.handleSubmit();
+              }}>
+              <Text style={{
+                  fontSize: 14, textAlign:
+                  'center', margin: 10
+                }}>Iniciar sesión</Text>
               </Button>
 
               <Spacer size={20} />
 
-          </Form>
-        </Content>
-      </Container>
-    );
+            </Form>
+          </Content>
+        </Container>
+      );
+    }
   }
-}
 
-export default Login;
+  export default Login;
