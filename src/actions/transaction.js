@@ -7,8 +7,8 @@ import axios from 'axios';
 export function addMovimiento(tipoMovimiento, member) {
   return dispatch => new Promise(async (resolve, reject) => {
     await statusMessage(dispatch, 'loading', true);
-    //let baseurl = "http://www.kaluapp.com:81/api/add-transaction";
-    let baseurl = "http://192.168.1.15/api/add-transaction";
+    let baseurl = "http://www.kaluapp.com:81/api/add-transaction";
+    //let baseurl = "http://192.168.1.15/api/add-transaction";
     let data = {
       "user_id": member.id,
       "tipo_transaccion": tipoMovimiento,
@@ -41,8 +41,8 @@ export function addMovimiento(tipoMovimiento, member) {
 export function addDetalleMovimiento(movimientoId, items, member) {
   return dispatch => new Promise(async (resolve, reject) => {
     await statusMessage(dispatch, 'loading', true);
-    //let baseurl = "http://www.kaluapp.com:81/api/add-transaction";
-    let baseurl = "http://192.168.1.15/api/add-items-transaction";
+    let baseurl = "http://www.kaluapp.com:81/api/add-items-transaction";
+    //let baseurl = "http://192.168.1.15/api/add-items-transaction";
     let data = {
       "transaction_id": movimientoId,
       "items": items,

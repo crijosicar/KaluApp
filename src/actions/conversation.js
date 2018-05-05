@@ -10,8 +10,8 @@ export function sendMessage(message, member, from) {
 
     await dispatch(chatMessageLoading());
 
-    //let baseurl = "http://www.kaluapp.com:81/api/send-message";
-    let baseurl = "http://192.168.1.15/api/send-message";
+    let baseurl = "http://www.kaluapp.com:81/api/send-message";
+    //let baseurl = "http://192.168.1.15/api/send-message";
 
     return Api.post(baseurl,
       {
@@ -71,8 +71,8 @@ export function setRecordingStatus(status = false){
 export function sendMessageAsAudio(audio, member, from) {
   return dispatch => new Promise(async (resolve, reject) => {
     await dispatch(chatMessageLoading());
-    //let baseurl = "http://www.kaluapp.com:81/api/send-audio-message";
-    let baseurl = "http://192.168.1.15/api/send-audio-message";
+    let baseurl = "http://www.kaluapp.com:81/api/send-audio-message";
+    //let baseurl = "http://192.168.1.15/api/send-audio-message";
     let data = {
       "user_id": member.id,
       "is_bot": from,
@@ -113,8 +113,8 @@ export function sendMessageAsAudio(audio, member, from) {
 
 export function uploadAudio(audioPath){
   return dispatch => new Promise(async (resolve, reject) => {
-    //let baseurl = "http://www.kaluapp.com:81/api/upload-audio";
-    let baseurl = "http://192.168.1.15/api/upload-audio";
+    let baseurl = "http://www.kaluapp.com:81/api/upload-audio";
+    //let baseurl = "http://192.168.1.15/api/upload-audio";
     let files = [
       {
         name: 'audio',
@@ -163,8 +163,8 @@ export function loadMessages(member) {
   return dispatch => new Promise(async (resolve, reject) => {
 
     await statusMessage(dispatch, 'loading', true);
-    //let baseurl = "http://www.kaluapp.com:81/api/get-messages";
-    let baseurl = "http://192.168.1.15/api/get-messages";
+    let baseurl = "http://www.kaluapp.com:81/api/get-messages";
+    //let baseurl = "http://192.168.1.15/api/get-messages";
 
     return Api.post(baseurl,
       {
