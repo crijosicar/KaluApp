@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, TextInput, TouchableOpacity, Image, Alert, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import { Player, Recorder, MediaStates } from 'react-native-audio-toolkit';
+import { Actions } from 'react-native-router-flux';
 
 const OPACITY_ENABLED = 1.0;
 const OPACITY_DISABLED = 0.2;
@@ -26,6 +27,7 @@ class MessageFormComponent extends Component {
     this.props.sendMessage(this.props.message, this.props.member, isBot)
     .then((response) => {
       this.props.onSendMessage();
+
       if(this.props.watsonResponse != ""){
         if(!this.props.watsonResponse.error){
           if(this.props.watsonResponse.message.intents.length){
@@ -61,11 +63,11 @@ class MessageFormComponent extends Component {
                     let items = [];
                     let categoria = "";
                     let nombre = "";
+                    let monto = 0;
 
                     if(medidas.length){
                       nombre = numbers[0].metadata.numeric_value + " " + medidas[0].value + " de " + comida[0].value;
                       categoria = comida[0].entity;
-                      monto = 0;
 
                       if(typeof numbers[1] !== "undefined"){
                         monto = numbers[1].metadata.numeric_value;
@@ -80,15 +82,16 @@ class MessageFormComponent extends Component {
                     } else {
                       if(numbers.length){
                         for(let i = 0; i < numbers[0].metadata.numeric_value; i++){
-                          let monto = 0;
 
                           if(typeof numbers[1] !== "undefined"){
                             monto = numbers[1].metadata.numeric_value;
                           }
+
                           if(comida.length){
                             categoria = comida[0].entity;
                             nombre = comida[0].value;
                           }
+
                           items.push({
                             categoria_activo: categoria,
                             nombre: nombre,
@@ -100,7 +103,7 @@ class MessageFormComponent extends Component {
 
                     this.props.addDetalleMovimiento(this.props.transaction.id, items, this.props.member)
                     .then(() => {
-                      let nombreAux = numbers[0].metadata.numeric_value + nombre;
+                      let nombreAux = numbers[0].metadata.numeric_value + " " + nombre;
                       let haAux = "ha"
                       if(numbers[0].metadata.numeric_value > 1){
                         nombreAux + "s";
@@ -120,6 +123,29 @@ class MessageFormComponent extends Component {
 
                   }).catch((err) => { console.log("err", err); });
                 }, 500);
+              } else if(this.props.watsonResponse.message.intents[0].intent === "IR_A"){
+                setTimeout(()=> {
+                  let views = [];
+                  if(this.props.watsonResponse.message.entities.length){
+                    views = this.props.watsonResponse.message.entities.filter((entity) => entity.entity === "VIEWS");
+                  }
+                  if(views.length){
+                    let viewName = views[0].value;
+                    switch(viewName) {
+                      case "inicio":
+                      Actions.forgotPassword();
+                      break;
+                      case "mi cartera":
+                      Actions.forgotPassword();
+                      break;
+                      case "reportes":
+                      Actions.forgotPassword();
+                      break;
+                      default:
+                      Actions.conversation();
+                    }
+                  }
+                }, 500);
               }
             }
 
@@ -135,6 +161,7 @@ class MessageFormComponent extends Component {
           }
         }
       }
+
     })
     .catch((err) => console.log(err));
   }
@@ -175,7 +202,7 @@ class MessageFormComponent extends Component {
                 if(this.props.watsonResponse != ""){
                   if(!this.props.watsonResponse.error){
                     if(this.props.watsonResponse.message.intents.length){
-
+                      //TOMA DE DECISIONES DE WATSON ASSISTANT
                       if(this.props.watsonResponse.message.output.nodes_visited.length){
                         if(this.props.watsonResponse.message.output.nodes_visited[0] === "En otras cosas"){
                           setTimeout(()=> {
@@ -191,6 +218,104 @@ class MessageFormComponent extends Component {
                             .then((response) => {
                               this.props.onSendMessage();
                             }).catch((err) => { console.log("err", err); });
+                          }, 500);
+                        } else if(this.props.watsonResponse.message.intents[0].intent === "AGREGAR"){
+                          setTimeout(()=> {
+                            this.props.addMovimiento("INGRESO", this.props.member)
+                            .then(() => {
+                              let numbers = [];
+                              let comida = [];
+                              let medidas = [];
+                              if(this.props.watsonResponse.message.entities.length){
+                                numbers = this.props.watsonResponse.message.entities.filter((entity) => entity.entity === "sys-number");
+                                comida = this.props.watsonResponse.message.entities.filter((entity) => entity.entity === "COMIDA");
+                                medidas = this.props.watsonResponse.message.entities.filter((entity) => entity.entity === "MEDIDAS");
+                              }
+                              let items = [];
+                              let categoria = "";
+                              let nombre = "";
+                              let monto = 0;
+
+                              if(medidas.length){
+                                nombre = numbers[0].metadata.numeric_value + " " + medidas[0].value + " de " + comida[0].value;
+                                categoria = comida[0].entity;
+
+                                if(typeof numbers[1] !== "undefined"){
+                                  monto = numbers[1].metadata.numeric_value;
+                                }
+
+                                items.push({
+                                  categoria_activo: categoria,
+                                  nombre: nombre,
+                                  monto: monto
+                                })
+
+                              } else {
+                                if(numbers.length){
+                                  for(let i = 0; i < numbers[0].metadata.numeric_value; i++){
+
+                                    if(typeof numbers[1] !== "undefined"){
+                                      monto = numbers[1].metadata.numeric_value;
+                                    }
+
+                                    if(comida.length){
+                                      categoria = comida[0].entity;
+                                      nombre = comida[0].value;
+                                    }
+
+                                    items.push({
+                                      categoria_activo: categoria,
+                                      nombre: nombre,
+                                      monto: monto
+                                    });
+                                  }
+                                }
+                              }
+
+                              this.props.addDetalleMovimiento(this.props.transaction.id, items, this.props.member)
+                              .then(() => {
+                                let nombreAux = numbers[0].metadata.numeric_value + " " + nombre;
+                                let haAux = "ha"
+                                if(numbers[0].metadata.numeric_value > 1){
+                                  nombreAux + "s";
+                                  haAux = "han";
+                                }
+                                if(medidas.length){
+                                  nombreAux = nombre;
+                                }
+                                setTimeout(()=> {
+                                  this.props.sendMessage("se " + haAux + " agregado " + nombreAux, this.props.member, 1)
+                                  .then((response) => {
+                                    this.props.onSendMessage();
+                                  }).catch((err) => { console.log("err", err); });
+                                }, 500);
+                              })
+                              .catch((err) => { console.log("err", err); });
+
+                            }).catch((err) => { console.log("err", err); });
+                          }, 500);
+                        } else if(this.props.watsonResponse.message.intents[0].intent === "IR_A"){
+                          setTimeout(()=> {
+                            let views = [];
+                            if(this.props.watsonResponse.message.entities.length){
+                              views = this.props.watsonResponse.message.entities.filter((entity) => entity.entity === "VIEWS");
+                            }
+                            if(views.length){
+                              let viewName = views[0].value;
+                              switch(viewName) {
+                                case "inicio":
+                                Actions.forgotPassword();
+                                break;
+                                case "mi cartera":
+                                Actions.forgotPassword();
+                                break;
+                                case "reportes":
+                                Actions.forgotPassword();
+                                break;
+                                default:
+                                Actions.conversation();
+                              }
+                            }
                           }, 500);
                         }
                       }
