@@ -21,6 +21,7 @@ class ChatScreen extends Component {
     const { Layout,
             conversation,
             member,
+            transaction,
             onFormSubmit,
             isLoading,
             infoMessage,
@@ -34,6 +35,7 @@ class ChatScreen extends Component {
 
     return <Layout  conversation={conversation}
                     member={member}
+                    transaction={transaction}
                     onFormSubmit={onFormSubmit}
                     loading={isLoading}
                     info={infoMessage}

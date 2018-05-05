@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import { sendMessage, updateMessage, sendMessageAsAudio, uploadAudio, setRecordingStatus } from '../../actions/conversation'
+import { addMovimiento, addDetalleMovimiento } from '../../actions/transaction'
+
 import MessageFormComponent from './components/MessagesForm'
 
 const MessageForm = (props) => {
@@ -19,7 +21,11 @@ const MessageForm = (props) => {
           audionName,
           watsonResponse,
           recording,
-          setRecordingStatus
+          setRecordingStatus,
+          addMovimiento,
+          transaction,
+          addDetalleMovimiento,
+          transactionDetailState
         } = props;
 
   return <MessageFormComponent
@@ -36,6 +42,10 @@ const MessageForm = (props) => {
             watsonResponse={watsonResponse}
             recording={recording}
             setRecordingStatus={setRecordingStatus}
+            addMovimiento={addMovimiento}
+            transaction={transaction}
+            addDetalleMovimiento={addDetalleMovimiento}
+            transactionDetailState={transactionDetailState}
             />
 }
 
@@ -46,7 +56,9 @@ const mapStateToProps = state => ({
   message: state.conversation.message || '',
   sending: state.conversation.sending || false,
   sendingError: state.conversation.sendingError,
-  recording: state.conversation.recording || false
+  recording: state.conversation.recording || false,
+  transaction: state.transaction || {},
+  transactionDetailState: state.transaction.transactionDetailState || false
 })
 
 const mapDispatchToProps = {
@@ -54,7 +66,9 @@ const mapDispatchToProps = {
   updateMessage: updateMessage,
   onSendMessageAsAudio: sendMessageAsAudio,
   uploadAudio: uploadAudio,
-  setRecordingStatus: setRecordingStatus
+  setRecordingStatus: setRecordingStatus,
+  addMovimiento: addMovimiento,
+  addDetalleMovimiento: addDetalleMovimiento
 }
 
 MessageForm.propTypes = {

@@ -24,21 +24,13 @@ class MessageFormComponent extends Component {
 
   handleButtonPress = (isBot = 0) => {
     this.props.sendMessage(this.props.message, this.props.member, isBot)
-      .then((response) => {
-        this.props.onSendMessage();
-        if(this.props.watsonResponse != ""){
-          if(!this.props.watsonResponse.error){
-            console.log(this.props.watsonResponse);
-            if(this.props.watsonResponse.message.intents.length){
-              if(this.props.watsonResponse.message.intents[0].intent === "SALUDO"){
-                setTimeout(()=> {
-                  this.props.sendMessage(this.props.watsonResponse.message.output.text[0], this.props.member, 1)
-                  .then((response) => {
-                    this.props.onSendMessage();
-                  }).catch((err) => { console.log("err", err); });
-                }, 500);
-              }
-            } else if( this.props.watsonResponse.message.output.nodes_visited.length){
+    .then((response) => {
+      this.props.onSendMessage();
+      if(this.props.watsonResponse != ""){
+        if(!this.props.watsonResponse.error){
+          if(this.props.watsonResponse.message.intents.length){
+            //TOMA DE DECISIONES DE WATSON ASSISTANT
+            if(this.props.watsonResponse.message.output.nodes_visited.length){
               if(this.props.watsonResponse.message.output.nodes_visited[0] === "En otras cosas"){
                 setTimeout(()=> {
                   this.props.sendMessage(this.props.watsonResponse.message.output.text[0], this.props.member, 1)
@@ -46,12 +38,105 @@ class MessageFormComponent extends Component {
                     this.props.onSendMessage();
                   }).catch((err) => { console.log("err", err); });
                 }, 500);
+              } else if(this.props.watsonResponse.message.intents[0].intent === "SALUDO" ||
+              this.props.watsonResponse.message.intents[0].intent === "COMO_TE_LLAMAS"){
+                setTimeout(()=> {
+                  this.props.sendMessage(this.props.watsonResponse.message.output.text[0], this.props.member, 1)
+                  .then((response) => {
+                    this.props.onSendMessage();
+                  }).catch((err) => { console.log("err", err); });
+                }, 500);
+              } else if(this.props.watsonResponse.message.intents[0].intent === "AGREGAR"){
+                setTimeout(()=> {
+                  this.props.addMovimiento("INGRESO", this.props.member)
+                  .then(() => {
+                    let numbers = [];
+                    let comida = [];
+                    let medidas = [];
+                    if(this.props.watsonResponse.message.entities.length){
+                      numbers = this.props.watsonResponse.message.entities.filter((entity) => entity.entity === "sys-number");
+                      comida = this.props.watsonResponse.message.entities.filter((entity) => entity.entity === "COMIDA");
+                      medidas = this.props.watsonResponse.message.entities.filter((entity) => entity.entity === "MEDIDAS");
+                    }
+                    let items = [];
+                    let categoria = "";
+                    let nombre = "";
+
+                    if(medidas.length){
+                      nombre = numbers[0].metadata.numeric_value + " " + medidas[0].value + " de " + comida[0].value;
+                      categoria = comida[0].entity;
+                      monto = 0;
+
+                      if(typeof numbers[1] !== "undefined"){
+                        monto = numbers[1].metadata.numeric_value;
+                      }
+
+                      items.push({
+                        categoria_activo: categoria,
+                        nombre: nombre,
+                        monto: monto
+                      })
+
+                    } else {
+                      if(numbers.length){
+                        for(let i = 0; i < numbers[0].metadata.numeric_value; i++){
+                          let monto = 0;
+
+                          if(typeof numbers[1] !== "undefined"){
+                            monto = numbers[1].metadata.numeric_value;
+                          }
+                          if(comida.length){
+                            categoria = comida[0].entity;
+                            nombre = comida[0].value;
+                          }
+                          items.push({
+                            categoria_activo: categoria,
+                            nombre: nombre,
+                            monto: monto
+                          });
+                        }
+                      }
+                    }
+
+                    this.props.addDetalleMovimiento(this.props.transaction.id, items, this.props.member)
+                    .then(() => {
+                      let nombreAux = numbers[0].metadata.numeric_value + nombre;
+                      let haAux = "ha"
+                      if(numbers[0].metadata.numeric_value > 1){
+                        nombreAux + "s";
+                        haAux = "han";
+                      }
+                      if(medidas.length){
+                        nombreAux = nombre;
+                      }
+                      setTimeout(()=> {
+                        this.props.sendMessage("se " + haAux + " agregado " + nombreAux, this.props.member, 1)
+                        .then((response) => {
+                          this.props.onSendMessage();
+                        }).catch((err) => { console.log("err", err); });
+                      }, 500);
+                    })
+                    .catch((err) => { console.log("err", err); });
+
+                  }).catch((err) => { console.log("err", err); });
+                }, 500);
               }
+            }
+
+          } else if( this.props.watsonResponse.message.output.nodes_visited.length){
+            if(this.props.watsonResponse.message.output.nodes_visited[0] === "En otras cosas"){
+              setTimeout(()=> {
+                this.props.sendMessage(this.props.watsonResponse.message.output.text[0], this.props.member, 1)
+                .then((response) => {
+                  this.props.onSendMessage();
+                }).catch((err) => { console.log("err", err); });
+              }, 500);
             }
           }
         }
-      })
-      .catch((err) => console.log(err));
+      }
+    })
+    .catch((err) => console.log(err));
   }
 
   componentWillMount() {
@@ -60,81 +145,91 @@ class MessageFormComponent extends Component {
   }
 
   onReloadRecorder = () => {
-     if (this.recorder) {
-       this.recorder.destroy();
-     }
+    if (this.recorder) {
+      this.recorder.destroy();
+    }
 
-     this.recorder = new Recorder(FILENAME, {
-       bitrate: 128000,
-       channels: 1,
-       sampleRate: 44100,
-       quality: 'high',
-       format: 'mp4'
-     });
-   }
+    this.recorder = new Recorder(FILENAME, {
+      bitrate: 128000,
+      channels: 1,
+      sampleRate: 44100,
+      quality: 'high',
+      format: 'mp4'
+    });
+  }
 
-   onToggleRecord = (isBot = 0) => {
-     if(this.recorder && this.recorder.isRecording){
-       this.recorder.stop((err) => {
-         this.props.setRecordingStatus();
-         if(err){
-             return;
-         } else {
-           this.props.uploadAudio(this.recorder.fsPath)
-             .then((response) => {
-               if(this.props.audionName != ""){
-                 //NO ENTIENDO -> 5aeb2d08e4f9aaudio.pcm / REAL -> this.props.audionName / SALUDO -> 5aec6a2628761audio.pcm / AGREGAR ->  / REDIRECCIONAR ->
-                 this.props.onSendMessageAsAudio(this.props.audionName, this.props.member, isBot)
-                   .then((response) => {
-                     this.props.onSendMessage();
-                     if(this.props.watsonResponse != ""){
-                       if(!this.props.watsonResponse.error){
-                         console.log(this.props.watsonResponse);
-                         //debugger;
-                         if(this.props.watsonResponse.message.intents.length){
-                           if(this.props.watsonResponse.message.intents[0].intent === "SALUDO"){
-                             setTimeout(()=> {
-                               this.props.sendMessage(this.props.watsonResponse.message.output.text[0], this.props.member, 1)
-                               .then((response) => {
-                                 this.props.onSendMessage();
-                               }).catch((err) => { console.log("err", err); });
-                             }, 500);
-                           }
-                         } else if( this.props.watsonResponse.message.output.nodes_visited.length){
-                           if(this.props.watsonResponse.message.output.nodes_visited[0] === "En otras cosas"){
-                             setTimeout(()=> {
-                               this.props.sendMessage(this.props.watsonResponse.message.output.text[0], this.props.member, 1)
-                               .then((response) => {
-                                 this.props.onSendMessage();
-                               }).catch((err) => { console.log("err", err); });
-                             }, 500);
-                           }
-                         }
-                       }
-                     }
-                   }). catch((err) => {
-                     console.log("err -> ", err);
-                   });
-               }
-             }).catch((err) => {
-               console.log("err -> ", err);
-             });
-         }
-         this.recorder.destroy();
-       });
-     } else {
-       this.recorder = new Recorder(FILENAME, {
-         bitrate: 128000,
-         channels: 1,
-         sampleRate: 44100,
-         quality: 'high',
-         format: 'mp4'
-       }).prepare(() => {
-         console.log(this.recorder);
-       })
-       .record();
-       this.props.setRecordingStatus(true);
-     }
+  onToggleRecord = (isBot = 0) => {
+    if(this.recorder && this.recorder.isRecording){
+      this.recorder.stop((err) => {
+        this.props.setRecordingStatus();
+        if(err){
+          return;
+        } else {
+          this.props.uploadAudio(this.recorder.fsPath)
+          .then((response) => {
+            if(this.props.audionName != ""){
+              //NO ENTIENDO -> 5aeb2d08e4f9aaudio.pcm / REAL -> this.props.audionName / SALUDO -> 5aec6a2628761audio.pcm / AGREGAR ->  / REDIRECCIONAR ->
+              this.props.onSendMessageAsAudio(this.props.audionName, this.props.member, isBot)
+              .then((response) => {
+                this.props.onSendMessage();
+                if(this.props.watsonResponse != ""){
+                  if(!this.props.watsonResponse.error){
+                    if(this.props.watsonResponse.message.intents.length){
+
+                      if(this.props.watsonResponse.message.output.nodes_visited.length){
+                        if(this.props.watsonResponse.message.output.nodes_visited[0] === "En otras cosas"){
+                          setTimeout(()=> {
+                            this.props.sendMessage(this.props.watsonResponse.message.output.text[0], this.props.member, 1)
+                            .then((response) => {
+                              this.props.onSendMessage();
+                            }).catch((err) => { console.log("err", err); });
+                          }, 500);
+                        } else if(this.props.watsonResponse.message.intents[0].intent === "SALUDO" ||
+                        this.props.watsonResponse.message.intents[0].intent === "COMO_TE_LLAMAS"){
+                          setTimeout(()=> {
+                            this.props.sendMessage(this.props.watsonResponse.message.output.text[0], this.props.member, 1)
+                            .then((response) => {
+                              this.props.onSendMessage();
+                            }).catch((err) => { console.log("err", err); });
+                          }, 500);
+                        }
+                      }
+
+                    } else if( this.props.watsonResponse.message.output.nodes_visited.length){
+                      if(this.props.watsonResponse.message.output.nodes_visited[0] === "En otras cosas"){
+                        setTimeout(()=> {
+                          this.props.sendMessage(this.props.watsonResponse.message.output.text[0], this.props.member, 1)
+                          .then((response) => {
+                            this.props.onSendMessage();
+                          }).catch((err) => { console.log("err", err); });
+                        }, 500);
+                      }
+                    }
+                  }
+                }
+              }). catch((err) => {
+                console.log("err -> ", err);
+              });
+            }
+          }).catch((err) => {
+            console.log("err -> ", err);
+          });
+        }
+        this.recorder.destroy();
+      });
+    } else {
+      this.recorder = new Recorder(FILENAME, {
+        bitrate: 128000,
+        channels: 1,
+        sampleRate: 44100,
+        quality: 'high',
+        format: 'mp4'
+      }).prepare(() => {
+        console.log(this.recorder);
+      })
+      .record();
+      this.props.setRecordingStatus(true);
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -162,28 +257,28 @@ class MessageFormComponent extends Component {
           underlineColorAndroid={'transparent'}
           editable={!sending} />
 
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              this.handleButtonPress();
-            }}
-            disabled={isButtonDisabled}>
-            <Image
-              source={require('../../../images/ic_send.png')}
-              style={{opacity: opacity}} />
-          </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            this.handleButtonPress();
+          }}
+          disabled={isButtonDisabled}>
+          <Image
+            source={require('../../../images/ic_send.png')}
+            style={{opacity: opacity}} />
+        </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              this.onToggleRecord();
-            }}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            this.onToggleRecord();
+          }}>
 
-            <Image
-              source={require('../../../images/recorder.png')}
-              style={{opacity: opacityRecorder}} />
+          <Image
+            source={require('../../../images/recorder.png')}
+            style={{opacity: opacityRecorder}} />
 
-          </TouchableOpacity>
+        </TouchableOpacity>
       </View>
     );
   }

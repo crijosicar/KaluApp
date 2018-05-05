@@ -19,7 +19,6 @@ export default function userReducer(state = initialState, action) {
       if (action.data) {
         return {
           ...state,
-          
           facebook_id: action.data.user.facebook_id
         };
       }
