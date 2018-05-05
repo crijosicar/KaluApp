@@ -18,6 +18,9 @@ import LoginComponent from '../components/Login';
 import ForgotPasswordContainer from '../../containers/ForgotPassword';
 import ForgotPasswordComponent from '../components/ForgotPassword';
 
+import MiCarteraContainer from '../../containers/MiCartera';
+import MiCarteraComponent from '../components/MiCartera';
+
 import UpdateProfileContainer from '../../containers/UpdateProfile';
 import UpdateProfileComponent from '../components/UpdateProfile';
 
@@ -57,6 +60,13 @@ const Index = (
             title="FORGOT PASSWORD"
             component={ForgotPasswordContainer}
             Layout={ForgotPasswordComponent}
+            />
+          <Scene
+            back
+            key="miCartera"
+            title="MI CARTERA"
+            component={MiCarteraContainer}
+            Layout={MiCarteraComponent}
             />
           {/*<Scene
             back
