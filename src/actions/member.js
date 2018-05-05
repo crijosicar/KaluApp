@@ -74,8 +74,8 @@ export function registerWithFacebook(formData) {
 
     await statusMessage(dispatch, 'loading', true);
 
-    //let baseurl = "http://www.kaluapp.com:81/api/get-user-by-fbid";
-    let baseurl = "http://192.168.1.15/api/get-user-by-fbid";
+    let baseurl = "http://www.kaluapp.com:81/api/get-user-by-fbid";
+    //let baseurl = "http://192.168.1.15/api/get-user-by-fbid";
 
     return Api.post(baseurl, {
       "facebook_id": facebook_id
@@ -87,8 +87,7 @@ export function registerWithFacebook(formData) {
         }
       } else {
         if (response.user != null){
-          let baseurl = "http://192.168.1.15/api/login";
-          //let baseurl = "http://192.168.1.15/api/login";
+          let baseurl = "http://www.kaluapp.com:81/api/login";
           let email = facebook_id + "@facebook.com";
           let password = facebook_id;
 
@@ -103,8 +102,7 @@ export function registerWithFacebook(formData) {
               reject({ message: response.message });
             } else {
 
-              let baseurl = "http://192.168.1.15/api/get-user-details";
-              //let baseurl = "http://192.168.1.15/api/get-user-details";
+              let baseurl = "http://www.kaluapp.com:81/api/get-user-details";
               let payload = {
                 "token": response.token
               };
@@ -136,7 +134,7 @@ export function registerWithFacebook(formData) {
 
         } else {
 
-          return Api.post("http://192.168.1.15/api/register", {
+          return Api.post("http://www.kaluapp.com:81/api/register", {
             "name": nombre,
             "email": facebook_id + "@facebook.com",
             "password": facebook_id,
@@ -152,7 +150,7 @@ export function registerWithFacebook(formData) {
             } else {
               await statusMessage(dispatch, 'loading', false);
 
-              return Api.post("http://192.168.1.15/api/login", {
+              return Api.post("http://www.kaluapp.com:81/api/login", {
                 "email": facebook_id + "@facebook.com",
                 "password": facebook_id
               })
@@ -163,7 +161,7 @@ export function registerWithFacebook(formData) {
                   reject({ message: response.message });
                 } else {
                   let token = response.token;
-                  Api.post("http://192.168.1.15/api/get-user-details", {
+                  Api.post("http://www.kaluapp.com:81/api/get-user-details", {
                     "token": token
                   })
                   .then(async (response) => {
