@@ -32,6 +32,7 @@
 		2D02E4C91E0B4AEC006451C7 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* KaluTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* KaluTests.m */; };
 		494EC1C0B39247E0A4383AFF /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BDEAF122238444E5B69DA645 /* libRNFS.a */; };
+		59F0CBD73E3347C1895B7675 /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B883001BA1E14FE0B9CA1CE8 /* libRNSVG.a */; };
 		5B281BCBED3F4B759E00AE7A /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C4A95A70EA5A4E66BF2EC920 /* libRCTFBSDK.a */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		70503F9820910DB9004F5B32 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
