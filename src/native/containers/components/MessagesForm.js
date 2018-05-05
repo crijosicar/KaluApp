@@ -357,12 +357,6 @@ class MessageFormComponent extends Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
-    if (!prevProps.sendingError && this.props.sendingError) {
-      Alert.alert('Error', this.props.sendingError)
-    }
-  }
-
   render() {
     const { sending = false, recording } = this.props;
     const isButtonDisabled = sending || this.props.message.trim().length == 0;

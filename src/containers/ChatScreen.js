@@ -25,7 +25,7 @@ class ChatScreen extends Component {
             onFormSubmit,
             isLoading,
             infoMessage,
-            errorMessage,
+            error,
             successMessage,
             loadMessages,
             sending,
@@ -39,7 +39,7 @@ class ChatScreen extends Component {
                     onFormSubmit={onFormSubmit}
                     loading={isLoading}
                     info={infoMessage}
-                    error={errorMessage}
+                    error={error}
                     success={successMessage}
                     loadMessages={loadMessages}
                     sending={sending}
@@ -56,7 +56,7 @@ const mapStateToProps = state => ({
   member: state.member || {},
   isLoading: state.status.loading || false,
   infoMessage: state.status.info || null,
-  errorMessage: state.status.error || null,
+  error: state.status.error || null,
   successMessage: state.status.success || null,
 });
 

@@ -42,7 +42,7 @@ class ChatScreen extends Component {
 
   render() {
     const { loading, error, sending, recording } = this.props;
-
+    console.log(error);
     return (
       <Container>
             <KeyboardAvoidingView
@@ -61,8 +61,8 @@ class ChatScreen extends Component {
                   {/* List of messages */}
                   <MessagesList {...this.props} />
                 </ScrollView>
-                
-                { error && <Messages message={error} /> }
+
+                { error && !loading && !recording && !sending ? <Messages message={error} /> : null }
                 { loading ? <Messages message={"Cargando mensajes..."} type="success" />  : null }
                 { recording ? <Messages message={"Kalu esta escuchando..."} type="error" />  : null }
                 { sending ? <Messages message={"Enviando mensaje..."} type="info" />  : null }
