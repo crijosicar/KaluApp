@@ -7,6 +7,7 @@ import Loading from './Loading';
 import Header from './Header';
 import Spacer from './Spacer';
 import { PieChart } from 'react-native-svg-charts';
+import { Circle, G, Line } from 'react-native-svg'
 
 class MiCartera extends React.Component {
 
@@ -43,6 +44,30 @@ class MiCartera extends React.Component {
                                 },
                                 key: `pie-${index}`,
                             }));
+
+              const Labels = ({ slices }) => {
+                  return slices.map((slice, index) => {
+                      const { labelCentroid, pieCentroid, data } = slice;
+                      return (
+                          <G key={ index }>
+                              <Line
+                                  x1={ labelCentroid[ 0 ] }
+                                  y1={ labelCentroid[ 1 ] }
+                                  x2={ pieCentroid[ 0 ] }
+                                  y2={ pieCentroid[ 1 ] }
+                                  stroke={ data.svg.fill }
+                              />
+                              <Circle
+                                  cx={ labelCentroid[ 0 ] }
+                                  cy={ labelCentroid[ 1 ] }
+                                  r={ 15 }
+                                  fill={ data.svg.fill }
+                              />
+                          </G>
+                      )
+                  })
+              }
+
             return (
                 <Container>
                     <Content padder>
@@ -100,8 +125,12 @@ class MiCartera extends React.Component {
                         <Grid>
                           <Col>
                             <PieChart
-                                style={ { height: 160 } }
-                                data={ pieData }/>
+                                style={ { height: 240 } }
+                                data={ pieData }innerRadius={ 20 }
+                                outerRadius={ 55 }
+                                labelRadius={ 80 }>
+                                <Labels/>
+                            </PieChart>
                           </Col>
                         </Grid>
                         <Grid>
@@ -146,17 +175,20 @@ class MiCartera extends React.Component {
                                       { allItems && allItems.map((anho,i) => {
                                         return (
                                             <Picker.Item key={i} label={anho} value={anho} />
-                                          )
-                                       })
-                                     }
+                                        )})}
                               </Picker>
                           </Col>
                         </Grid>
                         <Grid>
                           <Col>
                             <PieChart
-                                style={ { height: 160 } }
-                                data={ pieData }/>
+                                style={ { height: 240 } }
+                                data={ pieData }
+                                innerRadius={ 20 }
+                                outerRadius={ 55 }
+                                labelRadius={ 80 }>
+                              <Labels/>
+                            </PieChart>
                           </Col>
                         </Grid>
                     </Content>
