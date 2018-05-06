@@ -14,25 +14,34 @@ class MiCartera extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            month: "",
-            year: ""
+            monthIncoming: "",
+            yearIncoming: "",
+            monthOutcoming: "",
+            yearOutcoming: "",
         }
         this.onValueChangeYear = this.onValueChangeYear.bind(this);
         this.onValueChangeMonth = this.onValueChangeMonth.bind(this);
     }
 
+    componentDidMount(){}
+
     onValueChangeMonth = (value) => {
-        this.setState({ month: value });
+        this.setState({ monthIncoming: value });
     }
 
     onValueChangeYear = (value) => {
-        this.setState({ year: value });
+        this.setState({ yearIncoming: value });
+    }
+
+    onValueChangeMonthOutcoming = (value) => {
+        this.setState({ monthOutcoming: value });
+    }
+
+    onValueChangeYearOutcoming = (value) => {
+        this.setState({ yearOutcoming: value });
     }
 
     render() {
-        const allItems = new Array();
-        const year = new Date().getFullYear();
-        for (let i = 2018; i <= year; i++) { allItems.push(i) }
         const data = [ 50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80 ];
         const randomColor = () => ('#' + (Math.random() * 0xFFFFFF << 0).toString(16) + '000000').slice(0, 7);
         const pieData = data.filter(value => value > 0)
@@ -44,6 +53,16 @@ class MiCartera extends React.Component {
                                 },
                                 key: `pie-${index}`,
                             }));
+
+                            const pieData2 = data.filter(value => value > 0)
+                                                .map((value, index) => ({
+                                                    value,
+                                                    svg: {
+                                                      fill: randomColor(),
+                                                      onPress: () => console.log('press', index),
+                                                    },
+                                                    key: `pie-${index}`,
+                                                }));
 
               const Labels = ({ slices }) => {
                   return slices.map((slice, index) => {
@@ -85,7 +104,7 @@ class MiCartera extends React.Component {
                               placeholderStyle={{ color: "#2874F0" }}
                               note={false}
                               style={{ width: undefined }}
-                              selectedValue={this.state.month}
+                              selectedValue={this.state.monthIncoming}
                               onValueChange={this.onValueChangeMonth}>
                                 <Picker.Item label="Enero" value="1" />
                                 <Picker.Item label="Febrero" value="2" />
@@ -111,14 +130,9 @@ class MiCartera extends React.Component {
                                 placeholderStyle={{ color: "#2874F0" }}
                                 note={false}
                                 style={{ width: undefined }}
-                                selectedValue={this.state.year}
+                                selectedValue={this.state.yearIncoming}
                                 onValueChange={this.onValueChangeYear}>
-                                    { allItems && allItems.map((anho,i) => {
-                                      return (
-                                          <Picker.Item key={i} label={anho} value={anho} />
-                                        )
-                                     })
-                                   }
+                                <Picker.Item label="Enero" value="1" />
                             </Picker>
                           </Col>
                         </Grid>
@@ -126,7 +140,8 @@ class MiCartera extends React.Component {
                           <Col>
                             <PieChart
                                 style={ { height: 240 } }
-                                data={ pieData }innerRadius={ 20 }
+                                data={ pieData2 }
+                                innerRadius={ 20 }
                                 outerRadius={ 55 }
                                 labelRadius={ 80 }>
                                 <Labels/>
@@ -144,8 +159,8 @@ class MiCartera extends React.Component {
                               placeholderStyle={{ color: "#2874F0" }}
                               note={false}
                               style={{ width: undefined }}
-                              selectedValue={this.state.month}
-                              onValueChange={this.onValueChangeMonth}>
+                              selectedValue={this.state.monthOutcoming}
+                              onValueChange={this.onValueChangeMonthOutcoming}>
                                 <Picker.Item label="Enero" value="1" />
                                 <Picker.Item label="Febrero" value="2" />
                                 <Picker.Item label="Marzo" value="3" />
@@ -170,12 +185,9 @@ class MiCartera extends React.Component {
                                   placeholderStyle={{ color: "#2874F0" }}
                                   note={false}
                                   style={{ width: undefined }}
-                                  selectedValue={this.state.year}
-                                  onValueChange={this.onValueChangeYear}>
-                                      { allItems && allItems.map((anho,i) => {
-                                        return (
-                                            <Picker.Item key={i} label={anho} value={anho} />
-                                        )})}
+                                  selectedValue={this.state.yearOutcoming}
+                                  onValueChange={this.onValueChangeYearOutcoming}>
+                                  <Picker.Item label="Enero" value="1" />
                               </Picker>
                           </Col>
                         </Grid>
