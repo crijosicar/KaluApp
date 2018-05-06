@@ -6,32 +6,23 @@ import { getIncomeCategories,getIncomeValues,getExpensesCategories,getExpensesVa
 
 const MyWallet = ({
   Layout,
- 
   errorMessage,
- 
 }) => (
   <Layout
-  
     error={errorMessage}
-  
   />
 );
 
-MiCartera.propTypes = {
- 
-  onStartView: PropTypes.func.isRequired,
-
+MyWallet.propTypes = {
   errorMessage: PropTypes.string,
 };
 
-MiCartera.defaultProps = {
+MyWallet.defaultProps = {
   errorMessage: null,
 };
 
 const mapStateToProps = state => ({
-
   errorMessage: state.status.error || null,
-
 });
 
 const mapDispatchToProps = {

@@ -14,25 +14,37 @@ class MyWallet extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            month: "",
-            year: ""
+            monthIncoming: "",
+            yearIncoming: "",
+            monthExpenses: "",
+            yearExpeses: ""
         }
-        this.onValueChangeYear = this.onValueChangeYear.bind(this);
-        this.onValueChangeMonth = this.onValueChangeMonth.bind(this);
+        this.onValueChangeYearIncoming = this.onValueChangeYearIncoming.bind(this);
+        this.onValueChangeMonthIncoming = this.onValueChangeMonthIncoming.bind(this);
+        this.onValueChangeYearExpenses = this.onValueChangeYearExpenses.bind(this);
+        this.onValueChangeMonthExpenses = this.onValueChangeMonthExpenses.bind(this);
     }
 
-    onValueChangeMonth = (value) => {
-        this.setState({ month: value });
+    onValueChangeMonthIncoming = (value) => {
+        this.setState({ monthIncoming: value });
     }
 
-    onValueChangeYear = (value) => {
-        this.setState({ year: value });
+    onValueChangeYearIncoming = (value) => {
+        this.setState({ yearIncoming: value });
+    }
+
+    onValueChangeYearExpenses = (value) => {
+        this.setState({ monthExpenses: value });
+    }
+
+    onValueChangeMonthExpenses = (value) => {
+        this.setState({ yearExpeses: value });
     }
 
     render() {
         var allItems = new Array();
         const year = new Date().getFullYear();
-        allItems=['2018','2017','2016','2015'];
+        allItems = ['2018','2017','2016','2015'];
         //for (let i = 2018; i <= year; i++) { allItems.push(i) }
         const data = [ 50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80 ];
         const randomColor = () => ('#' + (Math.random() * 0xFFFFFF << 0).toString(16) + '000000').slice(0, 7);
@@ -86,8 +98,8 @@ class MyWallet extends React.Component {
                               placeholderStyle={{ color: "#2874F0" }}
                               note={false}
                               style={{ width: undefined }}
-                              selectedValue={this.state.month}
-                              onValueChange={this.onValueChangeMonth}>
+                              selectedValue={this.state.monthIncoming}
+                              onValueChange={this.onValueChangeMonthIncoming}>
                                 <Picker.Item label="Enero" value="1" />
                                 <Picker.Item label="Febrero" value="2" />
                                 <Picker.Item label="Marzo" value="3" />
@@ -112,8 +124,8 @@ class MyWallet extends React.Component {
                                 placeholderStyle={{ color: "#2874F0" }}
                                 note={false}
                                 style={{ width: undefined }}
-                                selectedValue={this.state.year}
-                                onValueChange={this.onValueChangeYear}>
+                                selectedValue={this.state.yearIncoming}
+                                onValueChange={this.onValueChangeYearIncoming}>
                                     { allItems && allItems.map((anho,i) => {
                                       return (
                                           <Picker.Item key={i} label={anho} value={anho} />
@@ -127,7 +139,8 @@ class MyWallet extends React.Component {
                           <Col>
                             <PieChart
                                 style={ { height: 240 } }
-                                data={ pieData }innerRadius={ 20 }
+                                data={ pieData }
+                                innerRadius={ 20 }
                                 outerRadius={ 55 }
                                 labelRadius={ 80 }>
                                 <Labels/>
@@ -145,8 +158,8 @@ class MyWallet extends React.Component {
                               placeholderStyle={{ color: "#2874F0" }}
                               note={false}
                               style={{ width: undefined }}
-                              selectedValue={this.state.month}
-                              onValueChange={this.onValueChangeMonth}>
+                              selectedValue={this.state.monthExpenses}
+                              onValueChange={this.onValueChangeMonthExpenses}>
                                 <Picker.Item label="Enero" value="1" />
                                 <Picker.Item label="Febrero" value="2" />
                                 <Picker.Item label="Marzo" value="3" />
@@ -171,8 +184,8 @@ class MyWallet extends React.Component {
                                   placeholderStyle={{ color: "#2874F0" }}
                                   note={false}
                                   style={{ width: undefined }}
-                                  selectedValue={this.state.year}
-                                  onValueChange={this.onValueChangeYear}>
+                                  selectedValue={this.state.yearExpeses}
+                                  onValueChange={this.onValueChangeYearExpenses}>
                                       { allItems && allItems.map((anho,i) => {
                                         return (
                                             <Picker.Item key={i} label={anho} value={anho} />
