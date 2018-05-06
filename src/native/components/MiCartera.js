@@ -29,11 +29,11 @@ class MiCartera extends React.Component {
     }
 
     render() {
-        const allItems= new Array();
+        const allItems = new Array();
         const year = new Date().getFullYear();
         for (let i = 2018; i <= year; i++) { allItems.push(i) }
-        const data = [ 50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80 ]
-        const randomColor = () => ('#' + (Math.random() * 0xFFFFFF << 0).toString(16) + '000000').slice(0, 7)
+        const data = [ 50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80 ];
+        const randomColor = () => ('#' + (Math.random() * 0xFFFFFF << 0).toString(16) + '000000').slice(0, 7);
         const pieData = data.filter(value => value > 0)
                             .map((value, index) => ({
                                 value,
