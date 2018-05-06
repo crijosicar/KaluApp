@@ -48,35 +48,35 @@ class MiCartera extends React.Component {
                     <Content padder>
                         <Header
                             title="Mi Cartera"
-                            content="Información Financiera" />
+                            content="Información Financiera"/>
                         <Grid>
-                        <Col style={{ height: 40 }}>
-                          <Picker
-                            mode="dropdown"
-                            iosHeader="Seleccione..."
-                            iosIcon={<Icon name="ios-arrow-down-outline" />}
-                            headerBackButtonText="< Volver"
-                            placeholder="Mes"
-                            placeholderStyle={{ color: "#2874F0" }}
-                            note={false}
-                            style={{ width: undefined }}
-                            selectedValue={this.state.month}
-                            onValueChange={this.onValueChangeMonth}>
-                              <Picker.Item label="Enero" value="1" />
-                              <Picker.Item label="Febrero" value="2" />
-                              <Picker.Item label="Marzo" value="3" />
-                              <Picker.Item label="Abril" value="4" />
-                              <Picker.Item label="Mayo" value="5" />
-                              <Picker.Item label="Junio" value="6" />
-                              <Picker.Item label="Julio" value="7" />
-                              <Picker.Item label="Agosto" value="8" />
-                              <Picker.Item label="Septiembre" value="9" />
-                              <Picker.Item label="Octubre" value="10" />
-                              <Picker.Item label="Noviembre" value="11" />
-                              <Picker.Item label="Diciembre" value="12" />
-                          </Picker>
-                        </Col>
-                        <Col style={{ height: 40 }}>
+                          <Col>
+                            <Picker
+                              mode="dropdown"
+                              iosHeader="Seleccione..."
+                              iosIcon={<Icon name="ios-arrow-down-outline" />}
+                              headerBackButtonText="< Volver"
+                              placeholder="Mes"
+                              placeholderStyle={{ color: "#2874F0" }}
+                              note={false}
+                              style={{ width: undefined }}
+                              selectedValue={this.state.month}
+                              onValueChange={this.onValueChangeMonth}>
+                                <Picker.Item label="Enero" value="1" />
+                                <Picker.Item label="Febrero" value="2" />
+                                <Picker.Item label="Marzo" value="3" />
+                                <Picker.Item label="Abril" value="4" />
+                                <Picker.Item label="Mayo" value="5" />
+                                <Picker.Item label="Junio" value="6" />
+                                <Picker.Item label="Julio" value="7" />
+                                <Picker.Item label="Agosto" value="8" />
+                                <Picker.Item label="Septiembre" value="9" />
+                                <Picker.Item label="Octubre" value="10" />
+                                <Picker.Item label="Noviembre" value="11" />
+                                <Picker.Item label="Diciembre" value="12" />
+                            </Picker>
+                          </Col>
+                          <Col>
                             <Picker
                                 mode="dropdown"
                                 iosHeader="Seleccione..."
@@ -92,17 +92,76 @@ class MiCartera extends React.Component {
                                       return (
                                           <Picker.Item key={i} label={anho} value={anho} />
                                         )
-                                     })}
+                                     })
+                                   }
                             </Picker>
-                        </Col>
+                          </Col>
                         </Grid>
-                        <PieChart
-                            style={ { height: 200 } }
-                            data={ pieData }
-                        />
+                        <Grid>
+                          <Col>
+                            <PieChart
+                                style={ { height: 160 } }
+                                data={ pieData }/>
+                          </Col>
+                        </Grid>
+                        <Grid>
+                          <Col>
+                            <Picker
+                              mode="dropdown"
+                              iosHeader="Seleccione..."
+                              iosIcon={<Icon name="ios-arrow-down-outline" />}
+                              headerBackButtonText="< Volver"
+                              placeholder="Mes"
+                              placeholderStyle={{ color: "#2874F0" }}
+                              note={false}
+                              style={{ width: undefined }}
+                              selectedValue={this.state.month}
+                              onValueChange={this.onValueChangeMonth}>
+                                <Picker.Item label="Enero" value="1" />
+                                <Picker.Item label="Febrero" value="2" />
+                                <Picker.Item label="Marzo" value="3" />
+                                <Picker.Item label="Abril" value="4" />
+                                <Picker.Item label="Mayo" value="5" />
+                                <Picker.Item label="Junio" value="6" />
+                                <Picker.Item label="Julio" value="7" />
+                                <Picker.Item label="Agosto" value="8" />
+                                <Picker.Item label="Septiembre" value="9" />
+                                <Picker.Item label="Octubre" value="10" />
+                                <Picker.Item label="Noviembre" value="11" />
+                                <Picker.Item label="Diciembre" value="12" />
+                            </Picker>
+                          </Col>
+                          <Col>
+                              <Picker
+                                  mode="dropdown"
+                                  iosHeader="Seleccione..."
+                                  iosIcon={<Icon name="ios-arrow-down-outline" />}
+                                  headerBackButtonText="< Volver"
+                                  placeholder="Año"
+                                  placeholderStyle={{ color: "#2874F0" }}
+                                  note={false}
+                                  style={{ width: undefined }}
+                                  selectedValue={this.state.year}
+                                  onValueChange={this.onValueChangeYear}>
+                                      { allItems && allItems.map((anho,i) => {
+                                        return (
+                                            <Picker.Item key={i} label={anho} value={anho} />
+                                          )
+                                       })
+                                     }
+                              </Picker>
+                          </Col>
+                        </Grid>
+                        <Grid>
+                          <Col>
+                            <PieChart
+                                style={ { height: 160 } }
+                                data={ pieData }/>
+                          </Col>
+                        </Grid>
                     </Content>
                 </Container>
-        )
+                )
     }
 
 }
