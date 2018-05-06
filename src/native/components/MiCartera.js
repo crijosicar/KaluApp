@@ -14,19 +14,31 @@ class MiCartera extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            month: "",
-            year: ""
+            monthIncoming: "",
+            yearIncoming: "",
+            monthExpenses: "",
+            yearExpeses: ""
         }
-        this.onValueChangeYear = this.onValueChangeYear.bind(this);
-        this.onValueChangeMonth = this.onValueChangeMonth.bind(this);
+        this.onValueChangeYearIncoming = this.onValueChangeYearIncoming.bind(this);
+        this.onValueChangeMonthIncoming = this.onValueChangeMonthIncoming.bind(this);
+        this.onValueChangeYearExpenses = this.onValueChangeYearExpenses.bind(this);
+        this.onValueChangeMonthExpenses = this.onValueChangeMonthExpenses.bind(this);
     }
 
-    onValueChangeMonth = (value) => {
-        this.setState({ month: value });
+    onValueChangeMonthIncoming = (value) => {
+        this.setState({ monthIncoming: value });
     }
 
-    onValueChangeYear = (value) => {
-        this.setState({ year: value });
+    onValueChangeYearIncoming = (value) => {
+        this.setState({ yearIncoming: value });
+    }
+
+    onValueChangeYearExpenses = (value) => {
+        this.setState({ monthExpenses: value });
+    }
+
+    onValueChangeMonthExpenses = (value) => {
+        this.setState({ yearExpeses: value });
     }
 
     render() {
@@ -86,8 +98,8 @@ class MiCartera extends React.Component {
                               placeholderStyle={{ color: "#2874F0" }}
                               note={false}
                               style={{ width: undefined }}
-                              selectedValue={this.state.month}
-                              onValueChange={this.onValueChangeMonth}>
+                              selectedValue={this.state.monthIncoming}
+                              onValueChange={this.onValueChangeMonthIncoming}>
                                 <Picker.Item label="Enero" value="1" />
                                 <Picker.Item label="Febrero" value="2" />
                                 <Picker.Item label="Marzo" value="3" />
@@ -112,8 +124,8 @@ class MiCartera extends React.Component {
                                 placeholderStyle={{ color: "#2874F0" }}
                                 note={false}
                                 style={{ width: undefined }}
-                                selectedValue={this.state.year}
-                                onValueChange={this.onValueChangeYear}>
+                                selectedValue={this.state.yearIncoming}
+                                onValueChange={this.onValueChangeYearIncoming}>
                                     { allItems && allItems.map((anho,i) => {
                                       return (
                                           <Picker.Item key={i} label={anho} value={anho} />
@@ -145,8 +157,8 @@ class MiCartera extends React.Component {
                               placeholderStyle={{ color: "#2874F0" }}
                               note={false}
                               style={{ width: undefined }}
-                              selectedValue={this.state.month}
-                              onValueChange={this.onValueChangeMonth}>
+                              selectedValue={this.state.monthExpenses}
+                              onValueChange={this.onValueChangeMonthExpenses}>
                                 <Picker.Item label="Enero" value="1" />
                                 <Picker.Item label="Febrero" value="2" />
                                 <Picker.Item label="Marzo" value="3" />
@@ -171,8 +183,8 @@ class MiCartera extends React.Component {
                                   placeholderStyle={{ color: "#2874F0" }}
                                   note={false}
                                   style={{ width: undefined }}
-                                  selectedValue={this.state.year}
-                                  onValueChange={this.onValueChangeYear}>
+                                  selectedValue={this.state.yearExpeses}
+                                  onValueChange={this.onValueChangeYearExpenses}>
                                       { allItems && allItems.map((anho,i) => {
                                         return (
                                             <Picker.Item key={i} label={anho} value={anho} />
