@@ -9,7 +9,7 @@ import Spacer from './Spacer';
 import { PieChart } from 'react-native-svg-charts';
 import { Circle, G, Line } from 'react-native-svg'
 
-class MiCartera extends React.Component {
+class MyWallet extends React.Component {
 
     constructor(props) {
         super(props);
@@ -199,4 +199,4 @@ class MiCartera extends React.Component {
 
 }
 
-export default MiCartera;
+export default MyWallet;

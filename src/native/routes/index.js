@@ -18,8 +18,8 @@ import LoginComponent from '../components/Login';
 import ForgotPasswordContainer from '../../containers/ForgotPassword';
 import ForgotPasswordComponent from '../components/ForgotPassword';
 
-import MiCarteraContainer from '../../containers/MiCartera';
-import MiCarteraComponent from '../components/MiCartera';
+import MyWalletContainer from '../../containers/MyWallet';
+import MyWalletComponent from '../components/MyWallet';
 
 import UpdateProfileContainer from '../../containers/UpdateProfile';
 import UpdateProfileComponent from '../components/UpdateProfile';
@@ -63,10 +63,10 @@ const Index = (
             />
           <Scene
             back
-            key="miCartera"
+            key="myWallet"
             title="MI CARTERA"
-            component={MiCarteraContainer}
-            Layout={MiCarteraComponent}
+            component={MyWalletContainer}
+            Layout={MyWalletComponent}
             />
           {/*<Scene
             back

@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
 import { setLoadingFalse } from '../actions/member';
+import { getIncomeCategories,getIncomeValues,getExpensesCategories,getExpensesValues } from '../actions/wallet';
 
-const MiCartera = ({
+const MyWallet = ({
   Layout,
  
   errorMessage,
@@ -36,7 +36,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   onStartView: setLoadingFalse,
+  onPieValues: getPieValues,
   
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MiCartera);
+export default connect(mapStateToProps, mapDispatchToProps)(MyWallet);
