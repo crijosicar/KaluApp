@@ -54,7 +54,7 @@ class Login extends React.Component {
       });
       if(this.props.member && this.props.member.id){
         //Actions.conversation();
-        Actions.miCartera();
+        Actions.myWallet();
       }
        
      })

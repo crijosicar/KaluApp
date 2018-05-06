@@ -18,4 +18,9 @@ export default {
   // Recipes
   recipe404: 'Recipe not found',
   missingMealId: 'Missing meal definition',
+
+  //MyWallet
+  missingYear: 'Seleccione un año',
+  missingMonth: 'Seleccion un mes',
+
 };

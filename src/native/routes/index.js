@@ -21,6 +21,9 @@ import ForgotPasswordComponent from '../components/ForgotPassword';
 import MyWalletContainer from '../../containers/MyWallet';
 import MyWalletComponent from '../components/MyWallet';
 
+import MyPredictionContainer from '../../containers/MyPrediction';
+import MyPredictionComponent from '../components/MyPrediction';
+
 import UpdateProfileContainer from '../../containers/UpdateProfile';
 import UpdateProfileComponent from '../components/UpdateProfile';
 
@@ -67,6 +70,13 @@ const Index = (
             title="MI CARTERA"
             component={MyWalletContainer}
             Layout={MyWalletComponent}
+            />
+            <Scene
+            back
+            key="myForecast"
+            title="MI PRONÓSTICO"
+            component={MyPredictionContainer}
+            Layout={MyPredictionComponent}
             />
           {/*<Scene
             back

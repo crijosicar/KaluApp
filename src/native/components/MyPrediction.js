@@ -10,7 +10,7 @@ import { PieChart } from 'react-native-svg-charts';
 import { Circle, G, Line } from 'react-native-svg'
 import Messages from './Messages';
 
-class MyWallet extends React.Component {
+class MyPrediction extends React.Component {
 
     constructor(props) {
         super(props);
@@ -233,4 +233,4 @@ class MyWallet extends React.Component {
 
 }
 
-export default MyWallet;
+export default MyPrediction;
