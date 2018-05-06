@@ -182,7 +182,6 @@ export function loadMessages(member) {
           dispatch(loadMessagesSuccess(response));
           resolve();
         }
-
     })
     .catch(reject);
 

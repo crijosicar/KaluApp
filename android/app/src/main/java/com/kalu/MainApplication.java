@@ -8,10 +8,6 @@ import com.facebook.appevents.AppEventsLogger;
 import com.facebook.react.ReactApplication;
 import com.horcrux.svg.SvgPackage;
 import com.rnfs.RNFSPackage;
-<<<<<<< HEAD
-//import com.rnim.rn.audio.ReactNativeAudioPackage;
-=======
->>>>>>> a3f01563a2fd95b1b8b694e648623f83be365c26
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;

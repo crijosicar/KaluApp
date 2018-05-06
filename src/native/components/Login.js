@@ -30,10 +30,12 @@ class Login extends React.Component {
     this.state = {
       email: (props.member && props.member.email) ? props.member.email : '',
       password: '',
+      
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.fbAuth = this.fbAuth.bind(this);
   }
 
   handleChange = (name, val) => {
@@ -47,10 +49,14 @@ class Login extends React.Component {
      this.props.onLogin(this.state)
      .then(() => {
        this.setState({
-         password: '',
-       });
-       //Actions.conversation();
-       Actions.miCartera();
+        password: '',
+        email: ''
+      });
+      if(this.props.member && this.props.member.id){
+        //Actions.conversation();
+        Actions.miCartera();
+      }
+       
      })
      .catch((e) => {
        this.setState({
@@ -58,52 +64,87 @@ class Login extends React.Component {
        });
      });
   }
-  fbAuth() {
-    LoginManager.logInWithReadPermissions(['public_profile']).then(
-      function (result) {
+
+  fbAuth = () => {
+    const responseInfoCallback = (error, result) => {
+      if (error) {
+        alert('Error fetching data: ' + error.toString());
+      } else {
+        this.props.onFacebookRegister({
+          "facebook_id": result.id,
+          "nombre": result.name
+        })
+          .then(() => {
+            this.setState({
+              password: '',
+              email: ''
+            });
+            if(this.props.member && this.props.member.id){
+              Actions.conversation();
+            }
+          })
+          .catch((err) =>{
+              console.log("err ->", err);
+          });
+      }
+    };
+
+    LoginManager.logInWithReadPermissions(['public_profile'])
+    .then((result) => {
         if (result.isCancelled) {
           console.log('Login was cancelled');
         } else {
-          AccessToken.getCurrentAccessToken().then(
-            (data) => {
+          AccessToken.getCurrentAccessToken()
+          .then((data) => {
               const infoRequest = new GraphRequest(
                 '/me?fields=name,picture',
                 null,
-                this._responseInfoCallback
+                responseInfoCallback
               );
-              // Start the graph request.
               new GraphRequestManager().addRequest(infoRequest).start();
-
-            },
-             //Create response callback.
-            _responseInfoCallback = (error, result) => {
-            if (error) {
-              alert('Error fetching data: ' + error.toString());
-            } else {
-              alert('Result Name: ' + result.name);
-              console.log('nombre:' + result.name.toString() + ' id:' + result.id.toString());
-             
-             //validateUserFacebookCreated
-             this.props.onFacebookReg(result.id);
-                
-              }
-            }
-
-          )
-          Actions.conversation();
-        
-          console.log('Login was successful with permissions: '
-            + result.grantedPermissions.toString());
+            })
+            .catch((err) => console.log("err ->", err))
         }
-      },
-      function (error) {
+      })
+      .catch((error) => {
         console.log('Login failed with error: ' + error);
-      }
-    );
+      });
   }
 
   render() {
     const { loading, error } = this.props;
+    const data = [
+            {
+                month: new Date(2015, 0, 1),
+                apples: 3840,
+                bananas: 1920,
+                cherries: 960,
+                dates: 400,
+            },
+            {
+                month: new Date(2015, 1, 1),
+                apples: 1600,
+                bananas: 1440,
+                cherries: 960,
+                dates: 400,
+            },
+            {
+                month: new Date(2015, 2, 1),
+                apples: 640,
+                bananas: 960,
+                cherries: 3640,
+                dates: 400,
+            },
+            {
+                month: new Date(2015, 3, 1),
+                apples: 3320,
+                bananas: 480,
+                cherries: 640,
+                dates: 400,
+            },
+        ];
+    const colors = [ 'rgb(138, 0, 230, 0.8)', 'rgb(173, 51, 255, 0.8)', 'rgb(194, 102, 255, 0.8)', 'rgb(214, 153, 255, 0.8)' ];
+    const keys   = [ 'apples', 'bananas', 'cherries', 'dates' ];
 
     // Loading
     if (loading) return <Loading />;
@@ -111,21 +152,22 @@ class Login extends React.Component {
     return (
       <Container>
         <Content padder>
+          
           <View style={{
-            flex: 1, justifyContent: 'center',
-            alignItems: 'center'
-          }}>
+              flex: 1, justifyContent: 'center',
+              alignItems: 'center'
+            }}>
             <Image
               style={{width: 50, height: 50}}
               source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}}
-            />
+              />
           </View>
 
           <Spacer size={30} />
 
           <View>
-            <Button block onPress={this.fbAuth.bind(this)}>
-              <Text>Ingresa with Facebook</Text>
+            <Button block onPress={this.fbAuth}>
+              <Text>Ingresa con Facebook</Text>
             </Button>
           </View>
 
@@ -161,7 +203,7 @@ class Login extends React.Component {
                 value={this.state.email}
                 keyboardType="email-address"
                 onChangeText={v => this.handleChange('email', v)}
-              />
+                />
             </Item>
 
             <Item stackedLabel>
@@ -169,44 +211,44 @@ class Login extends React.Component {
               <Input
                 secureTextEntry
                 onChangeText={v => this.handleChange('password', v)}
-              />
+                />
             </Item>
 
             <Spacer size={20} />
 
             <List>
               <ListItem onPress={Actions.forgotPassword} >
-                  <Body>
-                      <Text style={{
+                <Body>
+                  <Text style={{
                       fontSize: 14, textAlign:
-                        'center', margin: 10
-                      }}>¿Olvidaste tu constraseña?
-                    </Text>
-                  </Body>
+                      'center', margin: 10
+                    }}>¿Olvidaste tu constraseña?
+                  </Text>
+                </Body>
               </ListItem>
             </List>
 
             <Spacer size={20} />
 
-              <Button
-                success
-                block
-                onPress={() => {
-                  this.handleSubmit();
-                }}>
-                <Text style={{
-                    fontSize: 14, textAlign:
-                    'center', margin: 10
-                  }}>Iniciar sesión</Text>
+            <Button
+              success
+              block
+              onPress={() => {
+                this.handleSubmit();
+              }}>
+              <Text style={{
+                  fontSize: 14, textAlign:
+                  'center', margin: 10
+                }}>Iniciar sesión</Text>
               </Button>
 
               <Spacer size={20} />
 
-          </Form>
-        </Content>
-      </Container>
-    );
+            </Form>
+          </Content>
+        </Container>
+      );
+    }
   }
-}
 
-export default Login;
+  export default Login;
