@@ -432,12 +432,7 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				5B281BCBED3F4B759E00AE7A /* libRCTFBSDK.a in Frameworks */,
 				494EC1C0B39247E0A4383AFF /* libRNFS.a in Frameworks */,
-<<<<<<< HEAD
-				A85A0578336846DFBEF0F310 /* libRNSVG.a in Frameworks */,
-				716430A94E6C4374B0F23298 /* libRNSVG-tvOS.a in Frameworks */,
-=======
 				59F0CBD73E3347C1895B7675 /* libRNSVG.a in Frameworks */,
->>>>>>> a3f01563a2fd95b1b8b694e648623f83be365c26
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -689,11 +684,7 @@
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				8E5A529035DF482695A396D5 /* RCTFBSDK.xcodeproj */,
 				C705B7A639A042A483A42D67 /* RNFS.xcodeproj */,
-<<<<<<< HEAD
-				F77AD1A4F1F94ED1BA85C0CD /* RNSVG.xcodeproj */,
-=======
 				CE7F88EAC10D4A2EB0E2A807 /* RNSVG.xcodeproj */,
->>>>>>> a3f01563a2fd95b1b8b694e648623f83be365c26
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1390,12 +1381,9 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-<<<<<<< HEAD
-=======
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
->>>>>>> a3f01563a2fd95b1b8b694e648623f83be365c26
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1425,12 +1413,9 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-<<<<<<< HEAD
-=======
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
->>>>>>> a3f01563a2fd95b1b8b694e648623f83be365c26
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1520,12 +1505,9 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-<<<<<<< HEAD
-=======
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
->>>>>>> a3f01563a2fd95b1b8b694e648623f83be365c26
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1566,12 +1548,9 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-<<<<<<< HEAD
-=======
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
->>>>>>> a3f01563a2fd95b1b8b694e648623f83be365c26
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1605,12 +1584,9 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-<<<<<<< HEAD
-=======
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
->>>>>>> a3f01563a2fd95b1b8b694e648623f83be365c26
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.Kalu-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1640,12 +1616,9 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-<<<<<<< HEAD
-=======
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
->>>>>>> a3f01563a2fd95b1b8b694e648623f83be365c26
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.Kalu-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
