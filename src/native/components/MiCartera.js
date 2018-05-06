@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Container, Content, Form, Picker, Item, Label, Input, Text, Button,StyleProvider, H1, H2, H3 } from 'native-base';
+import { Container, Content, Form, Picker, Item, Label, Input, Text, Button,StyleProvider, H1, H2, H3, Icon } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Actions } from 'react-native-router-flux';
 import Loading from './Loading';
@@ -12,14 +12,12 @@ class MiCartera extends React.Component {
 
     constructor(props) {
         super(props);
-        let year = new Date().getFullYear();
         this.state = {
-            month: 1,
-            year: year
+            month: "",
+            year: ""
         }
         this.onValueChangeYear = this.onValueChangeYear.bind(this);
         this.onValueChangeMonth = this.onValueChangeMonth.bind(this);
-        this.updateDropdown = this.updateDropdown.bind(this);
     }
 
     onValueChangeMonth = (value) => {
@@ -30,28 +28,18 @@ class MiCartera extends React.Component {
         this.setState({ year: value });
     }
 
-    updateDropdown = () => {
-        const allItems= new Array();
-        for (i = 2018; i <= this.state.year; i++) {
-            allItems.push(i);
-        }
-        const allItemsAux = allItems.map((anho,i) => {
-          return (
-              <Picker.Item key={i} label={anho} value={anho} />
-            )
-         });
-        return allItemsAux;
-    }
-
     render() {
+        const allItems= new Array();
+        const year = new Date().getFullYear();
+        for (let i = 2018; i <= year; i++) { allItems.push(i) }
         const data = [ 50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80 ]
         const randomColor = () => ('#' + (Math.random() * 0xFFFFFF << 0).toString(16) + '000000').slice(0, 7)
         const pieData = data.filter(value => value > 0)
                             .map((value, index) => ({
                                 value,
                                 svg: {
-                                    fill: randomColor(),
-                                    onPress: () => console.log('press', index),
+                                  fill: randomColor(),
+                                  onPress: () => console.log('press', index),
                                 },
                                 key: `pie-${index}`,
                             }));
@@ -65,6 +53,13 @@ class MiCartera extends React.Component {
                         <Col style={{ height: 40 }}>
                           <Picker
                             mode="dropdown"
+                            iosHeader="Seleccione..."
+                            iosIcon={<Icon name="ios-arrow-down-outline" />}
+                            headerBackButtonText="< Volver"
+                            placeholder="Mes"
+                            placeholderStyle={{ color: "#2874F0" }}
+                            note={false}
+                            style={{ width: undefined }}
                             selectedValue={this.state.month}
                             onValueChange={this.onValueChangeMonth}>
                               <Picker.Item label="Enero" value="1" />
@@ -84,9 +79,20 @@ class MiCartera extends React.Component {
                         <Col style={{ height: 40 }}>
                             <Picker
                                 mode="dropdown"
+                                iosHeader="Seleccione..."
+                                iosIcon={<Icon name="ios-arrow-down-outline" />}
+                                headerBackButtonText="< Volver"
+                                placeholder="Año"
+                                placeholderStyle={{ color: "#2874F0" }}
+                                note={false}
+                                style={{ width: undefined }}
                                 selectedValue={this.state.year}
                                 onValueChange={this.onValueChangeYear}>
-                                    {this.updateDropdown}
+                                    { allItems && allItems.map((anho,i) => {
+                                      return (
+                                          <Picker.Item key={i} label={anho} value={anho} />
+                                        )
+                                     })}
                             </Picker>
                         </Col>
                         </Grid>

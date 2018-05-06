@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -45,6 +46,7 @@
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		89EB523B69174EDBA7C98450 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 27077AFDD3E34129B8739E38 /* EvilIcons.ttf */; };
 		9F5E8252CEE747BDB3D3824A /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 11C79B80829144139131A776 /* Feather.ttf */; };
+		A85A0578336846DFBEF0F310 /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10B8BFF5B9274B00BA2CED26 /* libRNSVG.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		B78DEAAF3BC9408AA9BA2EAF /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36C4A3C7F82048FDA87336A0 /* Foundation.ttf */; };
 		B7B04E1600F7456DA6EBD962 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 622D7100D2F344749ECDF9EF /* Zocial.ttf */; };
@@ -55,8 +57,6 @@
 		F308C596C64442C4AD34B62E /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B8692D1C731943BE8607F060 /* Ionicons.ttf */; };
 		FA88DEC521084081A9E653D8 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 28548E93F7F241C0813A8D50 /* FontAwesome.ttf */; };
 		FB5B225CAFA74CDABB5EC421 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 41A5FE30379C48BEB58896A5 /* MaterialCommunityIcons.ttf */; };
-		A85A0578336846DFBEF0F310 /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10B8BFF5B9274B00BA2CED26 /* libRNSVG.a */; };
-		716430A94E6C4374B0F23298 /* libRNSVG-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0F3FA38A0CA4E74B5D7479C /* libRNSVG-tvOS.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -235,6 +235,20 @@
 			remoteGlobalIDString = 2D2A28201D9B03D100D4039D;
 			remoteInfo = "RCTAnimation-tvOS";
 		};
+		7004384D209E8CCF00F7D818 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F77AD1A4F1F94ED1BA85C0CD /* RNSVG.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0CF68AC11AF0540F00FF9E5C;
+			remoteInfo = RNSVG;
+		};
+		7004384F209E8CCF00F7D818 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F77AD1A4F1F94ED1BA85C0CD /* RNSVG.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 70043823209E8CCA00F7D818;
+			remoteInfo = "RNSVG-tvOS";
+		};
 		7052F0AB20989778002EFAF1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8E5A529035DF482695A396D5 /* RCTFBSDK.xcodeproj */;
@@ -345,6 +359,7 @@
 		00E356EE1AD99517003FC87E /* KaluTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KaluTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* KaluTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KaluTests.m; sourceTree = "<group>"; };
+		10B8BFF5B9274B00BA2CED26 /* libRNSVG.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSVG.a; sourceTree = "<group>"; };
 		11C79B80829144139131A776 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = ../assets/fonts/Feather.ttf; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
@@ -388,15 +403,11 @@
 		9F5D889700B3494B99AC2A2D /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = ../assets/fonts/Entypo.ttf; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		B8692D1C731943BE8607F060 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = ../assets/fonts/Ionicons.ttf; sourceTree = "<group>"; };
-		B883001BA1E14FE0B9CA1CE8 /* libRNSVG.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSVG.a; sourceTree = "<group>"; };
 		BDEAF122238444E5B69DA645 /* libRNFS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFS.a; sourceTree = "<group>"; };
 		C4A95A70EA5A4E66BF2EC920 /* libRCTFBSDK.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTFBSDK.a; sourceTree = "<group>"; };
 		C705B7A639A042A483A42D67 /* RNFS.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFS.xcodeproj; path = "../node_modules/react-native-fs/RNFS.xcodeproj"; sourceTree = "<group>"; };
-		CE7F88EAC10D4A2EB0E2A807 /* RNSVG.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNSVG.xcodeproj; path = "../node_modules/react-native-svg/ios/RNSVG.xcodeproj"; sourceTree = "<group>"; };
 		ECB379EE045844758D9366CD /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = ../assets/fonts/MaterialIcons.ttf; sourceTree = "<group>"; };
-		F77AD1A4F1F94ED1BA85C0CD /* RNSVG.xcodeproj */ = {isa = PBXFileReference; name = "RNSVG.xcodeproj"; path = "../node_modules/react-native-svg/ios/RNSVG.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		10B8BFF5B9274B00BA2CED26 /* libRNSVG.a */ = {isa = PBXFileReference; name = "libRNSVG.a"; path = "libRNSVG.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
-		A0F3FA38A0CA4E74B5D7479C /* libRNSVG-tvOS.a */ = {isa = PBXFileReference; name = "libRNSVG-tvOS.a"; path = "libRNSVG-tvOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		F77AD1A4F1F94ED1BA85C0CD /* RNSVG.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNSVG.xcodeproj; path = "../node_modules/react-native-svg/ios/RNSVG.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -432,7 +443,7 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				5B281BCBED3F4B759E00AE7A /* libRCTFBSDK.a in Frameworks */,
 				494EC1C0B39247E0A4383AFF /* libRNFS.a in Frameworks */,
-				59F0CBD73E3347C1895B7675 /* libRNSVG.a in Frameworks */,
+				A85A0578336846DFBEF0F310 /* libRNSVG.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -582,11 +593,11 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		700437A0209E4B5400F7D818 /* Products */ = {
+		70043849209E8CCF00F7D818 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				700437CB209E4B5400F7D818 /* libRNSVG.a */,
-				700437CD209E4B5400F7D818 /* libRNSVG-tvOS.a */,
+				7004384E209E8CCF00F7D818 /* libRNSVG.a */,
+				70043850209E8CCF00F7D818 /* libRNSVG-tvOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -595,9 +606,8 @@
 			isa = PBXGroup;
 			children = (
 				C4A95A70EA5A4E66BF2EC920 /* libRCTFBSDK.a */,
-				B5D08C5EDC4D4F39B9D7A331 /* libRNAudio.a */,
 				BDEAF122238444E5B69DA645 /* libRNFS.a */,
-				B883001BA1E14FE0B9CA1CE8 /* libRNSVG.a */,
+				10B8BFF5B9274B00BA2CED26 /* libRNSVG.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -684,7 +694,7 @@
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				8E5A529035DF482695A396D5 /* RCTFBSDK.xcodeproj */,
 				C705B7A639A042A483A42D67 /* RNFS.xcodeproj */,
-				CE7F88EAC10D4A2EB0E2A807 /* RNSVG.xcodeproj */,
+				F77AD1A4F1F94ED1BA85C0CD /* RNSVG.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -929,8 +939,8 @@
 					ProjectRef = C705B7A639A042A483A42D67 /* RNFS.xcodeproj */;
 				},
 				{
-					ProductGroup = 700437A0209E4B5400F7D818 /* Products */;
-					ProjectRef = CE7F88EAC10D4A2EB0E2A807 /* RNSVG.xcodeproj */;
+					ProductGroup = 70043849209E8CCF00F7D818 /* Products */;
+					ProjectRef = F77AD1A4F1F94ED1BA85C0CD /* RNSVG.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -1105,18 +1115,18 @@
 			remoteRef = 5E9157341DD0AC6500FF2AA8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		700437CB209E4B5400F7D818 /* libRNSVG.a */ = {
+		7004384E209E8CCF00F7D818 /* libRNSVG.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libRNSVG.a;
-			remoteRef = 700437CA209E4B5400F7D818 /* PBXContainerItemProxy */;
+			remoteRef = 7004384D209E8CCF00F7D818 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		700437CD209E4B5400F7D818 /* libRNSVG-tvOS.a */ = {
+		70043850209E8CCF00F7D818 /* libRNSVG-tvOS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libRNSVG-tvOS.a";
-			remoteRef = 700437CC209E4B5400F7D818 /* PBXContainerItemProxy */;
+			remoteRef = 7004384F209E8CCF00F7D818 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		7052F0AC20989778002EFAF1 /* libRCTFBSDK.a */ = {
@@ -1381,9 +1391,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1411,9 +1418,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
@@ -1505,9 +1509,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1548,9 +1549,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1584,9 +1582,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.Kalu-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1614,9 +1609,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
