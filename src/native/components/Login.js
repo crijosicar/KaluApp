@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Container, Content, Form,List,ListItem, Item, Label, Input, Text, Button,StyleProvider, H1, H2, H3,Body } from 'native-base';
+import { Container, Content, Form, List, ListItem, Item, Label, Input, Text, Button,StyleProvider, H1, H2, H3, Body, Icon } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import { LoginManager, AccessToken, GraphRequest,GraphRequestManager} from 'react-native-fbsdk';
 import Loading from './Loading';
 import Messages from './Messages';
 import Header from './Header';
 import Spacer from './Spacer';
-import { View, Image, TouchableOpacity, TouchableHighlight} from 'react-native';
+import { View, Image, TouchableOpacity, TouchableHighlight, KeyboardAvoidingView, Platform } from 'react-native';
+import { Col, Row, Grid } from 'react-native-easy-grid';
 
 class Login extends React.Component {
   static propTypes = {
@@ -30,7 +31,7 @@ class Login extends React.Component {
     this.state = {
       email: (props.member && props.member.email) ? props.member.email : '',
       password: '',
-      
+
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -56,7 +57,6 @@ class Login extends React.Component {
         //Actions.conversation();
         Actions.myWallet();
       }
-       
      })
      .catch((e) => {
        this.setState({
@@ -152,102 +152,116 @@ class Login extends React.Component {
     return (
       <Container>
         <Content padder>
-          
-          <View style={{
-              flex: 1, justifyContent: 'center',
-              alignItems: 'center'
+          <KeyboardAvoidingView
+            behavior='padding'
+            keyboardVerticalOffset={
+              Platform.select({
+                 ios: () => 0,
+                 android: () => 200
+              })()
+            }>
+
+            <Spacer size={40}/>
+
+            <View style={{
+              flex: 1,
+              flexDirection:'row',
+              alignItems:'center',
+              justifyContent:'center'
             }}>
-            <Image
-              style={{width: 50, height: 50}}
-              source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}}
+              <Image
+                style={styles.icon}
+                source={require('../../images/icon-app.png')}
               />
-          </View>
+            </View>
 
-          <Spacer size={30} />
+            <Spacer size={20}/>
 
-          <View>
-            <Button block onPress={this.fbAuth}>
-              <Text>Ingresa con Facebook</Text>
-            </Button>
-          </View>
-
-          <Spacer size={30} />
-
-          <TouchableHighlight
-            onPress={Actions.signUp}
-            style={{
-              flex: 1, justifyContent: 'center',
-              alignItems: 'center'
-            }}>
-
-            <Text style={{
-                fontSize: 14,
-                textAlign: 'center',
-                margin: 10
-              }}> ó digita tus datos
-            </Text>
-            
-          </TouchableHighlight>
-
-          <Spacer size={10} />
-
-          { error && <Messages message={error} /> }
-
-          <Spacer size={10} />
-
-          <Form>
-            <Item stackedLabel>
-              <Label>Correo electrónico</Label>
-              <Input
-                autoCapitalize="none"
-                value={this.state.email}
-                keyboardType="email-address"
-                onChangeText={v => this.handleChange('email', v)}
-                />
-            </Item>
-
-            <Item stackedLabel>
-              <Label>Contraseña</Label>
-              <Input
-                secureTextEntry
-                onChangeText={v => this.handleChange('password', v)}
-                />
-            </Item>
+            <Grid>
+              <Col size={15}>
+              </Col>
+              <Col size={70}>
+                <View style={{
+                  flex: 1,
+                  flexDirection:'row',
+                  alignItems:'center',
+                  justifyContent:'center'
+                }}>
+                  <Button iconRight primary block onPress={this.fbAuth}>
+                    <Text>Ingresa con</Text>
+                    <Icon type="FontAwesome" name="facebook" />
+                  </Button>
+                </View>
+              </Col>
+              <Col size={15}>
+              </Col>
+            </Grid>
 
             <Spacer size={20} />
 
-            <List>
-              <ListItem onPress={Actions.forgotPassword} >
-                <Body>
-                  <Text style={{
-                      fontSize: 14, textAlign:
-                      'center', margin: 10
-                    }}>¿Olvidaste tu constraseña?
-                  </Text>
-                </Body>
-              </ListItem>
-            </List>
+            { error && <Messages message={error} /> }
 
-            <Spacer size={20} />
+            <Form>
+              <Item floatingLabel>
+                <Label>Correo electrónico</Label>
+                <Input
+                  autoCapitalize="none"
+                  value={this.state.email}
+                  keyboardType="email-address"
+                  onChangeText={v => this.handleChange('email', v)}/>
+              </Item>
 
-            <Button
-              success
-              block
-              onPress={() => {
-                this.handleSubmit();
-              }}>
-              <Text style={{
-                  fontSize: 14, textAlign:
-                  'center', margin: 10
-                }}>Iniciar sesión</Text>
-              </Button>
+              <Item floatingLabel>
+                <Label>Contraseña</Label>
+                <Input
+                  secureTextEntry
+                  onChangeText={v => this.handleChange('password', v)}/>
+              </Item>
 
               <Spacer size={20} />
 
-            </Form>
+              <Button
+                success
+                block
+                iconRight
+                onPress={() => {
+                  this.handleSubmit();
+                }}>
+                <Text>Iniciar sesión</Text>
+                <Icon name='arrow-forward' />
+              </Button>
+
+              </Form>
+
+              <Spacer size={30} />
+
+              <View style={{
+                    flex: 1,
+                    flexDirection:'row',
+                    alignItems:'center',
+                    justifyContent:'center'
+                  }}>
+                <Button transparent info
+                  onPress={() => {
+                    Actions.signUp();
+                  }}>
+                  <Text style={{ fontSize: 15 }}>{"¿No estas registrado?, Registrate aquí"}</Text>
+                </Button>
+              </View>
+
+            </KeyboardAvoidingView>
           </Content>
         </Container>
       );
+    }
+  }
+
+  const styles = {
+    icon: {
+        flex: 1,
+        width: 100,
+        height: 100,
+        resizeMode: 'contain'
     }
   }
 

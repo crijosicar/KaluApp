@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Container, Content, Text, Form, Item, Label, Input, Button } from 'native-base';
+import { Container, Content, Text, Form, Item, Label, Input, Title, Button, Left, Right, Body, Icon, H3 } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import Loading from './Loading';
 import Messages from './Messages';
 import Header from './Header';
 import Spacer from './Spacer';
 import { View } from 'react-native';
+import { Col, Row, Grid } from 'react-native-easy-grid';
 
 class SignUp extends React.Component {
   static propTypes = {
@@ -69,34 +70,15 @@ class SignUp extends React.Component {
     return (
       <Container>
         <Content padder>
-        <View style={{
-          flex: 1, justifyContent: 'center',
-          alignItems: 'center'
-        }}>
-          <Text style={{
-            fontSize: 24, textAlign:
-              'center', margin: 10
-          }}>
-            Registro de Usuarios
-        </Text>
-        </View>
-
-        <View style={{
-          flex: 1, justifyContent: 'center',
-          alignItems: 'center'
-        }}>
-          <Text style={{
-            fontSize: 24, textAlign:
-              'center', margin: 10
-          }}>
-            KALU
-        </Text>
-        </View>
+          <Header
+            title="Regístrate"
+            content="Con Kalu puedes gestionar todos tus presupuestos"
+          />
 
           {error && <Messages message={error} />}
 
           <Form>
-            <Item stackedLabel>
+            <Item floatingLabel>
               <Label>Correo electrónico</Label>
               <Input
                 autoCapitalize="none"
@@ -105,29 +87,56 @@ class SignUp extends React.Component {
               />
             </Item>
 
-            <Item stackedLabel>
+            <Item floatingLabel>
               <Label>Contraseña</Label>
               <Input secureTextEntry onChangeText={v => this.handleChange('password', v)} />
             </Item>
 
-            <Item stackedLabel>
+            <Item floatingLabel>
               <Label>Confirma tu contraseña</Label>
               <Input secureTextEntry onChangeText={v => this.handleChange('password2', v)} />
             </Item>
-
-            <Spacer size={20} />
-
-            <Button success block onPress={this.handleSubmit}>
-              <Text>Crear cuenta</Text>
-            </Button>
-
-            <Spacer size={20} />
-
-            <Button warning block onPress={Actions.login}>
-              <Text>Ingresar</Text>
-            </Button>
-
           </Form>
+
+          <Spacer size={20} />
+
+          <Grid>
+            <Col size={48}>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection:'row',
+                  alignItems:'center',
+                  justifyContent:'center'
+                }}>
+                <Button iconLeft light
+                  onPress={() => {
+                    Actions.pop();
+                  }}>
+                 <Icon name='arrow-back' />
+                 <Text>Regresar</Text>
+               </Button>
+              </View>
+            </Col>
+            <Col size={52}>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection:'row',
+                  alignItems:'center',
+                  justifyContent:'center'
+                }}>
+              <Button iconRight success
+                onPress={() => {
+                  this.handleSubmit();
+                }}>
+                <Text>Registrarse</Text>
+                <Icon name='arrow-forward' />
+              </Button>
+             </View>
+            </Col>
+          </Grid>
+
         </Content>
       </Container>
     );

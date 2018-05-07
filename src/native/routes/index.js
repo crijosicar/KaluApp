@@ -1,5 +1,6 @@
 import React from 'react';
 import { Scene, Tabs, Stack } from 'react-native-router-flux';
+import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/CardStackStyleInterpolator';
 import { Icon } from 'native-base';
 
 import DefaultProps from '../constants/navigation';
@@ -36,14 +37,11 @@ import ChatScreenContainer from '../../containers/ChatScreen';
 import ChatScreenComponent from '../components/ChatScreen';
 
 const Index = (
-    <Scene hideNavBar>
-          {/*<Scene
-            key="profileHome"
-            title="Perfil"
-            component={MemberContainer}
-            Layout={ProfileComponent}
-            />*/}
-
+    <Scene hideNavBar transitionConfig={() => ({
+              screenInterpolator: (props) => {
+                return CardStackStyleInterpolator.forVertical(props)
+              }
+            })}>
           <Scene
             key="login"
             title="LOGIN"
@@ -78,13 +76,6 @@ const Index = (
             component={MyPredictionContainer}
             Layout={MyPredictionComponent}
             />
-          {/*<Scene
-            back
-            key="updateProfile"
-            title="UPDATE PROFILE"
-            component={UpdateProfileContainer}
-            Layout={UpdateProfileComponent}
-            />*/}
           <Scene
             key="conversation"
             title="CONVERSACIÓN"
