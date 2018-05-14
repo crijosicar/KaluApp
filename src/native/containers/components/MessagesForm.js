@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TextInput, TouchableOpacity, Image, Alert, StyleSheet } from 'react-native';
+import { View, TextInput, TouchableOpacity, Image, Alert, StyleSheet, Keyboard } from 'react-native';
 import PropTypes from 'prop-types';
 import { Player, Recorder, MediaStates } from 'react-native-audio-toolkit';
 import { Actions } from 'react-native-router-flux';
@@ -17,6 +17,21 @@ class MessageFormComponent extends Component {
     this.handleButtonPress = this.handleButtonPress.bind(this);
     this.onToggleRecord = this.onToggleRecord.bind(this);
     this.onReloadRecorder = this.onReloadRecorder.bind(this);
+    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
+    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
+  }
+
+  componentWillUnmount () {
+   this.keyboardDidShowListener.remove();
+   this.keyboardDidHideListener.remove();
+  }
+
+  _keyboardDidShow  = () => {
+    this.props.onKeyboardChange('Keyboard Shown');
+  }
+
+  _keyboardDidHide = () => {
+    this.props.onKeyboardChange('Keyboard Hidden');
   }
 
   onMessageChange = (message) => {

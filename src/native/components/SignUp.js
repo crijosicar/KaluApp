@@ -6,7 +6,7 @@ import Loading from './Loading';
 import Messages from './Messages';
 import Header from './Header';
 import Spacer from './Spacer';
-import { View } from 'react-native';
+import { View, Image } from 'react-native';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 
 class SignUp extends React.Component {
@@ -75,6 +75,22 @@ class SignUp extends React.Component {
             content="Con Kalu puedes gestionar todos tus presupuestos"
           />
 
+          <View style={{
+            flex: 1,
+            flexDirection:'column',
+            alignItems:'center',
+            justifyContent:'center'
+          }}>
+            <View>
+              <Image
+                style={styles.icon}
+                source={require('../../images/icon-app.png')}
+              />
+            </View>
+          </View>
+
+          <Spacer size={20} />
+
           {error && <Messages message={error} />}
 
           <Form>
@@ -140,6 +156,15 @@ class SignUp extends React.Component {
         </Content>
       </Container>
     );
+  }
+}
+
+const styles = {
+  icon: {
+      flex: 1,
+      width: 60,
+      height: 60,
+      resizeMode: 'contain'
   }
 }
 

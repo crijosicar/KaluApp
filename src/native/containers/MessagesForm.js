@@ -25,7 +25,8 @@ const MessageForm = (props) => {
           addMovimiento,
           transaction,
           addDetalleMovimiento,
-          transactionDetailState
+          transactionDetailState,
+          onKeyboardChange
         } = props;
 
   return <MessageFormComponent
@@ -46,6 +47,7 @@ const MessageForm = (props) => {
             transaction={transaction}
             addDetalleMovimiento={addDetalleMovimiento}
             transactionDetailState={transactionDetailState}
+            onKeyboardChange={onKeyboardChange}
             />
 }
 
