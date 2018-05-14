@@ -73,7 +73,7 @@ const Index = (
             />
             <Scene
             back
-            key="myForecast"
+            key="myPrediction"
             title="MI PRONÓSTICO"
             component={MyPredictionContainer}
             Layout={MyPredictionComponent}
