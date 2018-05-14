@@ -26,7 +26,9 @@ import Svg,{
     Text
 } from 'react-native-svg';
 import Messages from './Messages';
-import { View } from 'react-native';
+import { View, Platform } from 'react-native';
+import Notch from './Notch';
+const platform = Platform.OS;
 
 class MyWallet extends React.Component {
 
@@ -142,13 +144,15 @@ class MyWallet extends React.Component {
             }
 
             const pieDaIncome = pieDataIncome.length ? (
-                <PieChart style={{ height: 190 }}
+              <View >
+                <PieChart style={{ height: 140 }}
                     data={ pieDataIncome }
                     valueAccessor={({ item }) => item.value}
                     spacing={5}
                     innerRadius={'0%'}>
                   <LabelsIncome />
                 </PieChart>
+              </View>
             ) : (
               <View style={ { height: 190 } }>
                 <Messages message={"No hay datos"} type="info" />
@@ -159,8 +163,9 @@ class MyWallet extends React.Component {
               <View>
                 {pieDataIncome && pieDataIncome.map((item, idx) => {
                     return (
-                      <View style={{flexDirection:"row", marginBottom: 5}}>
-                          <View style={{flex:1, width:'20%'}}>
+                    <View>
+                      <Grid>
+                        <Col size={25}>
                             <Svg
                               height="20"
                               width="20">
@@ -171,13 +176,19 @@ class MyWallet extends React.Component {
                                     fill={item.svg.fill}>
                               </Circle>
                             </Svg>
-                          </View>
-                          <View style={{flex:1, width:'80%'}}>
-                              <Texto>
-                                { this.props.incomeLabels[idx] }
-                              </Texto>
-                          </View>
-                      </View>
+                          </Col>
+                        <Col size={75}>
+                            <Texto>
+                              { this.props.incomeLabels[idx] }
+                            </Texto>
+                        </Col>
+                      </Grid>
+                      <Grid>
+                        <Col>
+                          <Spacer size={5}/>
+                        </Col>
+                      </Grid>
+                    </View>
                     );
                   })}
               </View>
@@ -189,26 +200,33 @@ class MyWallet extends React.Component {
               <View>
                 {pieDataExpense &&  pieDataExpense.map((item, idx) => {
                     return (
-                      <View style={{flexDirection:"row", marginBottom: 5}}>
-                          <View style={{flex:1, width:'20%'}}>
-                            <Svg
-                              height="20"
-                              width="20">
-                              <Circle
-                                    cx="10"
-                                    cy="10"
-                                    r="10"
-                                    fill={item.svg.fill}>
-                              </Circle>
-                            </Svg>
-                          </View>
-                          <View style={{flex:1, width:'80%'}}>
-                            <Texto>
-                              { this.props.expenseLabels[idx] }
-                            </Texto>
-                          </View>
+                      <View>
+                        <Grid>
+                          <Col size={25}>
+                              <Svg
+                                height="20"
+                                width="20">
+                                <Circle
+                                      cx="10"
+                                      cy="10"
+                                      r="10"
+                                      fill={item.svg.fill}>
+                                </Circle>
+                              </Svg>
+                            </Col>
+                            <Col size={75}>
+                              <Texto>
+                                { this.props.expenseLabels[idx] }
+                              </Texto>
+                            </Col>
+                        </Grid>
+                        <Grid>
+                          <Col>
+                            <Spacer size={5}/>
+                          </Col>
+                        </Grid>
                       </View>
-                    );
+                     );
                   })}
               </View>
             ) : (
@@ -216,18 +234,24 @@ class MyWallet extends React.Component {
             );
 
             const pieDaExpense = pieDataExpense.length ? (
-                <PieChart style={{ height: 190 }}
+              <View>
+                <PieChart style={{ height: 140 }}
                     data={ pieDataExpense }
                     valueAccessor={({ item }) => item.value}
                     spacing={5}
                     innerRadius={'0%'}>
                   <LabelsExpense />
                 </PieChart>
+              </View>
             ) : (
               <View style={ { height: 190 } }>
                 <Messages message={"No hay datos"} type="info" />
               </View>
             );
+
+            const kaluAssistantNotch = (<View style={{ width: 200, height: 20 }}>
+                                          <Text>{"fsdfdsfds"}</Text>
+                                        </View>);
 
             return (
                 <Container>
@@ -311,6 +335,9 @@ class MyWallet extends React.Component {
                             { pieDaIncome }
                           </Col>
                         </Grid>
+
+                        <Spacer size={10} />
+
                         <Grid>
                           <Col>
                             <H3>Egresos</H3>
@@ -377,8 +404,8 @@ class MyWallet extends React.Component {
                           </Col>
                         </Grid>
                         <Grid>
-                            <Col size={30}>{ pieDaExpensePoints }</Col>
-                            <Col size={70}>{ pieDaExpense }</Col>
+                          <Col size={30}>{ pieDaExpensePoints }</Col>
+                          <Col size={70}>{ pieDaExpense }</Col>
                         </Grid>
                     </Content>
                 </Container>

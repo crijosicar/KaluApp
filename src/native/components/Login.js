@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Container, Content, Form, List, ListItem, Item, Label, Input, Text, Button,StyleProvider, H1, H2, H3, Body, Icon } from 'native-base';
 import { Actions } from 'react-native-router-flux';
-import { LoginManager, AccessToken, GraphRequest,GraphRequestManager} from 'react-native-fbsdk';
+import { LoginManager, AccessToken, GraphRequest, GraphRequestManager} from 'react-native-fbsdk';
 import Loading from './Loading';
 import Messages from './Messages';
 import Header from './Header';
@@ -113,39 +113,6 @@ class Login extends React.Component {
 
   render() {
     const { loading, error } = this.props;
-    const data = [
-            {
-                month: new Date(2015, 0, 1),
-                apples: 3840,
-                bananas: 1920,
-                cherries: 960,
-                dates: 400,
-            },
-            {
-                month: new Date(2015, 1, 1),
-                apples: 1600,
-                bananas: 1440,
-                cherries: 960,
-                dates: 400,
-            },
-            {
-                month: new Date(2015, 2, 1),
-                apples: 640,
-                bananas: 960,
-                cherries: 3640,
-                dates: 400,
-            },
-            {
-                month: new Date(2015, 3, 1),
-                apples: 3320,
-                bananas: 480,
-                cherries: 640,
-                dates: 400,
-            },
-        ];
-    const colors = [ 'rgb(138, 0, 230, 0.8)', 'rgb(173, 51, 255, 0.8)', 'rgb(194, 102, 255, 0.8)', 'rgb(214, 153, 255, 0.8)' ];
-    const keys   = [ 'apples', 'bananas', 'cherries', 'dates' ];
-
     // Loading
     if (loading) return <Loading />;
 
@@ -165,17 +132,22 @@ class Login extends React.Component {
 
             <View style={{
               flex: 1,
-              flexDirection:'row',
+              flexDirection:'column',
               alignItems:'center',
               justifyContent:'center'
             }}>
-              <Image
-                style={styles.icon}
-                source={require('../../images/icon-app.png')}
-              />
+              <View>
+                <Image
+                  style={styles.icon}
+                  source={require('../../images/icon-app.png')}
+                />
+              </View>
+              <View>
+                <H3>Kalu</H3>
+              </View>
             </View>
 
-            <Spacer size={20}/>
+            <Spacer size={40}/>
 
             <Grid>
               <Col size={15}>
@@ -259,8 +231,8 @@ class Login extends React.Component {
   const styles = {
     icon: {
         flex: 1,
-        width: 100,
-        height: 100,
+        width: 120,
+        height: 120,
         resizeMode: 'contain'
     }
   }

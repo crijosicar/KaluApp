@@ -30,6 +30,8 @@ class ChatScreen extends Component {
     this.state = {
       conversation: (props.conversation) ? props.conversation : {},
     };
+
+    this.keyboardUpdate = this.keyboardUpdate.bind(this);
   }
 
   componentDidMount(){
@@ -38,6 +40,10 @@ class ChatScreen extends Component {
 
   onMessagesSended(c){
     this.props.loadMessages(this.props.member);
+  }
+
+  keyboardUpdate(){
+    this.refs._scrollView.scrollToEnd({ animated: true })
   }
 
   render() {
@@ -71,8 +77,11 @@ class ChatScreen extends Component {
                       style={styles.messageFrom}
                       onSendMessage={(c) => {
                         this.onMessagesSended(c);
-                      }
-                }/>
+                      }}
+                      onKeyboardChange={() => {
+                        this.keyboardUpdate();
+                      }}
+                />
             </KeyboardAvoidingView>
       </Container>
     );
