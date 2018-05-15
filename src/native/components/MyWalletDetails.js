@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import { Container, Content, Form, Picker, Item, Label, Input, Button,StyleProvider, H1, H2, H3, Icon,  Subtitle } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Actions } from 'react-native-router-flux';
@@ -25,16 +24,23 @@ class MyWalletDetails extends React.Component {
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
           dataSource: ds.cloneWithRows(['row 1', 'row 2']),
+          monthIncoming: ""
+          
         };
+        this.onValueChangeMonthIncoming = this.onValueChangeMonthIncoming.bind(this);
+        
       }
 
+      onValueChangeMonthIncoming = (value) => {
+       // this.props.getPieValues(this.props.member,{month:value, year:this.state.yearIncoming, tipoTransaccion:"INGRESO"});
+        this.setState({ monthIncoming: value });
+    }
     render() {
         const { error } = this.props;
         var allItems = new Array();
         const year = new Date().getFullYear();
         allItems = ['2018','2017','2016','2015'];
-        const dataIncome = this.props.incomeValues;
-        const dataExpense = this.props.expenseValues;
+    
         const colors = ["#600080", "#2556BA", "#26995F", "#99263D", "#7F9B0F", "#9E2807", "#C98704", "#33260E"];
        
 
@@ -66,11 +72,9 @@ class MyWalletDetails extends React.Component {
                                 iosIcon={<Icon name="ios-arrow-down-outline" />}
                                 headerBackButtonText="< Volver"
                                 placeholder="Mes"
-                                placeholderStyle={{ color: "#2874F0" }}
-                                note={false}
-                                style={{ width: undefined }}
                                 selectedValue={this.state.monthIncoming}
                                 onValueChange={this.onValueChangeMonthIncoming}>
+                                
                                   <Picker.Item label="Enero" value="1" />
                                   <Picker.Item label="Febrero" value="2" />
                                   <Picker.Item label="Marzo" value="3" />
@@ -85,16 +89,17 @@ class MyWalletDetails extends React.Component {
                                   <Picker.Item label="Diciembre" value="12" />
                               </Picker>
                             </View>
-                          </Col>
-                          
-                        </Grid>
-                    
-                    <ListView
-                    style={styles.container}
-                    dataSource={this.state.dataSource}
-                    renderRow={(data) => <View><Text>{data}</Text></View>}
-                        />
-                   
+                        </Col>
+                    </Grid>
+                    <Grid>
+                        <Col>
+                            <ListView
+                            style={styles.container}
+                            dataSource={this.state.dataSource}
+                            renderRow={(data) => <View><Text>{data}</Text></View>}
+                                />
+                        </Col>
+                    </Grid>                   
                     </Content>
                     <Notch></Notch>
                 </Container>
