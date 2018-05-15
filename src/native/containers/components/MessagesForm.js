@@ -148,16 +148,21 @@ class MessageFormComponent extends Component {
                     let viewName = views[0].value;
                     switch(viewName) {
                       case "inicio":
-                      Actions.forgotPassword();
+                      Actions.conversation();
                       break;
                       case "mi cartera":
-                      Actions.forgotPassword();
+                      Actions.myWallet();
                       break;
                       case "reportes":
-                      Actions.forgotPassword();
+                      Actions.myWalletDetails({categoria: "COMIDA"});
                       break;
                       default:
-                      Actions.conversation();
+                      Alert.alert(
+                        'Pantalla no existe',
+                        'La pantalla que buscas no existe',
+                        [{text: 'OK', onPress: () => console.log('OK Pressed')}],
+                        { cancelable: true }
+                      )
                     }
                   }
                 }, 500);
@@ -319,16 +324,21 @@ class MessageFormComponent extends Component {
                               let viewName = views[0].value;
                               switch(viewName) {
                                 case "inicio":
-                                Actions.forgotPassword();
+                                Actions.conversation();
                                 break;
                                 case "mi cartera":
-                                Actions.forgotPassword();
+                                Actions.myWallet();
                                 break;
                                 case "reportes":
-                                Actions.forgotPassword();
+                                Actions.myWalletDetails({categoria: "COMIDA"});
                                 break;
                                 default:
-                                Actions.conversation();
+                                Alert.alert(
+                                  'Pantalla no existe',
+                                  'La pantalla que buscas no existe',
+                                  [{text: 'OK', onPress: () => console.log('OK Pressed')}],
+                                  { cancelable: true }
+                                )
                               }
                             }
                           }, 500);
