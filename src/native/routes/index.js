@@ -22,6 +22,9 @@ import ForgotPasswordComponent from '../components/ForgotPassword';
 import MyWalletContainer from '../../containers/MyWallet';
 import MyWalletComponent from '../components/MyWallet';
 
+import MyWalletDetailsContainer from '../../containers/MyWalletDetails';
+import MyWalletDetailsComponent from '../components/MyWalletDetails';
+
 import MyPredictionContainer from '../../containers/MyPrediction';
 import MyPredictionComponent from '../components/MyPrediction';
 
@@ -81,6 +84,12 @@ const Index = (
             title="CONVERSACIÓN"
             component={ChatScreenContainer}
             Layout={ChatScreenComponent}
+            />
+          <Scene
+            key="myWalletDetails"
+            title="MIS DETALLES DE MOVIMIENTOS"
+            component={MyWalletDetailsContainer}
+            Layout={MyWalletDetailsComponent}
             />
   </Scene>
 );

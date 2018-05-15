@@ -2,12 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setLoadingFalse } from '../actions/member';
-
+import {getPredictionValues} from '../actions/prediction';
 
 const MyPrediction = ({
   Layout,
   errorMessage,
-  
+  getPredictionValues,
+  incomePredictionValues,
+  expensePredictionValues,
   member
 }) => (
   <Layout
@@ -15,6 +17,7 @@ const MyPrediction = ({
     getPredictionValues={getPredictionValues}
     member={member}
     incomePredictionValues={incomePredictionValues}
+    expensePredictionValues={expensePredictionValues}
   />
 );
 
@@ -29,7 +32,8 @@ MyPrediction.defaultProps = {
 const mapStateToProps = state => ({
   member:state.member||{},
   errorMessage: state.status.error || null,
-  incomePredictionValues:state.prediction.incomePredictionValues || []
+  incomePredictionValues:state.prediction.incomePredictionValues || null,
+  expensePredictionValues:state.prediction.expensePredictionValues || null
 });
 
 const mapDispatchToProps = {

@@ -6,15 +6,11 @@ import Api from '../lib/api';
 
 export function getPredictionValues(member,formData) {
   const {
-      year,
-      month,
       tipoTransaccion
   } = formData;   
   
     return dispatch => new Promise(async (resolve, reject) => {
       //Validation checks
-      if(!year) return reject({message:ErrorMessages.missingYear});
-      if(!month) return reject({message:ErrorMessages.missingMonth});
       
       await statusMessage(dispatch, 'loading', true);
       let baseurl = "http://www.kaluapp.com:81/api/get-expected-incomes-expenses-by-user";

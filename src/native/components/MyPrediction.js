@@ -7,11 +7,12 @@ import Loading from './Loading';
 import Spacer from './Spacer';
 import { PieChart } from 'react-native-svg-charts';
 import { Circle, G, Line } from 'react-native-svg';
-import { Button,Container, Content, Card, CardItem, Text, Icon, Right, Separator,H3 } from 'native-base';
+import { Button,Container, Content, Card, CardItem,Label, Text, Icon, Right, Separator,H2 } from 'native-base';
 
 import Header from './Header';
 
 import Messages from './Messages';
+import Subtitle from '../../../native-base-theme/components/Subtitle';
 
 class MyPrediction extends React.Component {
 
@@ -22,57 +23,78 @@ class MyPrediction extends React.Component {
         }
     }
    componentWillMount(){
-       this.props.getPredictionValues
+       this.props.getPredictionValues(this.props.member, {tipoTransaccion:"EGRESO"});
    }
     
     render() {
+        const nodoNumero=1;
         const { error } = this.props;
-        const data=this.props.incomePredictionValues;
+        const data=this.props.expensePredictionValues;
+        const resultado = Object.keys(data)[nodoNumero]; 
+        let categoria;
+        const monto="data."+resultado;
+        
+            
+        switch(monto) {
+            case "data.comida":
+            categoria= data.comida;
+                break;
+            case "data.ropa":
+            categoria= data.ropa;
+                break;
+            case "data.facturas":
+            categoria= data.facturas;
+                break;
+            case "data.entretenimiento":
+            categoria= data.entretenimiento;
+                    break;
+            case "data.comunicaciones":
+            categoria= data.comunicaciones;
+                    break;
+                            
+            case "data.hogar":
+            categoria= data.hogar;
+                    break;
+            case "data.salud":
+            categoria= data.salud;
+                    break;
+                               
+                                    
+            default:
+                categoria= data.transporte;
+        }
+           
             return (
                 <Container>
             
                 <Content>
                 <Spacer size={30} />
-                <H3 style={{margin:15}}>
+                <H2 style={{margin:15}}>
                 Pronótisco de gasto
+                </H2 >
+                <Label style={{margin:25}}>
+                Tienes que comprar:
+                </Label>
                 
-                </H3>
-                <Spacer size={30} />
                   <Card>
                     
-                        <Button full style={{margin:15, backgroundColor:'white'}}>
-                      <Text style={{textAlign:"center", fontSize: 15 , color:"#99badd"}}>PARA:</Text>
-                      </Button>
-                      
+                    <Button full info style={{margin:15}}>
+                        <Text> {resultado} </Text>
+                    </Button>
+                     
+                    <Button full style={{margin:15, backgroundColor:'white'}}>
+                       <Text style={{textAlign:"center", fontSize: 15 , color:"#99badd"}}>MONTO:</Text>
+                    </Button>
                     
                     <Button full info style={{margin:15}}>
-                        <Text> Ropa </Text>
+                      <Text> $ {categoria} </Text>
                     </Button>
-                    
-                      
-                     
-                     
                     <Button full style={{margin:15, backgroundColor:'white'}}>
-                      
-                     <Text style={{textAlign:"center", fontSize: 15 , color:"#99badd"}}>EN:</Text>
-                      </Button>
-                      
-                      
-                      
-                      <Button full info style={{margin:15}}>
-                        <Text> 06/18 </Text>
+                       <Text style={{textAlign:"center", fontSize: 15 , color:"#99badd"}}>Tu periodicidad de compra es:</Text>
                     </Button>
-                    
-                     
-                    <Button full style={{margin:15, backgroundColor:'white'}}>
-                     <Text style={{textAlign:"center", fontSize: 15 , color:"#99badd"}}>ES:</Text>
-                      </Button>
-                      
-                    
-                      <Button full info style={{margin:15}}>
-                        <Text> $0.00 </Text>
+                    <Button full info style={{margin:15}}>
+                      <Text> cada xx días </Text>
                     </Button>
-                    
                    </Card>
                 </Content>
               </Container>

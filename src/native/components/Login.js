@@ -56,7 +56,8 @@ class Login extends React.Component {
       if(this.props.member && this.props.member.id){
         //Actions.conversation();
         //Actions.myWallet();
-        Actions.myPrediction();
+        //Actions.myPrediction();
+        Actions.myWalletDetails();
       }
      })
      .catch((e) => {

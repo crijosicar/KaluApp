@@ -1,4 +1,4 @@
-import Store from '../store/conversation';
+import Store from '../store/prediction';
 import  * as types from './types';
 
 export const initialState = Store;

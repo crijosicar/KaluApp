@@ -30,6 +30,31 @@ export default function walletReducer(state = initialState, action) {
             }
             return initialState;
         }
+        case types.GET_INCOME_DETAILS_DATA: {
+
+            if(action.data){
+                return {
+                ...state,
+                incomeDetailsLabels: action.data.income_details_labels,
+                incomeDetailsValues: action.data.income_details_values,
+                error: null,
+                loading: false,
+                }
+            }
+            return initialState;
+        }
+        case types.GET_EXPENSE_DETAILS_DATA: {
+            if(action.data){
+                return {
+                    ...state,
+                    expenseDetailsLabels: action.data.expense_details_labels,
+                    expenseDetailsValues: action.data.expense_details_values,
+                    error: null,
+                    loading: false,
+                  }
+            }
+            return initialState;
+        }
         default:
         return state;
     }

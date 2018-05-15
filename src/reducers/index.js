@@ -2,6 +2,7 @@ import status from './status';
 import member from './member';
 import conversation from './conversation';
 import transaction from './transaction';
+import prediction from './prediction';
 import wallet from './wallet';
 
 const rehydrated = (state = false, action) => {
@@ -20,4 +21,5 @@ export default {
   transaction,
   conversation,
   wallet,
+  prediction
 };
