@@ -34,10 +34,9 @@ class MyWalletDetails extends React.Component {
 
   componentDidMount() {
     let now = new Date();
-    this.props.getWalletDetailsValues(this.props.member,{categoria:"COMIDA", tipoTransaccion:"EGRESO", "mes": (now.getMonth() +  1), "anho": now.getFullYear()});
-    console.log(this.props.expenseDetailsValues);
+    this.props.getWalletDetailsValues(this.props.member, {categoria:"COMIDA", tipoTransaccion:"EGRESO", "mes": (now.getMonth() +  1), "anho": now.getFullYear()});
     this.setState({
-      dataSource: []
+      dataSource: this.props.expenseDetailsValues
     })
   }
 
