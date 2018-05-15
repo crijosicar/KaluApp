@@ -35,8 +35,8 @@ export default function walletReducer(state = initialState, action) {
             if(action.data){
                 return {
                 ...state,
-                incomeDetailsLabels: action.data.income_details_labels,
-                incomeDetailsValues: action.data.income_details_values,
+               
+                incomeDetailsValues: action.data,
                 error: null,
                 loading: false,
                 }
@@ -47,8 +47,8 @@ export default function walletReducer(state = initialState, action) {
             if(action.data){
                 return {
                     ...state,
-                    expenseDetailsLabels: action.data.expense_details_labels,
-                    expenseDetailsValues: action.data.expense_details_values,
+                    
+                    expenseDetailsValues: action.data,
                     error: null,
                     loading: false,
                   }

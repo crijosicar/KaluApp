@@ -28,7 +28,6 @@ import Svg,{
 import Messages from './Messages';
 import { View, Platform } from 'react-native';
 import Notch from '../containers/Notch';
-const platform = Platform.OS;
 
 class MyWallet extends React.Component {
 
@@ -49,8 +48,9 @@ class MyWallet extends React.Component {
 
     componentDidMount() {
       let now = new Date();
-      this.props.getPieValues(this.props.member,{month: 5, year: now.getFullYear(), tipoTransaccion:"EGRESO"});
-      this.props.getPieValues(this.props.member,{month: 5, year: now.getFullYear(), tipoTransaccion:"INGRESO"});
+      let month = now.getMonth() + 1;
+      this.props.getPieValues(this.props.member,{month: month, year: now.getFullYear(), tipoTransaccion:"EGRESO"});
+      this.props.getPieValues(this.props.member,{month: month, year: now.getFullYear(), tipoTransaccion:"INGRESO"});
     }
 
     onValueChangeMonthIncoming = (value) => {
@@ -92,7 +92,7 @@ class MyWallet extends React.Component {
                                             },
                                             key: `income-${index}`,
                                         }));
-        const pieDataExpense = dataExpense.filter(value => value > 0)
+         const pieDataExpense = dataExpense.filter(value => value > 0)
                                           .map((value, index) => ({
                                               value,
                                               svg: {
@@ -280,7 +280,7 @@ class MyWallet extends React.Component {
                                 placeholder="Mes"
                                 placeholderStyle={{ color: "#2874F0" }}
                                 note={false}
-                                style={{ width: undefined }}
+                                style={{ width:(Platform.OS === 'ios') ? undefined : 120 }}
                                 selectedValue={this.state.monthIncoming}
                                 onValueChange={this.onValueChangeMonthIncoming}>
                                   <Picker.Item label="Enero" value="1" />
@@ -313,7 +313,7 @@ class MyWallet extends React.Component {
                                 placeholder="Año"
                                 placeholderStyle={{ color: "#2874F0" }}
                                 note={false}
-                                style={{ width: undefined }}
+                                style={{ width:(Platform.OS === 'ios') ? undefined : 120 }}
                                 selectedValue={this.state.yearIncoming}
                                 onValueChange={this.onValueChangeYearIncoming}>
                                       {allItems && allItems.map((anho,i) => {
@@ -356,7 +356,7 @@ class MyWallet extends React.Component {
                               placeholder="Mes"
                               placeholderStyle={{ color: "#2874F0" }}
                               note={false}
-                              style={{ width: undefined }}
+                              style={{ width:(Platform.OS === 'ios') ? undefined : 120 }}
                               selectedValue={this.state.monthExpenses}
                               onValueChange={this.onValueChangeMonthExpenses}>
                                 <Picker.Item label="Enero" value="1" />
@@ -389,7 +389,7 @@ class MyWallet extends React.Component {
                                   placeholder="Año"
                                   placeholderStyle={{ color: "#2874F0" }}
                                   note={false}
-                                  style={{ width: undefined }}
+                                  style={{ width:(Platform.OS === 'ios') ? undefined : 120 }}
                                   selectedValue={this.state.yearExpenses}
                                   onValueChange={this.onValueChangeYearExpenses}>
                                         {allItems && allItems.map((anho,i) => {
