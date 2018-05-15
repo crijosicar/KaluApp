@@ -35,7 +35,7 @@ class ChatScreen extends Component {
   }
 
   componentDidMount(){
-      this.props.loadMessages(this.props.member);
+    this.props.loadMessages(this.props.member);
   }
 
   onMessagesSended(c){

@@ -6,7 +6,7 @@ export const initialState = Store;
 export default function walletReducer(state = initialState, action) {
     switch (action.type) {
         case types.GET_INCOME_PIE_DATA: {
-            
+
             if(action.data){
                 return {
                 ...state,

@@ -65,7 +65,7 @@ class MessageFormComponent extends Component {
                 }, 500);
               } else if(this.props.watsonResponse.message.intents[0].intent === "AGREGAR"){
                 setTimeout(()=> {
-                  this.props.addMovimiento("INGRESO", this.props.member)
+                  this.props.addMovimiento("EGRESO", this.props.member)
                   .then(() => {
                     let numbers = [];
                     let comida = [];
