@@ -67,7 +67,7 @@ class MyWalletDetails extends React.Component {
         }
         
         
-        debugger;
+        
     return (
       <Container>
         <Content padder>
@@ -143,8 +143,8 @@ class MyWalletDetails extends React.Component {
             <Col>
               <ListView
                 style={styles.container}
-                dataSource={this.state.dataSource}
-               
+               // dataSource={this.state.dataSource}
+               dataSource={resultado}
                 renderRow={(data) => <View><Text>{data}</Text></View>}
                 />
             </Col>
