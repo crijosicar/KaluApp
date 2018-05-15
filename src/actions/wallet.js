@@ -7,26 +7,31 @@ import Api from '../lib/api';
 
 export function getWalletDetailsValues(member,formData){
   const {
-    tipoTransaccion
+    categoria,
+    tipoTransaccion,
+    mes,
+    anho
 } = formData;   
 
   return dispatch => new Promise(async (resolve, reject) => {
     //Validation checks
     
     await statusMessage(dispatch, 'loading', true);
-    //let baseurl = "http://www.kaluapp.com:81/api/get-expected-incomes-expenses-by-user";
-   
+    let baseurl="http://www.kaluapp.com:81/api/get-category-details-by-user"
+    
     return Api.post(baseurl,
       {
           "user_id": member.id,
+          "categoria": categoria,
           "tipo_transaccion": tipoTransaccion,
           "token": member.token,
-         
+         "anho":anho,
+         "mes":mes
       }
     )
     .then((response) => {
         statusMessage(dispatch, 'loading', false);
-      
+        debugger;  
         if(response.error){
           reject({message: "Ocurrió un error!"});
         } else {

@@ -23,7 +23,7 @@ class MyWalletDetails extends React.Component {
         super();
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
-          dataSource: ds.cloneWithRows(['row 1', 'row 2']),
+          dataSource: ds.cloneWithRows(['papa : 2000', 'manzana: 5000']),
           monthIncoming: ""
           
         };
@@ -35,6 +35,11 @@ class MyWalletDetails extends React.Component {
        // this.props.getPieValues(this.props.member,{month:value, year:this.state.yearIncoming, tipoTransaccion:"INGRESO"});
         this.setState({ monthIncoming: value });
     }
+    componentWillMount(){
+        this.props.getWalletDetailsValues(this.props.member,{categoria:"COMIDA", tipoTransaccion:"EGRESO","mes": 5,
+        "anho": 2018});
+        //this.state.DataSource: this.props.expenseDetailsValues;
+    }
     render() {
         const { error } = this.props;
         var allItems = new Array();
@@ -44,7 +49,7 @@ class MyWalletDetails extends React.Component {
         const colors = ["#600080", "#2556BA", "#26995F", "#99263D", "#7F9B0F", "#9E2807", "#C98704", "#33260E"];
        
 
-            
+        const dataDetailsExpense=this.props.expenseValues;
                   return (
                     <Container>
                     <Content padder>
@@ -93,11 +98,20 @@ class MyWalletDetails extends React.Component {
                     </Grid>
                     <Grid>
                         <Col>
+                            <View>
+                            <Label>
+                                Comida
+                            </Label>
+                            <Label>
+                                Monto
+                            </Label>
+                            </View>
                             <ListView
                             style={styles.container}
                             dataSource={this.state.dataSource}
                             renderRow={(data) => <View><Text>{data}</Text></View>}
                                 />
+                                
                         </Col>
                     </Grid>                   
                     </Content>
