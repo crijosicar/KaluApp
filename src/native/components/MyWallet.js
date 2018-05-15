@@ -27,13 +27,14 @@ import Svg,{
 } from 'react-native-svg';
 import Messages from './Messages';
 import { View, Platform } from 'react-native';
-import Notch from './Notch';
+import Notch from '../containers/Notch';
 const platform = Platform.OS;
 
 class MyWallet extends React.Component {
 
     constructor(props) {
         super(props);
+
         this.state = {
             monthIncoming: "",
             yearIncoming: "",
@@ -48,8 +49,8 @@ class MyWallet extends React.Component {
 
     componentDidMount() {
       let now = new Date();
-      this.props.getPieValues(this.props.member,{month: 5, year: now.getFullYear(), tipoTransaccion:"INGRESO"});
       this.props.getPieValues(this.props.member,{month: 5, year: now.getFullYear(), tipoTransaccion:"EGRESO"});
+      this.props.getPieValues(this.props.member,{month: 5, year: now.getFullYear(), tipoTransaccion:"INGRESO"});
     }
 
     onValueChangeMonthIncoming = (value) => {
@@ -154,7 +155,7 @@ class MyWallet extends React.Component {
                 </PieChart>
               </View>
             ) : (
-              <View style={ { height: 190 } }>
+              <View style={ { height: 140 } }>
                 <Messages message={"No hay datos"} type="info" />
               </View>
             );
@@ -163,7 +164,7 @@ class MyWallet extends React.Component {
               <View>
                 {pieDataIncome && pieDataIncome.map((item, idx) => {
                     return (
-                    <View>
+                    <View key={idx}>
                       <Grid>
                         <Col size={25}>
                             <Svg
@@ -196,11 +197,11 @@ class MyWallet extends React.Component {
               null
             );
 
-            const pieDaExpensePoints = pieDataIncome.length ? (
+            const pieDaExpensePoints = pieDataExpense.length ? (
               <View>
                 {pieDataExpense &&  pieDataExpense.map((item, idx) => {
                     return (
-                      <View>
+                      <View key={idx}>
                         <Grid>
                           <Col size={25}>
                               <Svg
@@ -244,14 +245,10 @@ class MyWallet extends React.Component {
                 </PieChart>
               </View>
             ) : (
-              <View style={ { height: 190 } }>
+              <View style={ { height: 140 } }>
                 <Messages message={"No hay datos"} type="info" />
               </View>
             );
-
-            const kaluAssistantNotch = (<View style={{ width: 200, height: 20 }}>
-                                          <Text>{"fsdfdsfds"}</Text>
-                                        </View>);
 
             return (
                 <Container>
@@ -408,8 +405,9 @@ class MyWallet extends React.Component {
                           <Col size={70}>{ pieDaExpense }</Col>
                         </Grid>
                     </Content>
+                    <Notch></Notch>
                 </Container>
-                )
+        )
     }
 
 }

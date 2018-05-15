@@ -1,0 +1,55 @@
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+import NotchComponent from './components/Notch';
+import { sendMessage, loadMessages } from '../../actions/conversation';
+
+const Notch = (props) => {
+
+    const { conversation,
+            member,
+            transaction,
+            onFormSubmit,
+            isLoading,
+            infoMessage,
+            error,
+            successMessage,
+            loadMessages,
+            sending,
+            messages,
+            recording
+          } = props;
+
+    return  <NotchComponent conversation={conversation}
+                        member={member}
+                        transaction={transaction}
+                        onFormSubmit={onFormSubmit}
+                        loading={isLoading}
+                        info={infoMessage}
+                        error={error}
+                        success={successMessage}
+                        loadMessages={loadMessages}
+                        sending={sending}
+                        messages={messages}
+                        recording={recording} />
+}
+
+const mapStateToProps = state => ({
+  recording: state.conversation.recording || false,
+  sending: state.conversation.sending || false,
+  messages: state.conversation.messages || [],
+  conversation: state.conversation || {},
+  member: state.member || {},
+  isLoading: state.status.loading || false,
+  infoMessage: state.status.info || null,
+  error: state.status.error || null,
+  successMessage: state.status.success || null,
+});
+
+const mapDispatchToProps = {
+  onFormSubmit: sendMessage,
+  loadMessages: loadMessages
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Notch)
