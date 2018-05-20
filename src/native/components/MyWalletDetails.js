@@ -8,7 +8,7 @@ import Header from './Header';
 import Spacer from './Spacer';
 import { PieChart } from 'react-native-svg-charts';
 import Messages from './Messages';
-import { View, ListView, StyleSheet, Text, Platform } from 'react-native';
+import { View, FlatList, StyleSheet, Text, Platform } from 'react-native';
 
 import Notch from '../containers/Notch';
 
@@ -22,9 +22,8 @@ const styles = StyleSheet.create({
 class MyWalletDetails extends React.Component {
   constructor() {
     super();
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      dataSource: ds.cloneWithRows(['row 1', 'row 2']),
+      dataSource: [],
       monthIncoming: "",
       yearIncoming: ""
 
@@ -33,41 +32,33 @@ class MyWalletDetails extends React.Component {
     this.onValueChangeYearIncoming = this.onValueChangeYearIncoming.bind(this);
   }
 
+  componentDidMount() {
+    let now = new Date();
+    this.props.getWalletDetailsValues(this.props.member,{categoria:"COMIDA", tipoTransaccion:"EGRESO", "mes": (now.getMonth() +  1), "anho": now.getFullYear()});
+    console.log(this.props.expenseDetailsValues);
+    this.setState({
+      dataSource: []
+    })
+  }
+
   onValueChangeMonthIncoming = (value) => {
-    //this.props.getPieValues(this.props.member,{month:this.state.monthIncoming, year:value, tipoTransaccion:"INGRESO"});
     this.setState({ monthIncoming: value });
-    this.props.getWalletDetailsValues(this.props.member,{categoria:"COMIDA", tipoTransaccion:"EGRESO","mes": this.state.monthIncoming,
-    "anho": this.state.yearIncoming});
+    this.props.getWalletDetailsValues(this.props.member,{categoria:"COMIDA", tipoTransaccion:"EGRESO", "mes": value, "anho": this.state.yearIncoming});
+    debugger;
   }
 
   onValueChangeYearIncoming = (value) => {
-    //this.props.getPieValues(this.props.member,{month:this.state.monthIncoming, year:value, tipoTransaccion:"INGRESO"});
     this.setState({ yearIncoming: value });
-    this.props.getWalletDetailsValues(this.props.member,{categoria:"COMIDA", tipoTransaccion:"EGRESO","mes": this.state.monthIncoming,
-    "anho": this.state.yearIncoming});
+    this.props.getWalletDetailsValues(this.props.member,{categoria:"COMIDA", tipoTransaccion:"EGRESO","mes": this.state.monthIncoming, "anho": value});
+    debugger;
   }
-  
+
   render() {
     const { error } = this.props;
     var allItems = new Array();
     const year = new Date().getFullYear();
     allItems = ['2018','2017','2016','2015'];
-
     const colors = ["#600080", "#2556BA", "#26995F", "#99263D", "#7F9B0F", "#9E2807", "#C98704", "#33260E"];
-    const data=this.props.expenseDetailsValues;
-        const indexList = Object.keys(data); 
-        let resultado=[];
-        let cantidad=[];
-        
-        if(indexList.length>0){
-            for (i=0; i<indexList.length; i++){
-                resultado.push(data[indexList[i]].activo);
-                cantidad.push(data[indexList[i]].monto);
-            }
-        }
-        
-        
-        
     return (
       <Container>
         <Content padder>
@@ -141,11 +132,11 @@ class MyWalletDetails extends React.Component {
           </Grid>
           <Grid>
             <Col>
-              <ListView
-                style={styles.container}
-               // dataSource={this.state.dataSource}
-               dataSource={resultado}
-                renderRow={(data) => <View><Text>{data}</Text></View>}
+              <FlatList
+                  data={this.state.dataSource}
+                  renderItem={({item}) => (
+                      <Text>{item.activo} " - " {item.monto}</Text>
+                  )}
                 />
             </Col>
           </Grid>
