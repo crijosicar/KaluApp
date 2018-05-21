@@ -27,17 +27,19 @@ class MyPrediction extends React.Component {
    }
 
    componentDidMount(){
-     this.props.getPredictionTimeframe(this.props.member,{categoria:this.props.categoria})
+     let { categoria =  "COMIDA" } = this.props;
+     this.props.getPredictionTimeframe(this.props.member,{categoria: categoria})
    }
 
   render() {
-        const nodoNumero=1;
         const { error } = this.props;
         const data=this.props.expensePredictionValues;
         const timeFrame=this.props.expensePredictionTimeFrame;
-        let resultado = this.props.categoria.toLowerCase();
+        let resultado = "comida";
+        if(this.props.categoria){
+          resultado = this.props.categoria.toLowerCase();
+        }
         let categoria;
-        let monto = "data." + resultado;
         let btnTimeframe =  null;
 
         if(timeFrame){
@@ -46,26 +48,26 @@ class MyPrediction extends React.Component {
                             </Button>);
         }
 
-        switch(monto) {
-            case "data.comida":
+        switch(resultado) {
+            case "comida":
             categoria= data.comida;
                 break;
-            case "data.ropa":
+            case "ropa":
             categoria= data.ropa;
                 break;
-            case "data.facturas":
+            case "resultadofacturas":
             categoria= data.facturas;
                 break;
-            case "data.entretenimiento":
+            case "entretenimiento":
             categoria= data.entretenimiento;
                     break;
-            case "data.comunicaciones":
+            case "comunicaciones":
             categoria= data.comunicaciones;
                     break;
-            case "data.hogar":
+            case "hogar":
             categoria= data.hogar;
                     break;
-            case "data.salud":
+            case "salud":
             categoria= data.salud;
                     break;
             default:

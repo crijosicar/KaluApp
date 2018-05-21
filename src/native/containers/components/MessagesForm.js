@@ -341,7 +341,8 @@ class MessageFormComponent extends Component {
 
                           if(categorias.length){
                             setTimeout(() => {
-                              Actions.myPrediction({categoria: categorias[0].value});
+                              let catName = categorias[0].value;
+                              Actions.myPrediction({categoria: catName});
                             }, 500);
                           } else {
                             Alert.alert(

@@ -40,8 +40,7 @@ const mapStateToProps = state => ({
   errorMessage: state.status.error || null,
   incomePredictionValues:state.prediction.incomePredictionValues || null,
   expensePredictionValues:state.prediction.expensePredictionValues || null,
-  expensePredictionTimeFrame:state.prediction.expensePredictionTimeFrame || null,
-  categoria: state.prediction.categoria || "COMIDA"
+  expensePredictionTimeFrame:state.prediction.expensePredictionTimeFrame || null
 });
 
 const mapDispatchToProps = {
