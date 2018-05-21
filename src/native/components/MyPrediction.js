@@ -13,6 +13,7 @@ import Header from './Header';
 
 import Messages from './Messages';
 import Subtitle from '../../../native-base-theme/components/Subtitle';
+import Notch from '../containers/Notch';
 
 class MyPrediction extends React.Component {
 
@@ -27,10 +28,10 @@ class MyPrediction extends React.Component {
        this.props.getPredictionValues(this.props.member, {tipoTransaccion:"EGRESO"});
    }
    componentDidMount(){
-    this.props.getPredictionTimeframe(this.props.member,{categoria:"COMIDA"})
+    this.props.getPredictionTimeframe(this.props.member,{categoria:"ROPA"})
 }
     render() {
-        const nodoNumero=0;
+        const nodoNumero=1;
         const { error } = this.props;
         const data=this.props.expensePredictionValues;
         const timeFrame=this.props.expensePredictionTimeFrame;
@@ -41,8 +42,8 @@ class MyPrediction extends React.Component {
 
 
         if(timeFrame){
-            btnTimeframe = (<Button full info style={{margin:15}}>
-                                <Text> cada {timeFrame.value} {timeFrame.unit} </Text>
+            btnTimeframe = (<Button full info style={{margin:11}}>
+                                <Text style={{textAlign:"center", fontSize: 11}} > cada {timeFrame.value} {timeFrame.unit} </Text>
                             </Button>);
         }
             
@@ -79,33 +80,35 @@ class MyPrediction extends React.Component {
                 <Container>
             
                 <Content>
-                <Spacer size={30} />
-                <H2 style={{margin:15}}>
+                <Spacer size={11} />
+                <H2 style={{margin:11}}>
                 Pronótisco de gasto
                 </H2 >
-                <Label style={{margin:25}}>
+                <Label style={{margin:11}}>
                 Tienes que comprar:
                 </Label>
                 
                   <Card>
                     
-                    <Button full info style={{margin:15}}>
-                        <Text> {resultado} </Text>
+                    <Button full info style={{margin:11}}>
+                        <Text style={{textAlign:"center", fontSize: 11 }}> {resultado} </Text>
                     </Button>
                      
-                    <Button full style={{margin:15, backgroundColor:'white'}}>
-                       <Text style={{textAlign:"center", fontSize: 15 , color:"#99badd"}}>MONTO:</Text>
+                    <Button full style={{margin:11, backgroundColor:'white'}}>
+                       <Text style={{textAlign:"center", fontSize: 11 , color:"#99badd"}}>MONTO:</Text>
                     </Button>
                     
-                    <Button full info style={{margin:15}}>
-                      <Text> $ {categoria} </Text>
+                    <Button full info style={{margin:11}}>
+                      <Text style={{textAlign:"center", fontSize: 11 }}> $ {categoria} </Text>
                     </Button>
-                    <Button full style={{margin:15, backgroundColor:'white'}}>
-                       <Text style={{textAlign:"center", fontSize: 15 , color:"#99badd"}}>Tu periodicidad de compra es:</Text>
+                    <Button full style={{margin:11, backgroundColor:'white'}}>
+                       <Text style={{textAlign:"center", fontSize: 11 , color:"#99badd"}}>Tu periodicidad de compra es:</Text>
                     </Button>
+                    
                     { btnTimeframe }
                    </Card>
                 </Content>
+                <Notch></Notch>
               </Container>
         )
     }
