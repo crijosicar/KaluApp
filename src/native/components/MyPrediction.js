@@ -22,18 +22,29 @@ class MyPrediction extends React.Component {
             
         }
     }
+
    componentWillMount(){
        this.props.getPredictionValues(this.props.member, {tipoTransaccion:"EGRESO"});
    }
-    
+   componentDidMount(){
+    this.props.getPredictionTimeframe(this.props.member,{categoria:"COMIDA"})
+}
     render() {
-        const nodoNumero=1;
+        const nodoNumero=0;
         const { error } = this.props;
         const data=this.props.expensePredictionValues;
+        const timeFrame=this.props.expensePredictionTimeFrame;
         const resultado = Object.keys(data)[nodoNumero]; 
         let categoria;
         const monto="data."+resultado;
-        
+        let btnTimeframe =  null;
+
+
+        if(timeFrame){
+            btnTimeframe = (<Button full info style={{margin:15}}>
+                                <Text> cada {timeFrame.value} {timeFrame.unit} </Text>
+                            </Button>);
+        }
             
         switch(monto) {
             case "data.comida":
@@ -92,9 +103,7 @@ class MyPrediction extends React.Component {
                     <Button full style={{margin:15, backgroundColor:'white'}}>
                        <Text style={{textAlign:"center", fontSize: 15 , color:"#99badd"}}>Tu periodicidad de compra es:</Text>
                     </Button>
-                    <Button full info style={{margin:15}}>
-                      <Text> cada xx días </Text>
-                    </Button>
+                    { btnTimeframe }
                    </Card>
                 </Content>
               </Container>

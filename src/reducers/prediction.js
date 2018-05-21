@@ -17,6 +17,18 @@ export default function predictionReducer(state = initialState, action) {
             }
             return initialState;
         }
+        case types.GET_EXPENSE_PREDICTION_DATA_TIMEFRAME:{
+            debugger;
+            if(action.data){
+               return{ ...state,
+                expensePredictionTimeFrame: action.data,
+                error: null,
+                loading :false,
+                
+            }
+            return initialState;
+            }
+        }
         case types.GET_EXPENSE_PREDICTION_DATA: {
             if(action.data){
                 return {
