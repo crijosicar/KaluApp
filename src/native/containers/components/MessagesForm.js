@@ -42,14 +42,13 @@ class MessageFormComponent extends Component {
     this.props.sendMessage(this.props.message, this.props.member, isBot)
     .then((response) => {
       this.props.onSendMessage();
-
       if(this.props.watsonResponse != ""){
         if(!this.props.watsonResponse.error){
           if(this.props.watsonResponse.message.intents.length){
             //TOMA DE DECISIONES DE WATSON ASSISTANT
             if(this.props.watsonResponse.message.output.nodes_visited.length){
               if(this.props.watsonResponse.message.output.nodes_visited[0] === "En otras cosas"){
-                setTimeout(()=> {
+                setTimeout(() => {
                   this.props.sendMessage(this.props.watsonResponse.message.output.text[0], this.props.member, 1)
                   .then((response) => {
                     this.props.onSendMessage();
@@ -57,14 +56,14 @@ class MessageFormComponent extends Component {
                 }, 500);
               } else if(this.props.watsonResponse.message.intents[0].intent === "SALUDO" ||
               this.props.watsonResponse.message.intents[0].intent === "COMO_TE_LLAMAS"){
-                setTimeout(()=> {
+                setTimeout(() => {
                   this.props.sendMessage(this.props.watsonResponse.message.output.text[0], this.props.member, 1)
                   .then((response) => {
                     this.props.onSendMessage();
                   }).catch((err) => { console.log("err", err); });
                 }, 500);
               } else if(this.props.watsonResponse.message.intents[0].intent === "AGREGAR"){
-                setTimeout(()=> {
+                setTimeout(() => {
                   this.props.addMovimiento("EGRESO", this.props.member)
                   .then(() => {
                     let numbers = [];
@@ -127,7 +126,7 @@ class MessageFormComponent extends Component {
                       if(medidas.length){
                         nombreAux = nombre;
                       }
-                      setTimeout(()=> {
+                      setTimeout(() => {
                         this.props.sendMessage("se " + haAux + " agregado " + nombreAux, this.props.member, 1)
                         .then((response) => {
                           this.props.onSendMessage();
@@ -138,12 +137,32 @@ class MessageFormComponent extends Component {
 
                   }).catch((err) => { console.log("err", err); });
                 }, 500);
+              } else if(this.props.watsonResponse.message.intents[0].intent === "CUAL_ES_MI_EL_PRONOSTICO"){
+                let categorias = [];
+                if(this.props.watsonResponse.message.entities.length){
+                  categorias = this.props.watsonResponse.message.entities.filter((entity) => entity.entity === "CATEGORIAS_ACTIVO_EGRESOS");
+                }
+
+                if(categorias.length){
+                  setTimeout(() => {
+                    Actions.myPrediction({categoria: categorias[0].value});
+                  }, 500);
+                } else {
+                  Alert.alert(
+                    'Falta categoría',
+                    'Debes proporcionar una categoría',
+                    [{text: 'OK', onPress: () => console.log('OK Pressed')}],
+                    { cancelable: true }
+                  )
+                }
+
               } else if(this.props.watsonResponse.message.intents[0].intent === "IR_A"){
-                setTimeout(()=> {
+                setTimeout(() => {
                   let views = [];
                   if(this.props.watsonResponse.message.entities.length){
                     views = this.props.watsonResponse.message.entities.filter((entity) => entity.entity === "VIEWS");
                   }
+
                   if(views.length){
                     let viewName = views[0].value;
                     switch(viewName) {
@@ -154,7 +173,7 @@ class MessageFormComponent extends Component {
                       Actions.myWallet();
                       break;
                       case "reportes":
-                      Actions.myWalletDetails({categoria: "COMIDA"});
+                      Actions.myWalletDetails();
                       break;
                       default:
                       Alert.alert(
@@ -314,6 +333,25 @@ class MessageFormComponent extends Component {
 
                             }).catch((err) => { console.log("err", err); });
                           }, 500);
+                        } else if(this.props.watsonResponse.message.intents[0].intent === "CUAL_ES_MI_EL_PRONOSTICO"){
+                          let categorias = [];
+                          if(this.props.watsonResponse.message.entities.length){
+                            categorias = this.props.watsonResponse.message.entities.filter((entity) => entity.entity === "CATEGORIAS_ACTIVO_EGRESOS");
+                          }
+
+                          if(categorias.length){
+                            setTimeout(() => {
+                              Actions.myPrediction({categoria: categorias[0].value});
+                            }, 500);
+                          } else {
+                            Alert.alert(
+                              'Falta categoría',
+                              'Debes proporcionar una categoría',
+                              [{text: 'OK', onPress: () => console.log('OK Pressed')}],
+                              { cancelable: true }
+                            )
+                          }
+
                         } else if(this.props.watsonResponse.message.intents[0].intent === "IR_A"){
                           setTimeout(()=> {
                             let views = [];

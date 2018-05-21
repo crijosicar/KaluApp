@@ -12,7 +12,8 @@ const MyPrediction = ({
   incomePredictionValues,
   expensePredictionValues,
   expensePredictionTimeFrame,
-  member
+  member,
+  categoria
 }) => (
   <Layout
     error={errorMessage}
@@ -22,6 +23,7 @@ const MyPrediction = ({
     incomePredictionValues={incomePredictionValues}
     expensePredictionValues={expensePredictionValues}
     expensePredictionTimeFrame={expensePredictionTimeFrame}
+    categoria={categoria}
   />
 );
 
@@ -34,11 +36,12 @@ MyPrediction.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  member:state.member||{},
+  member:state.member || {},
   errorMessage: state.status.error || null,
   incomePredictionValues:state.prediction.incomePredictionValues || null,
   expensePredictionValues:state.prediction.expensePredictionValues || null,
-  expensePredictionTimeFrame:state.prediction.expensePredictionTimeFrame || null
+  expensePredictionTimeFrame:state.prediction.expensePredictionTimeFrame || null,
+  categoria: state.prediction.categoria || "COMIDA"
 });
 
 const mapDispatchToProps = {

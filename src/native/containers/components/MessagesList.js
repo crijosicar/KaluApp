@@ -16,24 +16,6 @@ class MessageListComponent extends Component {
     this.itemLayout = this.itemLayout.bind(this);
   }
 
-  componentDidMount() {
-    //if (this.props.data.length){
-      //console.log("componentDidMount (props) -> ", this.props);
-      //this.refs._flatList.scrollToOffset({x: 0, y: 0, animated: true});
-    //}
-  }
-
-  componentDidUpdate() {
-    //if (this.props.data.length){
-  //      console.log("componentDidUpdate (props) -> ", this.props);
-    //    this.refs._flatList.scrollToOffset({x: 0, y: 0, animated: true});
-        //this.refs._flatList.scrollToIndex({animated: true, index: 0});
-        //this.refs._flatList.scrollTo({x: 0, y: 0, animated: true});
-        //this.flatList.scrollToIndex({animated: true, index: 0});
-        //this.flatList.scrollToIndex({x: 0, y: 0, animated: true});
-    //}
-  }
-
   renderItem = ({item}) => {
     return <MessageRow message={item}/>
   }
