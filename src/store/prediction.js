@@ -1,4 +1,4 @@
 export default {
     incomePredictionValues:[],
-    error: null,
-  };
+    error: null
+};

@@ -19,66 +19,64 @@ class MyPrediction extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            
-        }
+        this.state = {}
     }
 
    componentWillMount(){
-       this.props.getPredictionValues(this.props.member, {tipoTransaccion:"EGRESO"});
+      this.props.getPredictionValues(this.props.member, { tipoTransaccion: "EGRESO" });
    }
+
    componentDidMount(){
-    this.props.getPredictionTimeframe(this.props.member,{categoria:"ROPA"})
-}
-    render() {
-        const nodoNumero=1;
+     let { categoria =  "COMIDA" } = this.props;
+     this.props.getPredictionTimeframe(this.props.member,{categoria: categoria})
+   }
+
+  render() {
         const { error } = this.props;
         const data=this.props.expensePredictionValues;
         const timeFrame=this.props.expensePredictionTimeFrame;
-        const resultado = Object.keys(data)[nodoNumero]; 
+        let resultado = "comida";
+        if(this.props.categoria){
+          resultado = this.props.categoria.toLowerCase();
+        }
         let categoria;
-        const monto="data."+resultado;
         let btnTimeframe =  null;
-
 
         if(timeFrame){
             btnTimeframe = (<Button full info style={{margin:11}}>
                                 <Text style={{textAlign:"center", fontSize: 11}} > cada {timeFrame.value} {timeFrame.unit} </Text>
                             </Button>);
         }
-            
-        switch(monto) {
-            case "data.comida":
+
+        switch(resultado) {
+            case "comida":
             categoria= data.comida;
                 break;
-            case "data.ropa":
+            case "ropa":
             categoria= data.ropa;
                 break;
-            case "data.facturas":
+            case "resultadofacturas":
             categoria= data.facturas;
                 break;
-            case "data.entretenimiento":
+            case "entretenimiento":
             categoria= data.entretenimiento;
                     break;
-            case "data.comunicaciones":
+            case "comunicaciones":
             categoria= data.comunicaciones;
                     break;
-                            
-            case "data.hogar":
+            case "hogar":
             categoria= data.hogar;
                     break;
-            case "data.salud":
+            case "salud":
             categoria= data.salud;
                     break;
-                               
-                                    
             default:
                 categoria= data.transporte;
         }
-           
+
             return (
                 <Container>
-            
+
                 <Content>
                 <Spacer size={11} />
                 <H2 style={{margin:11}}>
@@ -87,24 +85,24 @@ class MyPrediction extends React.Component {
                 <Label style={{margin:11}}>
                 Tienes que comprar:
                 </Label>
-                
+
                   <Card>
-                    
+
                     <Button full info style={{margin:11}}>
                         <Text style={{textAlign:"center", fontSize: 11 }}> {resultado} </Text>
                     </Button>
-                     
+
                     <Button full style={{margin:11, backgroundColor:'white'}}>
                        <Text style={{textAlign:"center", fontSize: 11 , color:"#99badd"}}>MONTO:</Text>
                     </Button>
-                    
+
                     <Button full info style={{margin:11}}>
                       <Text style={{textAlign:"center", fontSize: 11 }}> $ {categoria} </Text>
                     </Button>
                     <Button full style={{margin:11, backgroundColor:'white'}}>
                        <Text style={{textAlign:"center", fontSize: 11 , color:"#99badd"}}>Tu periodicidad de compra es:</Text>
                     </Button>
-                    
+
                     { btnTimeframe }
                    </Card>
                 </Content>
