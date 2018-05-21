@@ -9,20 +9,32 @@ import Spacer from './Spacer';
 import { PieChart } from 'react-native-svg-charts';
 import Messages from './Messages';
 import { View, FlatList, StyleSheet, Text, Platform } from 'react-native';
-
 import Notch from '../containers/Notch';
+import { Table, Row as TableRow, Rows, Col as TableCol } from 'react-native-table-component';
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     marginTop: 20,
+//   },
+// });
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 20,
-  },
+  container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
+  head: { height: 40, backgroundColor: '#f1f8ff' },
+  text: { margin: 6 }
 });
 
 class MyWalletDetails extends React.Component {
   constructor() {
     super();
     this.state = {
+      tableHead: ['Item', 'Monto'],
+      tableData: [
+        ['1', '2' ],
+        ['a', 'b'],
+        ['1', '2'],
+        ['a', 'b']
+      ],
       dataSource: [],
       monthIncoming: "",
       yearIncoming: ""
@@ -53,11 +65,29 @@ class MyWalletDetails extends React.Component {
   }
 
   render() {
+    const values= this.state.dataSource;
+    const state = this.state;
     const { error } = this.props;
     var allItems = new Array();
     const year = new Date().getFullYear();
     allItems = ['2018','2017','2016','2015'];
     const colors = ["#600080", "#2556BA", "#26995F", "#99263D", "#7F9B0F", "#9E2807", "#C98704", "#33260E"];
+    let tableRows =  [];
+    let colItem=[];
+    let colMonto=[];
+        if(values.length!=0){
+          for (var i = 0, len = values.length; i < len; i++) {
+            colItem.push(values[i].activo, values[i].monto);
+            colMonto.push(values[i].monto)
+          }
+            
+          }
+            tableRows = (
+              <TableCol data={colItem} textStyle={styles.text}/>
+             
+            );
+        
+            
     return (
       <Container>
         <Content padder>
@@ -131,12 +161,21 @@ class MyWalletDetails extends React.Component {
           </Grid>
           <Grid>
             <Col>
+              {/* <Text>Item                     Monto</Text>
               <FlatList
                   data={this.state.dataSource}
                   renderItem={({item}) => (
-                      <Text>{item.activo} " - " {item.monto}</Text>
+                      <Text>{item.activo} "                 " {item.monto}</Text>
                   )}
-                />
+                />  */}
+                <View style={styles.container}>
+                  <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
+                    <TableRow data={state.tableHead} style={styles.head} textStyle={styles.text}/>
+                    {tableRows}
+                    
+                  </Table>
+                </View> 
+              
             </Col>
           </Grid>
         </Content>
