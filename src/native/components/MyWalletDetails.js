@@ -77,7 +77,11 @@ class MyWalletDetails extends React.Component {
     let colMonto=[];
         if(values.length!=0){
           for (var i = 0, len = values.length; i < len; i++) {
-            colItem.push(values[i].activo, values[i].monto);
+            item=values[i].activo;
+            while(item.length<50){
+              item=item+" ";
+            }
+            colItem.push(item +"          "+values[i].monto);
             colMonto.push(values[i].monto)
           }
             
