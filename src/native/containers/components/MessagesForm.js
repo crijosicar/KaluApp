@@ -64,16 +64,64 @@ class MessageFormComponent extends Component {
                 }, 500);
               } else if(this.props.watsonResponse.message.intents[0].intent === "AGREGAR"){
                 setTimeout(() => {
+                  let ingresos = [];
+                  ingresos = this.props.watsonResponse.message.entities.filter((entity) => entity.entity === "INGRESOS");
+
+                  if(ingresos.length){
+                    this.props.addMovimiento("INGRESO", this.props.member)
+                    .then(() => {
+                      let numbers = [];
+                      let ingresos = [];
+
+                      if(this.props.watsonResponse.message.entities.length){
+                        numbers = this.props.watsonResponse.message.entities.filter((entity) => entity.entity === "sys-number");
+                        ingresos = this.props.watsonResponse.message.entities.filter((entity) => entity.entity === "INGRESOS");
+                      }
+
+                      if(numbers.length && ingresos.length){
+                        let cate = ingresos[0].value.toUpperCase();
+                        var items = [{
+                          categoria_activo: cate,
+                          nombre: ingresos[0].value,
+                          monto: numbers[0].metadata.numeric_value
+                        }];
+
+                        this.props.addDetalleMovimiento(this.props.transaction.id, items, this.props.member)
+                        .then(() => {
+                          setTimeout(()=> {
+                            this.props.sendMessage("se ha realizado la acción '" + this.props.watsonResponse.message.input.text + "'", this.props.member, 1)
+                            .then((response) => {
+                              this.props.onSendMessage();
+                            }).catch((err) => { console.log("err", err); });
+                          }, 500);
+                        })
+                        .catch((err) => { console.log("err", err); });
+                      } else {
+                        setTimeout(()=> {
+                          this.props.sendMessage("Intenta nuevamente.", this.props.member, 1)
+                          .then((response) => {
+                            this.props.onSendMessage();
+                          }).catch((err) => { console.log("err", err); });
+                        }, 500);
+                      }
+
+                    }).catch((err) => { console.log("err", err); });
+                  } else {
                   this.props.addMovimiento("EGRESO", this.props.member)
                   .then(() => {
+
                     let numbers = [];
                     let comida = [];
                     let medidas = [];
+                    let ropa = [];
+
                     if(this.props.watsonResponse.message.entities.length){
                       numbers = this.props.watsonResponse.message.entities.filter((entity) => entity.entity === "sys-number");
                       comida = this.props.watsonResponse.message.entities.filter((entity) => entity.entity === "COMIDA");
                       medidas = this.props.watsonResponse.message.entities.filter((entity) => entity.entity === "MEDIDAS");
+                      ropa = this.props.watsonResponse.message.entities.filter((entity) => entity.entity === "ROPA");
                     }
+
                     let items = [];
                     let categoria = "";
                     let nombre = "";
@@ -104,6 +152,9 @@ class MessageFormComponent extends Component {
                           if(comida.length){
                             categoria = comida[0].entity;
                             nombre = comida[0].value;
+                          } else if(ropa.length){
+                            categoria = ropa[0].entity;
+                            nombre = ropa[0].value;
                           }
 
                           items.push({
@@ -117,17 +168,8 @@ class MessageFormComponent extends Component {
 
                     this.props.addDetalleMovimiento(this.props.transaction.id, items, this.props.member)
                     .then(() => {
-                      let nombreAux = numbers[0].metadata.numeric_value + " " + nombre;
-                      let haAux = "ha"
-                      if(numbers[0].metadata.numeric_value > 1){
-                        nombreAux + "s";
-                        haAux = "han";
-                      }
-                      if(medidas.length){
-                        nombreAux = nombre;
-                      }
                       setTimeout(() => {
-                        this.props.sendMessage("se " + haAux + " agregado " + nombreAux, this.props.member, 1)
+                        this.props.sendMessage("se ha realizado la accion '" + this.props.watsonResponse.message.input.text + "'", this.props.member, 1)
                         .then((response) => {
                           this.props.onSendMessage();
                         }).catch((err) => { console.log("err", err); });
@@ -136,6 +178,7 @@ class MessageFormComponent extends Component {
                     .catch((err) => { console.log("err", err); });
 
                   }).catch((err) => { console.log("err", err); });
+                }
                 }, 500);
               } else if(this.props.watsonResponse.message.intents[0].intent === "CUAL_ES_MI_EL_PRONOSTICO"){
                 let categorias = [];
@@ -167,6 +210,9 @@ class MessageFormComponent extends Component {
                     let viewName = views[0].value;
                     switch(viewName) {
                       case "inicio":
+                      Actions.conversation();
+                      break;
+                      case "conversacion":
                       Actions.conversation();
                       break;
                       case "mi cartera":
@@ -259,17 +305,65 @@ class MessageFormComponent extends Component {
                             }).catch((err) => { console.log("err", err); });
                           }, 500);
                         } else if(this.props.watsonResponse.message.intents[0].intent === "AGREGAR"){
-                          setTimeout(()=> {
-                            this.props.addMovimiento("INGRESO", this.props.member)
+                          setTimeout(() => {
+                            let ingresos = [];
+                            ingresos = this.props.watsonResponse.message.entities.filter((entity) => entity.entity === "INGRESOS");
+
+                            if(ingresos.length){
+                              this.props.addMovimiento("INGRESO", this.props.member)
+                              .then(() => {
+                                let numbers = [];
+                                let ingresos = [];
+
+                                if(this.props.watsonResponse.message.entities.length){
+                                  numbers = this.props.watsonResponse.message.entities.filter((entity) => entity.entity === "sys-number");
+                                  ingresos = this.props.watsonResponse.message.entities.filter((entity) => entity.entity === "INGRESOS");
+                                }
+
+                                if(numbers.length && ingresos.length){
+                                  let cate = ingresos[0].value.toUpperCase();
+                                  var items = [{
+                                    categoria_activo: cate,
+                                    nombre: ingresos[0].value,
+                                    monto: numbers[0].metadata.numeric_value
+                                  }];
+
+                                  this.props.addDetalleMovimiento(this.props.transaction.id, items, this.props.member)
+                                  .then(() => {
+                                    setTimeout(()=> {
+                                      this.props.sendMessage("se ha realizado la acción '" + this.props.watsonResponse.message.input.text + "'", this.props.member, 1)
+                                      .then((response) => {
+                                        this.props.onSendMessage();
+                                      }).catch((err) => { console.log("err", err); });
+                                    }, 500);
+                                  })
+                                  .catch((err) => { console.log("err", err); });
+                                } else {
+                                  setTimeout(()=> {
+                                    this.props.sendMessage("Intenta nuevamente.", this.props.member, 1)
+                                    .then((response) => {
+                                      this.props.onSendMessage();
+                                    }).catch((err) => { console.log("err", err); });
+                                  }, 500);
+                                }
+
+                              }).catch((err) => { console.log("err", err); });
+                            } else {
+                            this.props.addMovimiento("EGRESO", this.props.member)
                             .then(() => {
+
                               let numbers = [];
                               let comida = [];
                               let medidas = [];
+                              let ropa = [];
+
                               if(this.props.watsonResponse.message.entities.length){
                                 numbers = this.props.watsonResponse.message.entities.filter((entity) => entity.entity === "sys-number");
                                 comida = this.props.watsonResponse.message.entities.filter((entity) => entity.entity === "COMIDA");
                                 medidas = this.props.watsonResponse.message.entities.filter((entity) => entity.entity === "MEDIDAS");
+                                ropa = this.props.watsonResponse.message.entities.filter((entity) => entity.entity === "ROPA");
                               }
+
                               let items = [];
                               let categoria = "";
                               let nombre = "";
@@ -300,6 +394,9 @@ class MessageFormComponent extends Component {
                                     if(comida.length){
                                       categoria = comida[0].entity;
                                       nombre = comida[0].value;
+                                    } else if(ropa.length){
+                                      categoria = ropa[0].entity;
+                                      nombre = ropa[0].value;
                                     }
 
                                     items.push({
@@ -313,17 +410,8 @@ class MessageFormComponent extends Component {
 
                               this.props.addDetalleMovimiento(this.props.transaction.id, items, this.props.member)
                               .then(() => {
-                                let nombreAux = numbers[0].metadata.numeric_value + " " + nombre;
-                                let haAux = "ha"
-                                if(numbers[0].metadata.numeric_value > 1){
-                                  nombreAux + "s";
-                                  haAux = "han";
-                                }
-                                if(medidas.length){
-                                  nombreAux = nombre;
-                                }
-                                setTimeout(()=> {
-                                  this.props.sendMessage("se " + haAux + " agregado " + nombreAux, this.props.member, 1)
+                                setTimeout(() => {
+                                  this.props.sendMessage("se ha realizado la accion '" + this.props.watsonResponse.message.input.text + "'", this.props.member, 1)
                                   .then((response) => {
                                     this.props.onSendMessage();
                                   }).catch((err) => { console.log("err", err); });
@@ -332,6 +420,7 @@ class MessageFormComponent extends Component {
                               .catch((err) => { console.log("err", err); });
 
                             }).catch((err) => { console.log("err", err); });
+                          }
                           }, 500);
                         } else if(this.props.watsonResponse.message.intents[0].intent === "CUAL_ES_MI_EL_PRONOSTICO"){
                           let categorias = [];
@@ -362,6 +451,9 @@ class MessageFormComponent extends Component {
                             if(views.length){
                               let viewName = views[0].value;
                               switch(viewName) {
+                                case "conversacion":
+                                Actions.conversation();
+                                break;
                                 case "inicio":
                                 Actions.conversation();
                                 break;
@@ -369,7 +461,7 @@ class MessageFormComponent extends Component {
                                 Actions.myWallet();
                                 break;
                                 case "reportes":
-                                Actions.myWalletDetails({categoria: "COMIDA"});
+                                Actions.myWalletDetails();
                                 break;
                                 default:
                                 Alert.alert(

@@ -54,10 +54,7 @@ class Login extends React.Component {
         email: ''
       });
       if(this.props.member && this.props.member.id){
-        //Actions.conversation();
-        //Actions.myWallet();
-        //Actions.myPrediction();
-        Actions.myWalletDetails();
+        Actions.conversation();
       }
      })
      .catch((e) => {
