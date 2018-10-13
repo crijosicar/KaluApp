@@ -8,11 +8,10 @@ const Header = ({ title, content }) => (
   <View>
     <Spacer size={25} />
     <H1>{title}</H1>
-    {!!content &&
-      <View>
-        <Spacer size={10} />
-        <Text>{content}</Text>
-      </View>
+    {!!content && <View>
+                    <Spacer size={10} />
+                    <Text>{content}</Text>
+                  </View>
     }
     <Spacer size={25} />
   </View>

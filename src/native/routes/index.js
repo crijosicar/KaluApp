@@ -1,6 +1,7 @@
 import React from 'react';
 import { Scene, Tabs, Stack } from 'react-native-router-flux';
-import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/CardStackStyleInterpolator';
+//import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/CardStackStyleInterpolator';
+import StackViewStyleInterpolator from 'react-navigation-stack/dist/views/StackView/StackViewStyleInterpolator';
 import { Icon } from 'native-base';
 
 import DefaultProps from '../constants/navigation';
@@ -42,7 +43,7 @@ import ChatScreenComponent from '../components/ChatScreen';
 const Index = (
     <Scene hideNavBar transitionConfig={() => ({
               screenInterpolator: (props) => {
-                return CardStackStyleInterpolator.forVertical(props)
+                return StackViewStyleInterpolator.forVertical(props)
               }
             })}>
           <Scene
